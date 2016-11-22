@@ -5,3 +5,14 @@
 
 
 // SETCURRENTDIR("Media") // go to media files
+
+main()
+
+FUNCTION main:
+
+	WHILE TRUE
+	
+		SHOWSCREEN
+	WEND
+
+ENDFUNCTION
