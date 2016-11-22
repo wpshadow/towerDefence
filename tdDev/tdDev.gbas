@@ -6,13 +6,96 @@
 
 // SETCURRENTDIR("Media") // go to media files
 
+TYPE mouse_TYPE
+	x
+	y
+	b1
+	b2
+	b1_press
+	b2_press
+ENDTYPE
+
+GLOBAL mouse AS mouse_TYPE
+
+
 main()
 
 FUNCTION main:
 
+	initial()
+	loader()
+	
+	wpGUI_addButton("blub", 100, 100, 100, 20)
+
 	WHILE TRUE
 	
+		system_mouse()
+		wpGUI_setMouseInfos(mouse.x, mouse.y, mouse.b1, mouse.b2, mouse.b1_press, mouse.b2_press)
+		wpGUI_update()
+		
+		PRINT "test", 0, 0
+		
+		
 		SHOWSCREEN
 	WEND
+
+ENDFUNCTION
+
+FUNCTION initial:
+
+	AUTOPAUSE FALSE
+	SYSTEMPOINTER TRUE
+	
+ENDFUNCTION
+
+FUNCTION loader:
+
+	LOADFONT "media/font/font0.png", 0
+	SETFONT 0
+
+ENDFUNCTION
+
+
+FUNCTION system_mouse:
+// ==================
+// Mouse Routine v1.3
+// ==================
+LOCAL x, y, b1, b2, b1_press, b2_press
+STATIC b1_tmp, b2_tmp, press_init, press_timer_old
+
+
+
+	MOUSESTATE x, y, b1_press, b2_press
+
+		mouse.x = x
+		mouse.y = y
+
+	IF b1_press = FALSE
+		b1 = FALSE
+		press_init = FALSE
+	ENDIF
+	IF b1_press = TRUE
+		b1_tmp = TRUE
+		IF press_init = FALSE
+			press_timer_old = GETTIMERALL() + 500
+			press_init = TRUE
+		ENDIF
+	ENDIF
+	IF b1_press = FALSE AND b1_tmp = TRUE AND GETTIMERALL() <= press_timer_old
+		b1 = TRUE
+		b1_tmp = FALSE
+	ENDIF
+
+	IF b2_press = FALSE THEN b2 = FALSE
+	IF b2_press = TRUE THEN b2_tmp = TRUE
+	IF b2_press = FALSE AND b2_tmp = TRUE
+		b2 = TRUE
+		b2_tmp = FALSE
+	ENDIF
+
+	mouse.b1 = b1
+	mouse.b2 = b2
+	mouse.b1_press = b1_press
+	mouse.b2_press = b2_press
 
 ENDFUNCTION
