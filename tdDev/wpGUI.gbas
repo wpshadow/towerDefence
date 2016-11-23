@@ -24,7 +24,7 @@ TYPE wpGUI_button_TYPE
 	position AS wpGUI_position_TYPE
 	size AS wpGUI_size_TYPE
 	returnCode$
-	
+
 	mouseOverOffset
 ENDTYPE
 
@@ -37,8 +37,8 @@ TYPE wpGUI_mouse_TYPE
 ENDTYPE
 
 TYPE wpGUI_TYPE
-	
-	typ	
+
+	typ
 	button AS wpGUI_button_TYPE
 
 ENDTYPE
@@ -54,13 +54,13 @@ LOCAL guiIndex
 		SELECT gui.typ
 		CASE 1
 			//wpGUI_drawButton(gui.button.text$, gui.button.textAlignment, gui.button.position.x, gui.button.position.y, gui.button.size.width, gui.button.size.height)
-			wpGUI_drawButton(guiIndex)			
+			wpGUI_drawButton(guiIndex)
 		CASE 2
-		
+
 		CASE 3
-		
+
 		ENDSELECT
-		
+
 		INC guiIndex, 1
 	NEXT
 
@@ -71,14 +71,14 @@ FUNCTION wpGUI_initial:
 ENDFUNCTION
 
 FUNCTION wpGUI_setMouseInfos: positionX, positionY, buttonLeft, buttonRight, buttonLeft_press, buttonRight_press
-	
+
 	wpGUI_mouse.position.x = 		positionX
 	wpGUI_mouse.position.y = 		positionY
 	wpGUI_mouse.buttonLeft = 		buttonLeft
 	wpGUI_mouse.buttonRight = 		buttonRight
 	wpGUI_mouse.buttonLeft_press =	buttonLeft_press
 	wpGUI_mouse.buttonRight_press = buttonRight_press
-	
+
 ENDFUNCTION
 
 FUNCTION wpGUI_addButton: text$, positionX, positionY, sizeX, sizeY, textAlignment = 0
@@ -91,25 +91,25 @@ LOCAL g AS wpGUI_TYPE
 	g.button.size.width =		sizeX
 	g.button.size.height =		sizeY
 	g.button.textAlignment =	textAlignment
-	
+
 	DIMPUSH wpGUI[], g
 
 ENDFUNCTION
 
 FUNCTION wpGUI_drawButton: guiIndex //text, textAlignment, positionX, positionY, sizeX, sizeY
-	
-	
-	
+
+
+
 	IF wpGUI_mouse.position.x >= wpGUI[guiIndex].button.position.x AND wpGUI_mouse.position.x <= wpGUI[guiIndex].button.position.x + wpGUI[guiIndex].button.size.width
-	
-		
-		
+
+
+
 	ELSE
-	
-		
-	
+
+
+
 	ENDIF
-	
+
 	DRAWRECT wpGUI[guiIndex].button.position.x, wpGUI[guiIndex].button.position.y, wpGUI[guiIndex].button.size.width, wpGUI[guiIndex].button.size.height, RGB(255, 255, 255)
-	
+
 ENDFUNCTION

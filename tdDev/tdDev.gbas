@@ -21,21 +21,38 @@ GLOBAL mouse AS mouse_TYPE
 main()
 
 FUNCTION main:
+STATIC startTime
+LOCAL time
+
 
 	initial()
 	loader()
-	
+
 	wpGUI_addButton("blub", 100, 100, 100, 20)
 
 	WHILE TRUE
-	
+
 		system_mouse()
 		wpGUI_setMouseInfos(mouse.x, mouse.y, mouse.b1, mouse.b2, mouse.b1_press, mouse.b2_press)
 		wpGUI_update()
-		
+
 		PRINT "test", 0, 0
+
+		// t = current time
+		// b = start value
+		// c = change in value
+		// d = duration
+		
+		IF startTime = FALSE
+			time = GETTIMERALL()
+			startTime = TRUE
+		ENDIF
 		
 		
+		DEBUG easeInQuad(time, 100, 250, 0.1) + "\n"
+		
+		PRINT "test", easeInQuad(time, 100, 250, 1), 200
+
 		SHOWSCREEN
 	WEND
 
@@ -45,7 +62,7 @@ FUNCTION initial:
 
 	AUTOPAUSE FALSE
 	SYSTEMPOINTER TRUE
-	
+
 ENDFUNCTION
 
 FUNCTION loader:
