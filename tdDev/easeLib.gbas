@@ -1,0 +1,216 @@
+// --------------------------------- //
+// Project: tdDev
+// Start: Wednesday, November 23, 2016
+// IDE Version: 14.371
+
+
+// SETCURRENTDIR("Media") // go to media files
+
+
+
+
+
+// ---------------------------------------------------------
+// Mixing and Inverse Mixing Functions
+// ---------------------------------------------------------
+// by David Marconi
+// ---------------------------------------------------------
+
+// a = start value
+// b = end value
+// v = percent between values to return
+
+// return value at percentage(v) between (a) and (b)
+FUNCTION mix: a#, b#, v#
+        RETURN ((b*v) / 100.0) + (a * (100.0-v) / 100.0)
+ENDFUNCTION
+
+// return value at inverse percentage(v) between (a) and (b)
+FUNCTION mixInverse: a#, b#, v#
+        RETURN ((a*v) / 100.0) + (b * (100.0 -v) / 100.0)
+ENDFUNCTION
+
+// ---------------------------------------------------------
+// Easing Functions
+// ---------------------------------------------------------
+// Based on Actionscript by Robert Penner
+// www.robertpenner.com
+// ---------------------------------------------------------
+//TERMS OF USE - EASING EQUATIONS
+//
+//Open source under the BSD License. 
+//
+//Copyright © 2001 Robert Penner
+//All rights reserved.
+//
+//Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+//
+//Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+//Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+//Neither the name of the author nor the names of contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+//THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// ---------------------------------------------------------
+// Translated to GLBasic by David Marconi
+// ---------------------------------------------------------
+
+// t = current time
+// b = start value
+// c = change in value
+// d = duration
+
+// simple linear tweening - no easing, no acceleration
+FUNCTION linearTween: t#, b#, c#, d#
+        RETURN c*t/d + b
+ENDFUNCTION
+
+// quadratic easing in - accelerating from zero velocity
+FUNCTION easeInQuad: t#, b#, c#, d#
+        t = t/d
+        RETURN c*t*t + b
+ENDFUNCTION
+
+// quadratic easing out - decelerating to zero velocity
+FUNCTION easeOutQuad: t#, b#, c#, d#
+        t = t / d
+        RETURN -c * t*(t-2) + b
+ENDFUNCTION
+
+// quadratic easing in/out - acceleration until halfway, then deceleration
+FUNCTION easeInOutQuad: t#, b#, c#, d#
+        t = t / (d/2)
+        IF t < 1
+                RETURN c/2*t*t + b
+        ENDIF
+        DEC t
+        RETURN -c/2 * (t*(t-2) - 1) + b
+ENDFUNCTION
+
+// cubic easing in - accelerating from zero velocity
+FUNCTION easeInCubic: t#, b#, c#, d#
+        t = t/d
+        RETURN c*t*t*t + b
+ENDFUNCTION
+
+// cubic easing out - decelerating to zero velocity
+FUNCTION easeOutCubic: t#, b#, c#, d#
+        t = t/d
+        DEC t
+        RETURN c*(t*t*t + 1) + b
+ENDFUNCTION
+
+// cubic easing in/out - acceleration until halfway, then deceleration
+FUNCTION easeInOutCubic: t#, b#, c#, d#
+        t = t / (d/2)
+        IF t < 1
+                RETURN c/2*t*t*t + b
+        ENDIF
+        DEC t, 2
+        RETURN c/2*(t*t*t + 2) + b
+ENDFUNCTION
+
+// quartic easing in - accelerating from zero velocity
+FUNCTION easeInQuart: t#, b#, c#, d#
+        t = t/d
+        RETURN c*t*t*t*t + b
+ENDFUNCTION
+
+// quartic easing out - decelerating to zero velocity
+FUNCTION easeOutQuart: t#, b#, c#, d#
+        t = t/d
+        DEC t
+        RETURN -c * (t*t*t*t - 1) + b
+ENDFUNCTION
+
+// quartic easing in/out - acceleration until halfway, then deceleration
+FUNCTION easeInOutQuart: t#, b#, c#, d#
+        t = t / (d/2)
+        IF t < 1
+                RETURN c/2*t*t*t*t + b
+        ENDIF
+        DEC t, 2
+        RETURN -c/2 * (t*t*t*t - 2) + b
+ENDFUNCTION
+
+// quintic easing in - accelerating from zero velocity
+FUNCTION easeInQuint: t#, b#, c#, d#
+        t = t/d
+        RETURN c*t*t*t*t*t + b
+ENDFUNCTION
+
+// quintic easing out - decelerating to zero velocity
+FUNCTION easeOutQuint: t#, b#, c#, d#
+        t = t/d
+        DEC t
+        RETURN c*(t*t*t*t*t + 1) + b
+ENDFUNCTION
+
+// quintic easing in/out - acceleration until halfway, then deceleration
+FUNCTION easeInOutQuint: t#, b#, c#, d#
+        t = t / (d/2)
+        IF t < 1
+                RETURN c/2*t*t*t*t*t + b
+        ENDIF
+        DEC t, 2
+        RETURN c/2*(t*t*t*t*t + 2) + b
+ENDFUNCTION
+
+// sinusoidal easing in - accelerating from zero velocity
+FUNCTION easeInSine: t#, b#, c#, d#
+        LOCAL pi# = 3.1415926535
+        RETURN -c * COS(t/d * (pi/2)) + c + b
+ENDFUNCTION
+
+// sinusoidal easing out - decelerating to zero velocity
+FUNCTION easeOutSine: t#, b#, c#, d#
+        LOCAL pi# = 3.1415926535
+        RETURN c * SIN(t/d * (pi/2)) + b
+ENDFUNCTION
+
+// sinusoidal easing in/out - accelerating until halfway, then decelerating
+FUNCTION easeInOutSine: t#, b#, c#, d#
+        LOCAL pi# = 3.1415926535
+        RETURN -c/2 * (COS(pi*t/d) - 1) + b
+ENDFUNCTION
+
+// exponential easing in - accelerating from zero velocity
+FUNCTION easeInExpo: t#, b#, c#, d#
+        RETURN c * POW(2, 10 * (t/d - 1)) + b
+ENDFUNCTION
+
+// exponential easing out - decelerating to zero velocity
+FUNCTION easeOutExpo: t#, b#, c#, d#
+        RETURN c * (-POW(2, -10 * t/d) + 1) + b
+ENDFUNCTION
+
+// exponential easing in/out - accelerating until halfway, then decelerating
+FUNCTION easeInOutExpo: t#, b#, c#, d#
+        t = t / (d/2)
+        IF t < 1
+                RETURN c/2 * POW(2, 10 * (t - 1)) + b
+        ENDIF
+        DEC t
+        RETURN c/2 * (-POW(2, -10 * t) + 2) + b
+ENDFUNCTION
+
+// circular easing in - accelerating from zero velocity
+FUNCTION easeInCirc: t#, b#, c#, d#
+        t = t/d
+        RETURN -c * (SQR(1 - t*t) - 1) + b
+ENDFUNCTION
+
+// circular easing out - decelerating to zero velocity
+FUNCTION easeOutCirc: t#, b#, c#, d#
+        t = t/d
+        DEC t
+        RETURN c * SQR(1 - t*t) + b
+ENDFUNCTION
+
+// circular easing in/out - acceleration until halfway, then deceleration
+FUNCTION easeInOutCirc: t#, b#, c#, d#
+        t = t / (d/2)
+        IF t < 1
+                RETURN -c/2 * (SQR(1 - t*t) - 1) + b
+        ENDIF
+        DEC t, 2
+        RETURN c/2 * (SQR(1 - t*t) + 1) + b
+ENDFUNCTION
