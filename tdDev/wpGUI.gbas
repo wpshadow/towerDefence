@@ -53,7 +53,6 @@ LOCAL guiIndex
 	FOREACH gui IN wpGUI[]
 		SELECT gui.typ
 		CASE 1
-			//wpGUI_drawButton(gui.button.text$, gui.button.textAlignment, gui.button.position.x, gui.button.position.y, gui.button.size.width, gui.button.size.height)
 			wpGUI_drawButton(guiIndex)
 		CASE 2
 
@@ -96,20 +95,46 @@ LOCAL g AS wpGUI_TYPE
 
 ENDFUNCTION
 
-FUNCTION wpGUI_drawButton: guiIndex //text, textAlignment, positionX, positionY, sizeX, sizeY
-
-
+FUNCTION wpGUI_drawButton: guiIndex 
 
 	IF wpGUI_mouse.position.x >= wpGUI[guiIndex].button.position.x AND wpGUI_mouse.position.x <= wpGUI[guiIndex].button.position.x + wpGUI[guiIndex].button.size.width
-
-
-
+		
 	ELSE
-
+		wpGUI_RoundRectBorder(100, 100, 250, 50, 5, 5, RGB(255, 255, 255), RGB(255, 255, 255), 0)
 
 
 	ENDIF
 
-	DRAWRECT wpGUI[guiIndex].button.position.x, wpGUI[guiIndex].button.position.y, wpGUI[guiIndex].button.size.width, wpGUI[guiIndex].button.size.height, RGB(255, 255, 255)
+	//DRAWRECT wpGUI[guiIndex].button.position.x, wpGUI[guiIndex].button.position.y, wpGUI[guiIndex].button.size.width, wpGUI[guiIndex].button.size.height, RGB(255, 255, 255)
 
+ENDFUNCTION
+
+FUNCTION wpGUI_RoundRectBorder: x,y,w,h,r,border,col, col_border, shadow_offset
+        IF shadow_offset
+                ALPHAMODE -.5
+                wpGUI_RoundRect(x+shadow_offset,y+shadow_offset,w,h,r,RGB(0,0,0))
+        ENDIF
+        ALPHAMODE 0
+        wpGUI_RoundRect(x,y,w,h,r,col_border)
+        wpGUI_RoundRect(x+border,y+border, w-2*border, h-2*border, r-border, col)
+ENDFUNCTION
+
+
+
+FUNCTION wpGUI_RoundRect: x,y,w,h,r,col
+        // polyvector way of doing it:
+        STARTPOLY -1
+        wpGUI_RRCircle(x+r,  y+r,    90,180, r,col)
+        wpGUI_RRCircle(x+r,  y+h-r, 180,270, r,col)
+        wpGUI_RRCircle(x+w-r,y+h-r, 270,360, r,col)
+        wpGUI_RRCircle(x+w-r,y+r,   360,450, r,col)
+
+        ENDPOLY
+ENDFUNCTION
+
+FUNCTION wpGUI_RRCircle: x,y,phi1, phi2, r, col
+LOCAL p
+        FOR p=phi1 TO phi2+0.00001 STEP (phi2-phi1)/16
+                POLYVECTOR x+COS(p)*r, y-SIN(p)*r, 0,0,col
+        NEXT
 ENDFUNCTION
