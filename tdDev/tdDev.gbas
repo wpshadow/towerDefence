@@ -21,7 +21,7 @@ GLOBAL mouse AS mouse_TYPE
 main()
 
 FUNCTION main:
-STATIC startTime
+STATIC startTime, x
 LOCAL time
 
 
@@ -42,16 +42,19 @@ LOCAL time
 		// b = start value
 		// c = change in value
 		// d = duration
-		
+
 		IF startTime = FALSE
 			time = GETTIMERALL()
 			startTime = TRUE
+			x = 0
 		ENDIF
-		
-		
-		DEBUG easeInQuad(time, 100, 250, 0.1) + "\n"
-		
-		PRINT "test", easeInQuad(time, 100, 250, 1), 200
+
+
+		INC x, 1
+
+		DEBUG easeInQuad(x, 0, 99, 99) + "\n"
+
+		PRINT "test", mix(0, 150, easeInQuad(x, 0, 99, 99)), 200
 
 		SHOWSCREEN
 	WEND
