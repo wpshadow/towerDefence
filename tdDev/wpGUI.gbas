@@ -95,10 +95,10 @@ LOCAL g AS wpGUI_TYPE
 
 ENDFUNCTION
 
-FUNCTION wpGUI_drawButton: guiIndex 
+FUNCTION wpGUI_drawButton: guiIndex
 
 	IF wpGUI_mouse.position.x >= wpGUI[guiIndex].button.position.x AND wpGUI_mouse.position.x <= wpGUI[guiIndex].button.position.x + wpGUI[guiIndex].button.size.width
-		
+
 	ELSE
 		wpGUI_RoundRectBorder(100, 100, 250, 50, 5, 5, RGB(255, 255, 255), RGB(255, 255, 255), 0)
 
