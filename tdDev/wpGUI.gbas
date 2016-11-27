@@ -14,8 +14,8 @@ TYPE wpGUI_position_TYPE
 ENDTYPE
 
 TYPE wpGUI_size_TYPE
-	height
 	width
+	height
 ENDTYPE
 
 TYPE wpGUI_button_TYPE
@@ -49,6 +49,8 @@ FUNCTION wpGUI_update:
 LOCAL guiIndex
 
 	wpGUI_initial()
+	
+	X_MAKE2D
 
 	FOREACH gui IN wpGUI[]
 		SELECT gui.typ
@@ -96,17 +98,64 @@ LOCAL g AS wpGUI_TYPE
 ENDFUNCTION
 
 FUNCTION wpGUI_drawButton: guiIndex
+LOCAL positionX, positionY, width, height
 
-	IF wpGUI_mouse.position.x >= wpGUI[guiIndex].button.position.x AND wpGUI_mouse.position.x <= wpGUI[guiIndex].button.position.x + wpGUI[guiIndex].button.size.width
+	positionX =		wpGUI[guiIndex].button.position.x + 10 - wpGUI[guiIndex].button.mouseOverOffset
+	positionY =		wpGUI[guiIndex].button.position.y
+	width =			wpGUI[guiIndex].button.size.width - 20 + (wpGUI[guiIndex].button.mouseOverOffset * 2)
+	height =		wpGUI[guiIndex].button.size.height
 
+	
+
+	IF wpGUI_mouse.position.x >= positionX AND wpGUI_mouse.position.x <= positionX + width AND wpGUI_mouse.position.y >= positionY AND wpGUI_mouse.position.y <= positionY + height
+		
+		INC wpGUI[guiIndex].button.mouseOverOffset, 0.1 * GETTIMER()
+		IF wpGUI[guiIndex].button.mouseOverOffset > 10 THEN wpGUI[guiIndex].button.mouseOverOffset = 10
+		
+		IF wpGUI_mouse.buttonLeft_press = TRUE
+			wpGUI_drawRRect(positionX, positionY, width, height, 1, 2)
+		ELSE
+			wpGUI_drawRRect(positionX, positionY, width, height, 1, 1)
+		ENDIF
 	ELSE
-		wpGUI_RoundRectBorder(100, 100, 250, 50, 5, 5, RGB(255, 255, 255), RGB(255, 255, 255), 0)
-
-
+		DEC wpGUI[guiIndex].button.mouseOverOffset, 0.1 * GETTIMER()
+		IF wpGUI[guiIndex].button.mouseOverOffset < 0 THEN wpGUI[guiIndex].button.mouseOverOffset = 0
+		
+		wpGUI_drawRRect(positionX, positionY, width, height, 1, 0)
 	ENDIF
 
 	//DRAWRECT wpGUI[guiIndex].button.position.x, wpGUI[guiIndex].button.position.y, wpGUI[guiIndex].button.size.width, wpGUI[guiIndex].button.size.height, RGB(255, 255, 255)
 
+ENDFUNCTION
+
+FUNCTION wpGUI_drawRRect: x, y, length, width, typ, mouseinfo
+LOCAL colorR, colorG, colorB
+// typ =	Art des Elementes
+// info =	Mouseover/Mousepress Information
+
+	SELECT mouseinfo
+	// No Mouseover
+	CASE 0
+		colorR = 60
+		colorG = 125
+		colorB = 139
+	// Mouseover
+	CASE 1
+		colorR = INTEGER(60 * 1.25)
+		colorG = INTEGER(125 * 1.25)
+		colorB = INTEGER(139 * 1.25)
+	// Mouse Press
+	CASE 2
+		colorR = INTEGER(60 * 1.5)
+		colorG = INTEGER(125 * 1.5)
+		colorB = INTEGER(139 * 1.5)
+	ENDSELECT
+	
+	IF colorR > 255 THEN colorR = 255
+	IF colorG > 255 THEN colorG = 255
+	IF colorB > 255 THEN colorB = 255
+
+	wpGUI_RoundRectBorder(x, y, length, width, 4, 4, RGB(colorR, colorG, colorB), RGB(colorR, colorG, colorB), 0)
 ENDFUNCTION
 
 FUNCTION wpGUI_RoundRectBorder: x,y,w,h,r,border,col, col_border, shadow_offset
