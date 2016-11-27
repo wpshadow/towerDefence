@@ -1,0 +1,179 @@
+[MENU]
+LANG_MENU_FILE = Datei
+LANG_MENU_FILE_NEW = Neu
+LANG_MENU_FILE_SAVE = Speichern
+LANG_MENU_FILE_SAVEAS = Speichern unter..
+LANG_MENU_FILE_QUIT = Beenden
+LANG_MENU_STYLE = Style
+LANG_MENU_STYLE_LOAD = Laden
+LANG_MENU_STYLE_SAVEAS = Speichern unter..
+LANG_MENU_CHAR = Zeichentabelle
+LANG_MENU_CHAR_LOAD = Laden..
+LANG_MENU_CHAR_SAVEAS = Speichern unter..
+LANG_MENU_CHAR_DEFAULT = Standard
+LANG_MENU_LANGUAGE = Sprache
+LANG_MENU_Q = ?
+LANG_MENU_Q_ABOUT = Über..
+
+[TEST]
+LANG_TESTYOURFONT = Teste hier deinen Font..
+LANG_TESTIMAGESAVE = Test speichern..
+
+[POPUP_REMAP]
+LANG_POPUP_REMAP_ENABLE = Zeichen Anzeigen
+LANG_POPUP_REMAP_DISABLE = Zeichen Ausblenden
+LANG_POPUP_REMAP_RESET = Zeichen Zurücksetzen
+LANG_POPUP_REMAP_ENABLE_ALL = Alle Zeichen anzeigen
+LANG_POPUP_REMAP_DISABLE_ALL = Alle Zeichen ausblenden
+LANG_POPUP_REMAP_RESET_ALL = Alle Zeichen zurücksetzen
+LANG_POPUP_REMAP_RESET_REMAP = Zeichen ändern
+
+[TOOLBAR]
+LANG_TOOLBAR_NEW = Neu
+LANG_TOOLBAR_SAVEAS = Speichern unter..
+LANG_TOOLBAR_ZOOMIN = Zoom +1 [Ctrl + HOCH]
+LANG_TOOLBAR_ZOOMRESET = Zoom 0
+LANG_TOOLBAR_ZOOMOUT = Zoom -1 [Ctrl + RUNTER]
+LANG_TOOLBAR_ABOUT = Über..
+LANG_TOOLBAR_QUIT = Beenden
+
+[GUI_FONT]
+LANG_GUI_FONT_FRAME = Schrifteinstellungen
+LANG_GUI_FONT_FONT = Schrift
+LANG_GUI_FONT_SIZE = Schriftgröße
+LANG_GUI_FONT_CHARSET = Art
+LANG_GUI_FONT_BOLD = Fett
+LANG_GUI_FONT_STRIKEOUT = Durchgestrichen
+LANG_GUI_FONT_ITALIC = Schräg
+LANG_GUI_FONT_UNDERLINE = Unterstrichen
+LANG_GUI_FONT_ANTIALIASING = Kantenglättung
+LANG_GUI_FONT_256_Chars = 256 Zeichen
+LANG_GUI_FONT_CLEARTYPE = Kantenglättung / Cleartype (Neu/XP)
+
+[GUI_OPTIONS]
+LANG_GUI_OPTIONS_FRAME = Grafikeinstellungen
+LANG_GUI_OPTIONS_1PIXEL = Füge Einen Pixel auf der rechten Seite hinzu
+LANG_GUI_OPTIONS_DIMENSION = Erzwinge 2^n Zeichengröße
+LANG_GUI_OPTIONS_FORCE = Erzwinge feste Zeichengröße
+LANG_GUI_OPTIONS_TILEWIDTH = Zeichenbreite
+LANG_GUI_OPTIONS_TILEHEIGHT = Zeichenhöhe
+
+[GUI_STYLE]
+LANG_GUI_STYLE_FRAME = Style
+LANG_GUI_STYLE_BG_SINGLECOLOR = Hintergrund einfarbing
+LANG_GUI_STYLE_BG_TRANSCOLOR = Hintergrund transparent
+LANG_GUI_STYLE_FONT_SINGLECOLOR = Schrift einfarbig
+LANG_GUI_STYLE_FONT_GRADIENT = Schrift mit Farbverlauf
+LANG_GUI_STYLE_FONT_TEXTURE = Schrift mit Textur
+LANG_GUI_STYLE_FONT_ALPHA = Schrift Transparenz
+LANG_GUI_STYLE_OUTLINE1_OFF = Kante#1 aus
+LANG_GUI_STYLE_OUTLINE1_SINGLECOLOR = Kante#1 einfarbig
+LANG_GUI_STYLE_OUTLINE1_GRADIENT = Kante#1 Farbverlauf
+LANG_GUI_STYLE_OUTLINE2_OFF = Kante#2 aus
+LANG_GUI_STYLE_OUTLINE2_SINGLECOLOR = Kante#2 einfarbig
+LANG_GUI_STYLE_OUTLINE2_GRADIENT = Kante#2 Farbverlauf
+LANG_GUI_STYLE_SHADDOW_OFF = Schatten aus
+LANG_GUI_STYLE_SHADDOW_CLEAN = Schatten scharf
+LANG_GUI_STYLE_SHADDOW_BLUR = Schatten mit Verlauf
+LANG_GUI_STYLE_SHADDOW_XOFFSET = Schatten X
+LANG_GUI_STYLE_SHADDOW_YOFFSET = Schatten Y
+LANG_GUI_STYLE_SHADDOW_ALPHA = Schatten Transparenz
+LANG_GUI_STYLE_LIGHT_OFF = Licht aus
+LANG_GUI_STYLE_LIGHT_SIMPLE = Licht einfach
+LANG_GUI_STYLE_LIGHT_DARK = Licht dunkel
+LANG_GUI_STYLE_LIGHT_FULL = Licht voll
+LANG_GUI_STYLE_LIGHT_ALPHA = Licht Transparenz
+LANG_GUI_STYLE_LIGHT_TOPLEFT = von oben/links
+LANG_GUI_STYLE_LIGHT_TOP = von oben
+LANG_GUI_STYLE_LIGHT_TOPRIGHT = von oben/rechts
+LANG_GUI_STYLE_LIGHT_RIGHT = von rechts
+LANG_GUI_STYLE_LIGHT_BOTTOMRIGHT = von unten/rechts
+LANG_GUI_STYLE_LIGHT_BOTTOM = von unten
+LANG_GUI_STYLE_LIGHT_BOTTOMLEFT = von unten/links
+LANG_GUI_STYLE_LIGHT_LEFT = links
+LANG_GUI_STYLE_LIGHT_DIRECTION = Richtung des Lichts
+
+[GUI_SAVE]
+LANG_GUI_SAVE_FRAME = Speichern unter..
+LANG_GUI_SAVE_FILE = deinfont.png
+LANG_GUI_SAVE_BUTTON1 = Wähle Zieldatei
+LANG_GUI_SAVE_BUTTON2 = Speichern
+
+[REQ_TESTIMAGE]
+LANG_REQ_TESTIMAGE_WINDOW = Speichern des TestBildes unter..
+LANG_REQ_TESTIMAGE_QUESTION = Eine Datei mit diesem Namen ist bereits vorhanden, wollen sie diese überschreiben?
+
+[REQ_SAVEFONT]
+LANG_REQ_SAVEFONT_WINDOW = Speichere Font unter..
+LANG_REQ_SAVEFONT_QUESTION = Eine Datei mit diesem Namen ist bereits vorhanden, wollen sie diese überschreiben?
+
+[REQ_TARGETFONT]
+LANG_REQ_TARGETFONT_WINDOW = Speichere Font unter..
+
+[REQ_LOADTEXTURE]
+LANG_REQ_LOADTEXTURE_WINDOW = Bitte ein Bild auswählen..
+LANG_REQ_LOADTEXTURE_ERROR = Das Format der angegebenen Datei wird nicht unterstützt!
+
+[REQ_REMAP]
+LANG_REQ_REMAP_WINDOW = Font ReMap
+LANG_REQ_REMAP_ORIGINAL = Original
+LANG_REQ_REMAP_REMAPPED = Geändert
+LANG_REQ_REMAP_OK = OK
+LANG_REQ_REMAP_CANCEL = Abbrechen
+
+[REQ_LOADSTYLE]
+LANG_REQ_LOADSTYLE_WINDOW = Eine Datei zum laden auswählen..
+LANG_REQ_LOADSTYLE_ERROR = Das Format der angegebenen Datei wird nicht unterstützt!
+
+[REQ_SAVESTYLE] 
+LANG_REQ_SAVESTYLE_WINDOW = Eine Datei zum speichern auswählen..
+LANG_REQ_SAVESTYLE_QUESTION = Eine Datei mit diesem Namen ist bereits vorhanden, wollen sie diese überschreiben?
+
+[REQ_SAVECHARMAP] 
+LANG_REQ_SAVECHARMAP_WINDOW = Eine Datei zum speichern auswählen..
+LANG_REQ_SAVECHARMAP_QUESTION = Eine Datei mit diesem Namen ist bereits vorhanden, wollen sie diese überschreiben?
+
+[REQ_LOADCHARMAP] 
+LANG_REQ_LOADCHARMAP_WINDOW = Eine Datei zum laden auswählen..
+
+[STATUSBAR]
+LANG_STATUSBAR_IMAGESIZE = Bildgröße
+LANG_STATUSBAR_TILEWIDTH = Zeichenbreite
+LANG_STATUSBAR_TILEHEIGHT = Zeichenhöhe
+LANG_STATUSBAR_ZOOM = Vergrößerung
+
+[QUIT]
+LANG_QUIT_SAVECHANGES = Alle Änderungen speichern?
+
+[COLOREDITOR]
+LANG_COLOREDITOR_WINDOW = Color Editor
+LANG_COLOREDITOR_WINREQ = WindowsColorRequester
+LANG_COLOREDITOR_OLD = Alt
+LANG_COLOREDITOR_NEW = Neu
+LANG_COLOREDITOR_OK = OK
+LANG_COLOREDITOR_CANCEL = Abbrechen
+
+[GRADIENTEDITOR]
+LANG_GRADIENTEDITOR_WINDOW = Gradient Editor
+LANG_GRADIENTEDITOR_1 = LinearGradient
+LANG_GRADIENTEDITOR_2 = CircularGradient
+LANG_GRADIENTEDITOR_3 = BoxedGradient
+LANG_GRADIENTEDITOR_4 = ConicalGradient
+LANG_GRADIENTEDITOR_COLOR = Farbe
+LANG_GRADIENTEDITOR_POSITION = Position
+LANG_GRADIENTEDITOR_DELETE = entfernen
+LANG_GRADIENTEDITOR_OK = OK
+LANG_GRADIENTEDITOR_CANCEL = Abbrechen
+LANG_GRADIENTEDITOR_INVERT = umkehren 
+LANG_GRADIENTEDITOR_CLEAR = löschen
+LANG_GRADIENTEDITOR_RESET = zurücksetzen
+
+LANG_GRADIENTEDITOR_IMPORT = importieren
+LANG_GRADIENTEDITOR_EXPORT = exportieren
+
+[REQ_SAVEGRADIENT]
+LANG_REQ_SAVEGRADIENT_WINDOW = Eine Datei zum speichern auswählen..
+
+[REQ_LOADGRADIENT]
+LANG_REQ_LOADGRADIENT_WINDOW = Eine Datei zum laden auswählen..
+

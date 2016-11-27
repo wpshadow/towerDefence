@@ -31,9 +31,10 @@ FUNCTION main:
 
 		system_mouse()
 		wpGUI_setMouseInfos(mouse.x, mouse.y, mouse.b1, mouse.b2, mouse.b1_press, mouse.b2_press)
-		wpGUI_update()
 
-		PRINT "test", 0, 0
+		//DRAWRECT 100, 100, 100, 20, RGB(128, 128, 128)
+
+		wpGUI_update()
 
 		SHOWSCREEN
 	WEND
