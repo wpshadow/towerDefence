@@ -33,8 +33,8 @@ TYPE wpGUI_label_TYPE
 	textAlignment
 	position AS wpGUI_position_TYPE
 	size AS wpGUI_size_TYPE
-	returnCode$	
-	
+	returnCode$
+
 ENDTYPE
 
 TYPE wpGUI_mouse_TYPE
@@ -54,6 +54,12 @@ ENDTYPE
 
 TYPE wpGUI_settings_TYPE
 	animationSpeed
+	animationGlobal
+	
+	animationButton
+	animationButtonDistance
+	
+	
 ENDTYPE
 
 TYPE wpGUI_colorBasic_TYPE
@@ -97,14 +103,32 @@ ENDFUNCTION
 
 FUNCTION wpGUI_initial:
 	wpGUI_settings.animationSpeed = 0.2
+	wpGUI_settings.animationGlobal = TRUE
+	
+	wpGUI_setAnimationSettings()
+	
 	wpGUI_setInitialColor()
+ENDFUNCTION
+
+FUNCTION wpGUI_setAnimationSettings:
+
+	wpGUI_settings.animationButtonDistance = 10
+
+	IF wpGUI_settings.animationGlobal = TRUE
+		wpGUI_settings.animationButton = TRUE
+	ENDIF
+
+	IF wpGUI_settings.animationGlobal = FALSE
+		wpGUI_settings.animationButton = FALSE
+	ENDIF
+
 ENDFUNCTION
 
 FUNCTION wpGUI_setInitialColor:
 	wpGUI_color.buttonInactive.r = 			60
 	wpGUI_color.buttonInactive.g = 			125
 	wpGUI_color.buttonInactive.b = 			139
-	
+
 	wpGUI_color.buttonActive.r = 			60 * 1.25
 	wpGUI_color.buttonActive.g = 			125 * 1.25
 	wpGUI_color.buttonActive.b = 			139 * 1.25
@@ -112,7 +136,7 @@ FUNCTION wpGUI_setInitialColor:
 	wpGUI_color.buttonPress.r = 			60 * 1.5
 	wpGUI_color.buttonPress.g = 			125 * 1.5
 	wpGUI_color.buttonPress.b = 			139 * 1.5
-	
+
 ENDFUNCTION
 
 FUNCTION wpGUI_setMouseInfos: positionX, positionY, buttonLeft, buttonRight, buttonLeft_press, buttonRight_press
@@ -144,17 +168,26 @@ ENDFUNCTION
 FUNCTION wpGUI_drawButton: guiIndex
 LOCAL positionX, positionY, width, height
 
-	positionX =		wpGUI[guiIndex].button.position.x + 10 - wpGUI[guiIndex].button.mouseOverOffset
+	IF wpGUI_settings.animationButton = FALSE
+		wpGUI[guiIndex].button.mouseOverOffset = wpGUI_settings.animationButtonDistance
+	ENDIF
+
+
+	positionX =		wpGUI[guiIndex].button.position.x + wpGUI_settings.animationButtonDistance - wpGUI[guiIndex].button.mouseOverOffset
 	positionY =		wpGUI[guiIndex].button.position.y
-	width =			wpGUI[guiIndex].button.size.width - 20 + (wpGUI[guiIndex].button.mouseOverOffset * 2)
+	width =			wpGUI[guiIndex].button.size.width - (wpGUI_settings.animationButtonDistance * 2) + (wpGUI[guiIndex].button.mouseOverOffset * 2)
 	height =		wpGUI[guiIndex].button.size.height
 
 
 
 	IF wpGUI_mouse.position.x >= positionX AND wpGUI_mouse.position.x <= positionX + width AND wpGUI_mouse.position.y >= positionY AND wpGUI_mouse.position.y <= positionY + height
 
-		INC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeed * GETTIMER()
-		IF wpGUI[guiIndex].button.mouseOverOffset > 10 THEN wpGUI[guiIndex].button.mouseOverOffset = 10
+		IF wpGUI_settings.animationButton = TRUE
+			INC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeed * GETTIMER()
+			IF wpGUI[guiIndex].button.mouseOverOffset > wpGUI_settings.animationButtonDistance THEN wpGUI[guiIndex].button.mouseOverOffset = wpGUI_settings.animationButtonDistance		
+		ENDIF
+		
+		
 
 		IF wpGUI_mouse.buttonLeft_press = TRUE
 			wpGUI_drawRRect(positionX, positionY, width, height, 1, 2)
@@ -162,9 +195,11 @@ LOCAL positionX, positionY, width, height
 			wpGUI_drawRRect(positionX, positionY, width, height, 1, 1)
 		ENDIF
 	ELSE
-		DEC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeed * GETTIMER()
-		IF wpGUI[guiIndex].button.mouseOverOffset < 0 THEN wpGUI[guiIndex].button.mouseOverOffset = 0
-
+		IF wpGUI_settings.animationButton = TRUE
+			DEC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeed * GETTIMER()
+			IF wpGUI[guiIndex].button.mouseOverOffset < 0 THEN wpGUI[guiIndex].button.mouseOverOffset = 0
+		ENDIF
+		
 		wpGUI_drawRRect(positionX, positionY, width, height, 1, 0)
 	ENDIF
 
@@ -181,7 +216,7 @@ LOCAL positionX, positionY, width, height
 //	positionY =		wpGUI[guiIndex].button.position.y
 //	width =			wpGUI[guiIndex].button.size.width - 20 + (wpGUI[guiIndex].button.mouseOverOffset * 2)
 //	height =		wpGUI[guiIndex].button.size.height
-	
+
 
 ENDFUNCTION
 
@@ -209,7 +244,7 @@ LOCAL colorR, colorG, colorB, tmpR, tmpG, tmpB
 			colorG = INTEGER(125 * 1.6)
 			colorB = INTEGER(139 * 1.6)
 		ENDSELECT
-	
+
 		IF colorR > 255 THEN colorR = 255
 		IF colorG > 255 THEN colorG = 255
 		IF colorB > 255 THEN colorB = 255
