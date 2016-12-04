@@ -21,6 +21,7 @@ ENDTYPE
 TYPE wpGUI_button_TYPE
 	text$
 	textAlignment
+	font
 	position AS wpGUI_position_TYPE
 	size AS wpGUI_size_TYPE
 	returnCode$
@@ -31,6 +32,7 @@ ENDTYPE
 TYPE wpGUI_label_TYPE
 	text$
 	textAlignment
+	font
 	position AS wpGUI_position_TYPE
 	size AS wpGUI_size_TYPE
 
@@ -54,8 +56,8 @@ ENDTYPE
 TYPE wpGUI_settings_TYPE
 	animationSpeed
 	animationSpeedButton
-	
-	
+
+
 	animationGlobal
 
 	animationButton
@@ -78,7 +80,11 @@ TYPE wpGUI_color_TYPE
 	label AS				wpGUI_colorBasic_TYPE
 ENDTYPE
 
-GLOBAL wpGUI[] AS wpGUI_TYPE, wpGUI_mouse AS wpGUI_mouse_TYPE, wpGUI_settings AS wpGUI_settings_TYPE, wpGUI_color AS wpGUI_color_TYPE
+TYPE wpGUI_font_TYPE
+	id
+ENDTYPE
+
+GLOBAL wpGUI[] AS wpGUI_TYPE, wpGUI_mouse AS wpGUI_mouse_TYPE, wpGUI_settings AS wpGUI_settings_TYPE, wpGUI_color AS wpGUI_color_TYPE, wpGUI_font AS wpGUI_font_TYPE
 
 FUNCTION wpGUI_update:
 STATIC init
@@ -88,9 +94,9 @@ LOCAL guiIndex
 		wpGUI_initial()
 		init = TRUE
 	ENDIF
-		
+
 	X_MAKE2D
-	
+
 	wpGUI_settings.returnCode$ = "NULL"
 
 	FOREACH gui IN wpGUI[]
@@ -111,11 +117,41 @@ ENDFUNCTION
 FUNCTION wpGUI_initial:
 
 		wpGUI_settings.animationGlobal = TRUE
-	
+
 		wpGUI_setAnimationSpeedSettings()
 		wpGUI_setAnimationSettings()
-	
+
 		wpGUI_setInitialColor()
+		
+		wpGUI_loader()		
+		
+ENDFUNCTION
+
+FUNCTION wpGUI_loader:
+LOCAL folderFound, fileFound
+
+	folderFound  = DOESDIREXIST("wpGUI/initial")
+	
+	IF folderFound = FALSE THEN END
+	
+	IF folderFound = TRUE
+	
+		fileFound = DOESFILEEXIST("wpGUI/initial/wpGUIinit.ini")
+		
+		IF fileFound = FALSE THEN END
+		
+		IF fileFound = TRUE
+		
+			INIOPEN "wpGUI/initial/wpGUIinit.ini"
+			
+				
+			
+			INIOPEN ""
+		
+		ENDIF
+	
+	ENDIF
+
 ENDFUNCTION
 
 FUNCTION wpGUI_setAnimationSettings:
@@ -165,7 +201,7 @@ FUNCTION wpGUI_setMouseInfos: positionX, positionY, buttonLeft, buttonRight, but
 
 ENDFUNCTION
 
-FUNCTION wpGUI_addButton: text$, returnCode$, positionX, positionY, sizeX, sizeY, textAlignment = 0
+FUNCTION wpGUI_addButton: text$, returnCode$, positionX, positionY, sizeX, sizeY, textAlignment = 0, font = -1
 LOCAL g AS wpGUI_TYPE
 
 	g.typ =						1
@@ -176,6 +212,7 @@ LOCAL g AS wpGUI_TYPE
 	g.button.size.height =		sizeY
 	g.button.textAlignment =	textAlignment
 	g.button.returnCode$ =		"button|" + returnCode$
+	g.button.font =				font
 
 	DIMPUSH wpGUI[], g
 
@@ -208,11 +245,11 @@ LOCAL positionX, positionY, width, height
 		ELSE
 			wpGUI_drawRRect(positionX, positionY, width, height, 1, 1)
 		ENDIF
-		
+
 		IF wpGUI_mouse.buttonLeft = TRUE
 			wpGUI_settings.returnCode$ = wpGUI[guiIndex].button.returnCode$
 		ENDIF
-		
+
 	ELSE
 		IF wpGUI_settings.animationButton = TRUE
 			DEC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeedButton * GETTIMER()
