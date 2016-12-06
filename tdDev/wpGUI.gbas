@@ -21,6 +21,7 @@ ENDTYPE
 TYPE wpGUI_button_TYPE
 	text$
 	textAlignment
+	textPosition AS wpGUI_position_TYPE
 	font
 	position AS wpGUI_position_TYPE
 	size AS wpGUI_size_TYPE
@@ -54,6 +55,8 @@ TYPE wpGUI_TYPE
 ENDTYPE
 
 TYPE wpGUI_settings_TYPE
+	initialized
+
 	animationSpeed
 	animationSpeedButton
 
@@ -87,13 +90,9 @@ ENDTYPE
 GLOBAL wpGUI[] AS wpGUI_TYPE, wpGUI_mouse AS wpGUI_mouse_TYPE, wpGUI_settings AS wpGUI_settings_TYPE, wpGUI_color AS wpGUI_color_TYPE, wpGUI_font AS wpGUI_font_TYPE
 
 FUNCTION wpGUI_update:
-STATIC init
 LOCAL guiIndex
 
-	IF init = FALSE
-		wpGUI_initial()
-		init = TRUE
-	ENDIF
+	wpGUI_check_init()
 
 	X_MAKE2D
 
@@ -114,42 +113,72 @@ LOCAL guiIndex
 
 ENDFUNCTION
 
+FUNCTION wpGUI_check_init:
+
+	IF wpGUI_settings.initialized = FALSE
+		wpGUI_initial()
+		wpGUI_settings.initialized = TRUE
+	ENDIF
+
+ENDFUNCTION
+
 FUNCTION wpGUI_initial:
 
 		wpGUI_settings.animationGlobal = TRUE
 
 		wpGUI_setAnimationSpeedSettings()
-		wpGUI_setAnimationSettings()
 
 		wpGUI_setInitialColor()
+
+		wpGUI_loader()
 		
-		wpGUI_loader()		
-		
+		wpGUI_setAnimationSettings()
+
 ENDFUNCTION
 
 FUNCTION wpGUI_loader:
 LOCAL folderFound, fileFound
+LOCAL animGlobal, animSpeed
 
 	folderFound  = DOESDIREXIST("wpGUI/initial")
-	
-	IF folderFound = FALSE THEN END
-	
+
 	IF folderFound = TRUE
-	
+
 		fileFound = DOESFILEEXIST("wpGUI/initial/wpGUIinit.ini")
-		
-		IF fileFound = FALSE THEN END
-		
+
+		//IF fileFound = FALSE THEN END
+
 		IF fileFound = TRUE
-		
+
 			INIOPEN "wpGUI/initial/wpGUIinit.ini"
-			
-				
-			
-			INIOPEN ""
-		
-		ENDIF
+
+				// ===
+				animGlobal = INIGET$("animation", "animationGlobal")
 	
+				IF animGlobal = 0 OR animGlobal = 1
+					wpGUI_settings.animationGlobal = INIGET$("animation", "animationGlobal")
+				ENDIF
+	
+				DEBUG wpGUI_settings.animationGlobal
+				
+								
+				// ===
+				animSpeed = INIGET$("animation", "animationGlobalTimer")
+				
+				IF animSpeed >= 0 AND animSpeed <= 10
+					wpGUI_settings.animationSpeed =	INIGET$("animation", "animationGlobalTimer")
+				ENDIF
+				
+				// ===
+				
+				
+				
+
+
+			INIOPEN ""
+
+		ENDIF
+
 	ENDIF
 
 ENDFUNCTION
@@ -204,6 +233,8 @@ ENDFUNCTION
 FUNCTION wpGUI_addButton: text$, returnCode$, positionX, positionY, sizeX, sizeY, textAlignment = 0, font = -1
 LOCAL g AS wpGUI_TYPE
 
+	wpGUI_check_init()
+
 	g.typ =						1
 	g.button.text$ = 			text$
 	g.button.position.x =		positionX
@@ -211,6 +242,20 @@ LOCAL g AS wpGUI_TYPE
 	g.button.size.width =		sizeX
 	g.button.size.height =		sizeY
 	g.button.textAlignment =	textAlignment
+	
+	SELECT textAlignment
+	CASE 0
+		g.button.textPosition.x = positionX + wpGUI_settings.animationButtonDistance + 5
+	CASE 1
+	
+	CASE 2
+	
+	DEFAULT
+	
+	ENDSELECT	
+	
+	
+	
 	g.button.returnCode$ =		"button|" + returnCode$
 	g.button.font =				font
 
@@ -259,7 +304,7 @@ LOCAL positionX, positionY, width, height
 		wpGUI_drawRRect(positionX, positionY, width, height, 1, 0)
 	ENDIF
 
-	PRINT "test", positionX, positionY
+	PRINT "test", wpGUI[guiIndex].button.textPosition.x, positionY
 
 	//DRAWRECT wpGUI[guiIndex].button.position.x, wpGUI[guiIndex].button.position.y, wpGUI[guiIndex].button.size.width, wpGUI[guiIndex].button.size.height, RGB(255, 255, 255)
 

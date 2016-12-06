@@ -25,7 +25,7 @@ FUNCTION main:
 	initial()
 	loader()
 
-	wpGUI_addButton("blub", "testbutton", 100, 100, 100, 20)
+	wpGUI_addButton("blub", "testbutton", 100, 100, 200, 20)
 
 	WHILE TRUE
 
