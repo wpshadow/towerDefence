@@ -131,14 +131,14 @@ FUNCTION wpGUI_initial:
 		wpGUI_setInitialColor()
 
 		wpGUI_loader()
-		
+
 		wpGUI_setAnimationSettings()
 
 ENDFUNCTION
 
 FUNCTION wpGUI_loader:
 LOCAL folderFound, fileFound
-LOCAL animGlobal, animSpeed
+LOCAL animGlobal, animSpeed, animButton, animButtonSpeed, animDistanceButton
 
 	folderFound  = DOESDIREXIST("wpGUI/initial")
 
@@ -154,26 +154,43 @@ LOCAL animGlobal, animSpeed
 
 				// ===
 				animGlobal = INIGET$("animation", "animationGlobal")
-	
+
 				IF animGlobal = 0 OR animGlobal = 1
 					wpGUI_settings.animationGlobal = INIGET$("animation", "animationGlobal")
 				ENDIF
-	
-				DEBUG wpGUI_settings.animationGlobal
-				
-								
+
 				// ===
 				animSpeed = INIGET$("animation", "animationGlobalTimer")
-				
+
 				IF animSpeed >= 0 AND animSpeed <= 10
 					wpGUI_settings.animationSpeed =	INIGET$("animation", "animationGlobalTimer")
 				ENDIF
+
+				// ===
+				animButton = INIGET$("animation", "animationButton")
+
+				IF animButton = 0 OR animButton = 1
+					wpGUI_settings.animationButton = INIGET$("animation", "animationButton")
+					IF wpGUI_settings.animationGlobal = 0
+						wpGUI_settings.animationButton = 0
+					ENDIF
+				ENDIF
+
+				// ===
+				animButtonSpeed = INIGET$("animation", "animationButtonTimer")
+
+				IF animButtonSpeed >= 0 AND animButtonSpeed <= 10
+					wpGUI_settings.animationSpeedButton = INIGET$("animation", "animationButtonTimer")
+				ENDIF
 				
 				// ===
+				animDistanceButton = INIGET$("animation", "animationButtonDistance")
+				
+				IF animButtonSpeed > 0 AND animButtonSpeed <= 50
+					wpGUI_settings.animationButtonDistance = INIGET$("animation", "animationButtonDistance")
+				ENDIF
 				
 				
-				
-
 
 			INIOPEN ""
 
@@ -185,7 +202,7 @@ ENDFUNCTION
 
 FUNCTION wpGUI_setAnimationSettings:
 
-	wpGUI_settings.animationButtonDistance = 10
+	//wpGUI_settings.animationButtonDistance = 10
 
 	IF wpGUI_settings.animationGlobal = TRUE
 		wpGUI_settings.animationButton = TRUE
@@ -231,7 +248,7 @@ FUNCTION wpGUI_setMouseInfos: positionX, positionY, buttonLeft, buttonRight, but
 ENDFUNCTION
 
 FUNCTION wpGUI_addButton: text$, returnCode$, positionX, positionY, sizeX, sizeY, textAlignment = 0, font = -1
-LOCAL g AS wpGUI_TYPE
+LOCAL g AS wpGUI_TYPE, textLength, fontX, fontY
 
 	wpGUI_check_init()
 
@@ -242,25 +259,66 @@ LOCAL g AS wpGUI_TYPE
 	g.button.size.width =		sizeX
 	g.button.size.height =		sizeY
 	g.button.textAlignment =	textAlignment
-	
+
+	GETFONTSIZE fontX, fontY
+
 	SELECT textAlignment
 	CASE 0
-		g.button.textPosition.x = positionX + wpGUI_settings.animationButtonDistance + 5
+		//g.button.textPosition.x = positionX + wpGUI_settings.animationButtonDistance + 5
+		
+		g.button.textPosition.x = wpGUI_getTextPositionX(0, positionX, sizeX, text$)
+		g.button.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
 	CASE 1
-	
+		g.button.textPosition.x = wpGUI_getTextPositionX(1, positionX, sizeX, text$)
+		g.button.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
 	CASE 2
-	
+		g.button.textPosition.x = wpGUI_getTextPositionX(2, positionX, sizeX, text$)
+		g.button.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
 	DEFAULT
-	
-	ENDSELECT	
-	
-	
-	
+
+	ENDSELECT
+
+
+
 	g.button.returnCode$ =		"button|" + returnCode$
 	g.button.font =				font
 
 	DIMPUSH wpGUI[], g
 
+ENDFUNCTION
+
+FUNCTION wpGUI_getTextPositionX: textAlignment, positionX, sizeX, text$
+LOCAL pos, fontSizeX, fontSizeY, textLength
+
+	GETFONTSIZE fontSizeX, fontSizeY
+	
+	textLength = LEN(text$)
+	
+	SELECT textAlignment
+	CASE 0
+		pos = positionX + wpGUI_settings.animationButtonDistance + 5
+		RETURN pos
+	CASE 1
+		pos = positionX + ((sizeX - (textLength * fontSizeX)) / 2)
+		RETURN pos
+	CASE 2
+		pos = positionX + sizeX - wpGUI_settings.animationButtonDistance - (textLength * fontSizeX) - 5
+		RETURN pos	
+	ENDSELECT
+	
+
+
+ENDFUNCTION
+
+FUNCTION wpGUI_getTextPositionY: textAlignment, positionY, sizeY
+LOCAL pos, fontSizeX, fontSizeY
+
+	GETFONTSIZE fontSizeX, fontSizeY
+	
+	pos = positionY + ((sizeY - fontSizeY) / 2)
+	
+	RETURN pos
+	
 ENDFUNCTION
 
 FUNCTION wpGUI_drawButton: guiIndex
@@ -304,7 +362,7 @@ LOCAL positionX, positionY, width, height
 		wpGUI_drawRRect(positionX, positionY, width, height, 1, 0)
 	ENDIF
 
-	PRINT "test", wpGUI[guiIndex].button.textPosition.x, positionY
+	PRINT "test", wpGUI[guiIndex].button.textPosition.x, wpGUI[guiIndex].button.textPosition.y
 
 	//DRAWRECT wpGUI[guiIndex].button.position.x, wpGUI[guiIndex].button.position.y, wpGUI[guiIndex].button.size.width, wpGUI[guiIndex].button.size.height, RGB(255, 255, 255)
 
