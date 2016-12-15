@@ -35,6 +35,7 @@ TYPE wpGUI_label_TYPE
 	textAlignment
 	font
 	position AS wpGUI_position_TYPE
+	textPosition AS wpGUI_position_TYPE
 	size AS wpGUI_size_TYPE
 
 ENDTYPE
@@ -51,6 +52,7 @@ TYPE wpGUI_TYPE
 
 	typ
 	button AS wpGUI_button_TYPE
+	label AS wpGUI_label_TYPE
 
 ENDTYPE
 
@@ -182,15 +184,15 @@ LOCAL animGlobal, animSpeed, animButton, animButtonSpeed, animDistanceButton
 				IF animButtonSpeed >= 0 AND animButtonSpeed <= 10
 					wpGUI_settings.animationSpeedButton = INIGET$("animation", "animationButtonTimer")
 				ENDIF
-				
+
 				// ===
 				animDistanceButton = INIGET$("animation", "animationButtonDistance")
-				
+
 				IF animButtonSpeed > 0 AND animButtonSpeed <= 50
 					wpGUI_settings.animationButtonDistance = INIGET$("animation", "animationButtonDistance")
 				ENDIF
-				
-				
+
+
 
 			INIOPEN ""
 
@@ -234,6 +236,10 @@ FUNCTION wpGUI_setInitialColor:
 	wpGUI_color.buttonPress.g = 			125 * 1.5
 	wpGUI_color.buttonPress.b = 			139 * 1.5
 
+	wpGUI_color.label.r =					69
+	wpGUI_color.label.g =					90
+	wpGUI_color.label.b =					100
+
 ENDFUNCTION
 
 FUNCTION wpGUI_setMouseInfos: positionX, positionY, buttonLeft, buttonRight, buttonLeft_press, buttonRight_press
@@ -265,7 +271,7 @@ LOCAL g AS wpGUI_TYPE, textLength, fontX, fontY
 	SELECT textAlignment
 	CASE 0
 		//g.button.textPosition.x = positionX + wpGUI_settings.animationButtonDistance + 5
-		
+
 		g.button.textPosition.x = wpGUI_getTextPositionX(0, positionX, sizeX, text$)
 		g.button.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
 	CASE 1
@@ -287,13 +293,32 @@ LOCAL g AS wpGUI_TYPE, textLength, fontX, fontY
 
 ENDFUNCTION
 
+FUNCTION wpGUI_addLabel: text$, positionX, positionY, sizeX, sizeY, font = -1
+LOCAL g AS wpGUI_TYPE
+
+	g.typ = 2
+	g.label.text$ =				text$
+	g.label.textAlignment =		1
+	g.label.font =				font
+	g.label.position.x =		positionX
+	g.label.position.y =		positionY
+	g.label.size.width =		sizeX
+	g.label.size.height =		sizeY
+	g.label.textPosition.x = wpGUI_getTextPositionX(1, positionX, sizeX, text$)
+	g.label.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
+	
+	DIMPUSH wpGUI[], g
+	
+
+ENDFUNCTION
+
 FUNCTION wpGUI_getTextPositionX: textAlignment, positionX, sizeX, text$
 LOCAL pos, fontSizeX, fontSizeY, textLength
 
 	GETFONTSIZE fontSizeX, fontSizeY
-	
+
 	textLength = LEN(text$)
-	
+
 	SELECT textAlignment
 	CASE 0
 		pos = positionX + wpGUI_settings.animationButtonDistance + 5
@@ -303,9 +328,9 @@ LOCAL pos, fontSizeX, fontSizeY, textLength
 		RETURN pos
 	CASE 2
 		pos = positionX + sizeX - wpGUI_settings.animationButtonDistance - (textLength * fontSizeX) - 5
-		RETURN pos	
+		RETURN pos
 	ENDSELECT
-	
+
 
 
 ENDFUNCTION
@@ -314,11 +339,11 @@ FUNCTION wpGUI_getTextPositionY: textAlignment, positionY, sizeY
 LOCAL pos, fontSizeX, fontSizeY
 
 	GETFONTSIZE fontSizeX, fontSizeY
-	
+
 	pos = positionY + ((sizeY - fontSizeY) / 2)
-	
+
 	RETURN pos
-	
+
 ENDFUNCTION
 
 FUNCTION wpGUI_drawButton: guiIndex
@@ -362,7 +387,7 @@ LOCAL positionX, positionY, width, height
 		wpGUI_drawRRect(positionX, positionY, width, height, 1, 0)
 	ENDIF
 
-	PRINT "test", wpGUI[guiIndex].button.textPosition.x, wpGUI[guiIndex].button.textPosition.y
+	PRINT wpGUI[guiIndex].button.text$, wpGUI[guiIndex].button.textPosition.x, wpGUI[guiIndex].button.textPosition.y
 
 	//DRAWRECT wpGUI[guiIndex].button.position.x, wpGUI[guiIndex].button.position.y, wpGUI[guiIndex].button.size.width, wpGUI[guiIndex].button.size.height, RGB(255, 255, 255)
 
@@ -371,11 +396,16 @@ ENDFUNCTION
 FUNCTION wpGUI_drawLabel: guiIndex
 LOCAL positionX, positionY, width, height
 
-//	positionX =		wpGUI[guiIndex].button.position.x + 10 - wpGUI[guiIndex].button.mouseOverOffset
-//	positionY =		wpGUI[guiIndex].button.position.y
-//	width =			wpGUI[guiIndex].button.size.width - 20 + (wpGUI[guiIndex].button.mouseOverOffset * 2)
-//	height =		wpGUI[guiIndex].button.size.height
+	positionX =		wpGUI[guiIndex].label.position.x
+	positionY =		wpGUI[guiIndex].label.position.y
+	width =			wpGUI[guiIndex].label.size.width
+	height =		wpGUI[guiIndex].label.size.height
 
+	
+
+	DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.label.r, wpGUI_color.label.g, wpGUI_color.label.b)
+
+	PRINT  wpGUI[guiIndex].label.text$, wpGUI[guiIndex].label.textPosition.x, wpGUI[guiIndex].label.textPosition.y
 
 ENDFUNCTION
 
