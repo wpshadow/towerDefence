@@ -18,13 +18,18 @@ TYPE wpGUI_size_TYPE
 	height
 ENDTYPE
 
+TYPE wpGUI_background_TYPE
+	position AS	wpGUI_position_TYPE
+	size AS 	wpGUI_size_TYPE
+ENDTYPE
+
 TYPE wpGUI_button_TYPE
 	text$
 	textAlignment
 	textPosition AS wpGUI_position_TYPE
 	font
-	position AS wpGUI_position_TYPE
-	size AS wpGUI_size_TYPE
+	position AS 	wpGUI_position_TYPE
+	size AS 		wpGUI_size_TYPE
 	returnCode$
 
 	mouseOverOffset
@@ -51,8 +56,9 @@ ENDTYPE
 TYPE wpGUI_TYPE
 
 	typ
-	button AS wpGUI_button_TYPE
-	label AS wpGUI_label_TYPE
+	background AS 	wpGUI_background_TYPE
+	button AS 		wpGUI_button_TYPE
+	label AS 		wpGUI_label_TYPE
 
 ENDTYPE
 
@@ -83,6 +89,7 @@ TYPE wpGUI_color_TYPE
 	buttonActive AS			wpGUI_colorBasic_TYPE
 	buttonPress AS 			wpGUI_colorBasic_TYPE
 	label AS				wpGUI_colorBasic_TYPE
+	background AS			wpGUI_colorBasic_TYPE
 ENDTYPE
 
 TYPE wpGUI_font_TYPE
@@ -99,6 +106,13 @@ LOCAL guiIndex
 	X_MAKE2D
 
 	wpGUI_settings.returnCode$ = "NULL"
+
+	FOREACH gui IN wpGUI[]
+		IF gui.typ = 0
+			wpGUI_drawBackground(guiIndex)
+		ENDIF
+	NEXT
+
 
 	FOREACH gui IN wpGUI[]
 		SELECT gui.typ
@@ -239,6 +253,10 @@ FUNCTION wpGUI_setInitialColor:
 	wpGUI_color.label.r =					69
 	wpGUI_color.label.g =					90
 	wpGUI_color.label.b =					100
+	
+	wpGUI_color.background.r =				33
+	wpGUI_color.background.g =				33
+	wpGUI_color.background.b =				33
 
 ENDFUNCTION
 
@@ -250,6 +268,19 @@ FUNCTION wpGUI_setMouseInfos: positionX, positionY, buttonLeft, buttonRight, but
 	wpGUI_mouse.buttonRight = 		buttonRight
 	wpGUI_mouse.buttonLeft_press =	buttonLeft_press
 	wpGUI_mouse.buttonRight_press = buttonRight_press
+
+ENDFUNCTION
+
+FUNCTION wpGUI_addBackground: positionX, positionY, sizeX, sizeY
+LOCAL g AS wpGUI_TYPE
+
+	g.typ =						0
+	g.background.position.x =	positionX
+	g.background.position.y =	positionY
+	g.background.size.width =	sizeX
+	g.background.size.height =	sizeY
+
+	DIMPUSH wpGUI[], g
 
 ENDFUNCTION
 
@@ -306,9 +337,9 @@ LOCAL g AS wpGUI_TYPE
 	g.label.size.height =		sizeY
 	g.label.textPosition.x = wpGUI_getTextPositionX(1, positionX, sizeX, text$)
 	g.label.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
-	
+
 	DIMPUSH wpGUI[], g
-	
+
 
 ENDFUNCTION
 
@@ -343,6 +374,28 @@ LOCAL pos, fontSizeX, fontSizeY
 	pos = positionY + ((sizeY - fontSizeY) / 2)
 
 	RETURN pos
+
+ENDFUNCTION
+
+FUNCTION wpGUI_drawBackground: guiIndex
+LOCAL positionX, positionY, width, height
+
+	positionX =		wpGUI[guiIndex].background.position.x
+	positionY =		wpGUI[guiIndex].background.position.y
+	width =			wpGUI[guiIndex].background.size.width
+	height =		wpGUI[guiIndex].background.size.height
+	
+	DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.background.r, wpGUI_color.background.g, wpGUI_color.background.b)
+	wpGUI_drawBorder(positionX, positionY, width, height)
+
+ENDFUNCTION
+
+FUNCTION wpGUI_drawBorder: positionX, positionY, width, height
+
+	DRAWLINE positionX, positionY, positionX + width, positionY, RGB(255, 255, 255)
+	DRAWLINE positionX, positionY, positionX, positionY + height, RGB(255, 255, 255)
+	DRAWLINE positionX, positionY + height, positionX + width, positionY + height, RGB(255, 255, 255)
+	DRAWLINE positionX + width, positionY, positionX + width, positionY + height, RGB(255, 255, 255)
 
 ENDFUNCTION
 
@@ -401,7 +454,7 @@ LOCAL positionX, positionY, width, height
 	width =			wpGUI[guiIndex].label.size.width
 	height =		wpGUI[guiIndex].label.size.height
 
-	
+
 
 	DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.label.r, wpGUI_color.label.g, wpGUI_color.label.b)
 
