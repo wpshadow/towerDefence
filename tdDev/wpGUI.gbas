@@ -253,7 +253,7 @@ FUNCTION wpGUI_setInitialColor:
 	wpGUI_color.label.r =					69
 	wpGUI_color.label.g =					90
 	wpGUI_color.label.b =					100
-	
+
 	wpGUI_color.background.r =				33
 	wpGUI_color.background.g =				33
 	wpGUI_color.background.b =				33
@@ -384,7 +384,7 @@ LOCAL positionX, positionY, width, height
 	positionY =		wpGUI[guiIndex].background.position.y
 	width =			wpGUI[guiIndex].background.size.width
 	height =		wpGUI[guiIndex].background.size.height
-	
+
 	DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.background.r, wpGUI_color.background.g, wpGUI_color.background.b)
 	wpGUI_drawBorder(positionX, positionY, width, height)
 

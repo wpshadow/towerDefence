@@ -1,0 +1,58 @@
+// --------------------------------- //
+// Project: tdDev
+// Start: Wednesday, December 21, 2016
+// IDE Version: 14.497
+
+
+// SETCURRENTDIR("Media") // go to media files
+
+
+
+TYPE gfxLib_TYPE
+
+	spriteID
+	identifier$
+
+ENDTYPE
+
+
+
+
+GLOBAL gfxLib[] AS gfxLib_TYPE
+
+
+
+FUNCTION gfxLib_loadsprite: file$, identifier$
+LOCAL g AS gfxLib_TYPE
+LOCAL fileFound, id
+	
+	fileFound = DOESFILEEXIST(file$)
+	
+	IF fileFound = TRUE
+	
+		id = GENSPRITE()
+		
+		LOADSPRITE file$, id	
+	
+	ENDIF
+
+	g.spriteID = 		id
+	g.identifier$ =		identifier$
+	
+	DIMPUSH gfxLib[], g
+
+ENDFUNCTION
+
+FUNCTION gfxLib_drawSprite: identifier$, positionX, positionY, rotation=0
+
+	FOREACH g IN gfxLib[]
+	
+		IF g.identifier$ = identifier$
+			ROTOSPRITE g.spriteID, positionX, positionY, rotation
+		
+			BREAK
+		ENDIF
+	
+	NEXT
+
+ENDFUNCTION
