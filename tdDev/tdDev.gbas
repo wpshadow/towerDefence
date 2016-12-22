@@ -32,11 +32,12 @@ FUNCTION main:
 	wpGUI_addButton("blub", "testbutton", 100, 100, 200, 20, 2)
 	wpGUI_addButton("blubdi", "testbutton2", 100, 200, 200, 20)
 
-	DEBUG gfxLib[0].spriteID + "|" + gfxLib[0].identifier$
+
 
 	WHILE TRUE
 
 		gfxLib_drawSprite("testgfx", 500, 300)
+		gfxLib_drawSprite("testgfx", 600, 300, 45)
 
 		system_mouse()
 		wpGUI_setMouseInfos(mouse.x, mouse.y, mouse.b1, mouse.b2, mouse.b1_press, mouse.b2_press)

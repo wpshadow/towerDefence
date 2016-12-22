@@ -6,7 +6,69 @@
 
 // SETCURRENTDIR("Media") // go to media files
 
+TYPE TDictionaryItem
+        name$
+        value
+ENDTYPE
 
+TYPE TDictionary
+        table[]         AS TDictionaryItem
+
+        FUNCTION Clear:
+                DIM self.table[0]
+        ENDFUNCTION
+
+        FUNCTION Add: name$, value
+                // If 'name$' already exists, call 'Set' instead
+                IF self.Exists(name$)
+                        self.Set(name$, value)
+                        RETURN
+                ENDIF
+
+                LOCAL item AS TDictionaryItem
+                item.name$ = name$
+                item.value = value
+                DIMPUSH self.table[], item
+        ENDFUNCTION
+
+        FUNCTION Get: name$, defaultValue=-1
+                LOCAL rv# = defaultValue
+
+                FOREACH item IN self.table[]
+                        IF item.name$ = name$
+                                rv = item.value
+                                BREAK
+                        ENDIF
+                NEXT
+
+                RETURN rv
+        ENDFUNCTION
+
+        FUNCTION Set%: name$, value
+                // If the 'name$' doesn't exist in the table, call 'Add' instead
+                IF NOT self.Exists(name$)
+                        self.Add(name$, value)
+                        RETURN
+                ENDIF
+
+                FOREACH item IN self.table[]
+                        IF item.name$ = name$
+                                item.value = value
+                                BREAK
+                        ENDIF
+                NEXT
+        ENDFUNCTION
+
+        FUNCTION Exists%: name$
+                FOREACH item IN self.table[]
+                        IF item.name$ = name$
+                                RETURN TRUE
+                        ENDIF
+                NEXT
+                RETURN FALSE
+        ENDFUNCTION
+
+ENDTYPE
 
 TYPE gfxLib_TYPE
 
@@ -18,41 +80,46 @@ ENDTYPE
 
 
 
-GLOBAL gfxLib[] AS gfxLib_TYPE
+//GLOBAL gfxLib[] AS gfxLib_TYPE
+GLOBAL gfxLib AS TDictionary
 
 
 
 FUNCTION gfxLib_loadsprite: file$, identifier$
-LOCAL g AS gfxLib_TYPE
 LOCAL fileFound, id
-	
+
 	fileFound = DOESFILEEXIST(file$)
-	
+
 	IF fileFound = TRUE
-	
+
 		id = GENSPRITE()
-		
-		LOADSPRITE file$, id	
+
+		LOADSPRITE file$, id
+
+		gfxLib.Add(identifier$, id)
 	
 	ENDIF
 
-	g.spriteID = 		id
-	g.identifier$ =		identifier$
 	
-	DIMPUSH gfxLib[], g
 
 ENDFUNCTION
 
 FUNCTION gfxLib_drawSprite: identifier$, positionX, positionY, rotation=0
+LOCAL id
 
-	FOREACH g IN gfxLib[]
+	id = gfxLib.Get(identifier$)
 	
-		IF g.identifier$ = identifier$
-			ROTOSPRITE g.spriteID, positionX, positionY, rotation
-		
-			BREAK
-		ENDIF
+	ROTOSPRITE id, positionX, positionY, rotation
 	
-	NEXT
+
+//	FOREACH g IN gfxLib[]
+//
+//		IF g.identifier$ = identifier$
+//			//ROTOSPRITE g.spriteID, positionX, positionY, rotation
+//
+//			BREAK
+//		ENDIF
+//
+//	NEXT
 
 ENDFUNCTION
