@@ -25,12 +25,14 @@ FUNCTION main:
 	initial()
 	loader()
 
-	gfxLib_loadsprite("media/gfx/grass.png", "testgfx")
+	gfxLib_loadsprite("media/gfx/test.png", "testgfx")
 
 	wpGUI_addBackground(50, 50, 400, 400)
 	wpGUI_addLabel("test", 0, 0, 150, 20)
 	wpGUI_addButton("blub", "testbutton", 100, 100, 200, 20, 2)
 	wpGUI_addButton("blubdi", "testbutton2", 100, 200, 200, 20)
+	
+	gameObject.addNew("horst", 10, 10)
 
 
 
@@ -48,7 +50,9 @@ FUNCTION main:
 
 		IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
 
-
+		gameObject.setPosition("horst", 500, 500)
+		gameObject.draw("horst")
+		
 		SHOWSCREEN
 	WEND
 

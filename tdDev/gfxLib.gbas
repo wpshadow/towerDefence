@@ -96,21 +96,27 @@ LOCAL fileFound, id
 
 		LOADSPRITE file$, id
 
-		gfxLib.Add(identifier$, id)
-	
-	ENDIF
+		IF gfxLib.Exists(identifier$) = FALSE
 
-	
+			gfxLib.Add(identifier$, id)
+
+		ENDIF
+
+	ENDIF
 
 ENDFUNCTION
 
 FUNCTION gfxLib_drawSprite: identifier$, positionX, positionY, rotation=0
-LOCAL id
+LOCAL id, pos1, pos2
 
 	id = gfxLib.Get(identifier$)
-	
+
+
+
+
+
 	ROTOSPRITE id, positionX, positionY, rotation
-	
+
 
 //	FOREACH g IN gfxLib[]
 //

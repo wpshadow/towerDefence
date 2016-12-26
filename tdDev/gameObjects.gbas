@@ -1,0 +1,73 @@
+// --------------------------------- //
+// Project: tdDev
+// Start: Saturday, December 24, 2016
+// IDE Version: 14.497
+
+
+// SETCURRENTDIR("Media") // go to media files
+
+TYPE go_sprite_TYPE
+	id
+
+ENDTYPE
+
+TYPE go_infos_type
+	
+
+ENDTYPE
+
+TYPE go_position_type
+	x
+	y
+ENDTYPE
+
+TYPE go_main_type
+	name$
+	position AS			go_position_type
+ENDTYPE
+
+TYPE gameobject_TYPE
+	
+	go[] AS go_main_type
+	
+	FUNCTION addNew: name$, positionX, positionY
+		LOCAL g AS go_main_type
+
+		g.name$ =			name$
+		g.position.x =		positionX
+		g.position.y =		positionY
+		
+		DIMPUSH self.go[], g
+	
+	ENDFUNCTION
+	
+	FUNCTION addSpriteLayer: name$, gfxLibID, offsetY=0, offsetY=0
+	
+	ENDFUNCTION
+
+	FUNCTION setPosition: name$, positionX, positionY
+		
+		FOREACH g IN self.go[]
+			IF g.name$ = name$
+				g.position.x =	positionX
+				g.position.y =	positionY
+			ENDIF
+		NEXT
+		
+	ENDFUNCTION
+
+	FUNCTION draw: name$
+		FOREACH g IN self.go[]
+			IF g.name$ = name$
+				PRINT "test", g.position.x, g.position.y
+			ENDIF
+			
+			
+		NEXT
+	ENDFUNCTION
+
+
+
+ENDTYPE
+
+GLOBAL gameObject AS gameobject_TYPE
