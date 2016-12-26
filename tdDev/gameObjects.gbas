@@ -8,11 +8,12 @@
 
 TYPE go_sprite_TYPE
 	id
-
+	active
+	offset AS go_position_type
 ENDTYPE
 
 TYPE go_infos_type
-	
+
 
 ENDTYPE
 
@@ -23,46 +24,63 @@ ENDTYPE
 
 TYPE go_main_type
 	name$
+	spriteCounter
+	sprite[] AS			go_sprite_TYPE
 	position AS			go_position_type
 ENDTYPE
 
 TYPE gameobject_TYPE
-	
+
 	go[] AS go_main_type
-	
+
 	FUNCTION addNew: name$, positionX, positionY
 		LOCAL g AS go_main_type
 
 		g.name$ =			name$
 		g.position.x =		positionX
 		g.position.y =		positionY
-		
+
 		DIMPUSH self.go[], g
-	
+
 	ENDFUNCTION
+
+	FUNCTION addSpriteLayer: name$, gfxLibID$, offsetX, offsetY
+	LOCAL s AS go_sprite_TYPE
 	
-	FUNCTION addSpriteLayer: name$, gfxLibID, offsetY=0, offsetY=0
-	
+		FOREACH g IN self.go[]
+			IF g.name$ = name$
+				
+				s.id =		gfxLib.Get(gfxLibID$)
+				
+				DIMPUSH g.sprite[], s
+				
+			ENDIF
+		NEXT
 	ENDFUNCTION
 
 	FUNCTION setPosition: name$, positionX, positionY
-		
+
 		FOREACH g IN self.go[]
 			IF g.name$ = name$
 				g.position.x =	positionX
 				g.position.y =	positionY
 			ENDIF
 		NEXT
-		
+
 	ENDFUNCTION
 
 	FUNCTION draw: name$
 		FOREACH g IN self.go[]
 			IF g.name$ = name$
-				PRINT "test", g.position.x, g.position.y
+				IF LEN(g.sprite[]) > 0
+					FOREACH s IN g.sprite[]
+						DRAWSPRITE s.id, g.position.x, g.position.y
+					NEXT
+				ENDIF
+				//PRINT "test", g.position.x, g.position.y
 			ENDIF
-			
-			
+
+
 		NEXT
 	ENDFUNCTION
 
