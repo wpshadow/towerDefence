@@ -44,7 +44,7 @@ FUNCTION main:
 	gameObject.addSpriteLayer("horst", "spr_2", 0, 0)
 	gameObject.addSpriteLayer("horst", "spr_3", 0, 0)
 	gameObject.addSpriteLayer("horst", "spr_4", 0, 0)
-	
+
 
 
 

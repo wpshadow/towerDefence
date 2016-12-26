@@ -46,14 +46,16 @@ TYPE gameobject_TYPE
 
 	FUNCTION addSpriteLayer: name$, gfxLibID$, offsetX, offsetY
 	LOCAL s AS go_sprite_TYPE
-	
+
 		FOREACH g IN self.go[]
 			IF g.name$ = name$
-				
-				s.id =		gfxLib.Get(gfxLibID$)
-				
+
+				s.id =				gfxLib.Get(gfxLibID$)
+				s.offset.x =		offsetX
+				s.offset.y =		offsetY
+
 				DIMPUSH g.sprite[], s
-				
+
 			ENDIF
 		NEXT
 	ENDFUNCTION
@@ -74,7 +76,7 @@ TYPE gameobject_TYPE
 			IF g.name$ = name$
 				IF LEN(g.sprite[]) > 0
 					FOREACH s IN g.sprite[]
-						DRAWSPRITE s.id, g.position.x, g.position.y
+						DRAWSPRITE s.id, g.position.x + s.offset.x, g.position.y + s.offset.y
 					NEXT
 				ENDIF
 				//PRINT "test", g.position.x, g.position.y
