@@ -34,9 +34,12 @@ FUNCTION main:
 	gfxLib_loadsprite("media/gfx/spr_4.png", "spr_4")
 
 	wpGUI_addBackground(50, 50, 400, 400)
-	wpGUI_addLabel("test", 0, 0, 150, 20)
-	wpGUI_addButton("blub", "testbutton", 100, 100, 200, 20, 2)
-	wpGUI_addButton("blubdi", "testbutton2", 100, 200, 200, 20)
+	wpGUI_addLabel("label1", "test", 0, 0, 150, 20)
+	wpGUI_addButton("button1", "blub", "testbutton", 100, 100, 200, 20, 2)
+	wpGUI_addButton("button2", "blubdi", "testbutton2", 100, 200, 200, 20)
+	
+	wpGUI_updateLabelText("label1", "Horst")
+	wpGUI_updateButtonText("button1", "Schnüb")
 
 	gameObject.addNew("horst", 10, 10)
 	gameObject.addSpriteLayer("horst", "spr_0", 0, 0)
