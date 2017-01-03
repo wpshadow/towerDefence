@@ -1,0 +1,58 @@
+// --------------------------------- //
+// Project: tdDev
+// Start: Tuesday, January 03, 2017
+// IDE Version: 14.497
+
+
+// SETCURRENTDIR("Media") // go to media files
+
+TYPE window_TYPE
+	activeWindowID
+	changeInitial
+ENDTYPE
+
+TYPE levelEditor_type
+
+ENDTYPE
+
+GLOBAL levelEditor AS levelEditor_type, window AS window_TYPE
+
+FUNCTION showWindows:
+STATIC initialWindow
+
+	IF initialWindow = FALSE
+		window.activeWindowID = 4
+		window.changeInitial = FALSE
+		initialWindow = TRUE
+	ENDIF
+	
+	SELECT window.activeWindowID
+	CASE 4
+		window_004()
+	ENDSELECT
+
+
+ENDFUNCTION
+
+FUNCTION window_000:
+
+	
+	
+
+ENDFUNCTION
+
+FUNCTION window_001:
+
+ENDFUNCTION
+
+FUNCTION window_004:
+// Level Editor
+	
+	IF window.changeInitial = FALSE
+		
+		
+		
+		window.changeInitial = TRUE
+	ENDIF
+
+ENDFUNCTION

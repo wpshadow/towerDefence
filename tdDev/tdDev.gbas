@@ -37,7 +37,7 @@ FUNCTION main:
 	wpGUI_addLabel("label1", "test", 0, 0, 150, 20)
 	wpGUI_addButton("button1", "blub", "testbutton", 100, 100, 200, 20, 2)
 	wpGUI_addButton("button2", "blubdi", "testbutton2", 100, 200, 200, 20)
-	
+
 	wpGUI_updateLabelText("label1", "Horst")
 	wpGUI_updateButtonText("button1", "Schnüb")
 
@@ -47,14 +47,16 @@ FUNCTION main:
 	gameObject.addSpriteLayer("horst", "spr_2", 0, 0)
 	gameObject.addSpriteLayer("horst", "spr_3", 0, 0)
 	gameObject.addSpriteLayer("horst", "spr_4", 0, 0)
-
+	gameObject.addSpriteMouseOverLayer("horst", "testgfx", 0, 0)
 
 
 
 	WHILE TRUE
+	
+		showWindows()
 
-		gfxLib_drawSprite("testgfx", 500, 300)
-		gfxLib_drawSprite("testgfx", 600, 300, 45)
+		//gfxLib_drawSprite("testgfx", 500, 300)
+		//gfxLib_drawSprite("testgfx", 600, 300, 45)
 
 		system_mouse()
 		wpGUI_setMouseInfos(mouse.x, mouse.y, mouse.b1, mouse.b2, mouse.b1_press, mouse.b2_press)
@@ -82,7 +84,7 @@ ENDFUNCTION
 
 FUNCTION loader:
 
-	LOADFONT "media/font/font0.png", 0
+	LOADFONT "media/font/font2.png", 0
 	SETFONT 0
 
 ENDFUNCTION

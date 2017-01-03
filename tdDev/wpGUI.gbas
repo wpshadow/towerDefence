@@ -289,9 +289,9 @@ FUNCTION wpGUI_addButton: name$, text$, returnCode$, positionX, positionY, sizeX
 LOCAL g AS wpGUI_TYPE, textLength, fontX, fontY
 
 		wpGUI_check_init()
-		
+
 		IF wpGUI_checkName(name$) = FALSE
-	
+
 			g.typ =						1
 			g.name$ =					name$
 			g.button.text$ = 			text$
@@ -300,13 +300,13 @@ LOCAL g AS wpGUI_TYPE, textLength, fontX, fontY
 			g.button.size.width =		sizeX
 			g.button.size.height =		sizeY
 			g.button.textAlignment =	textAlignment
-		
+
 			GETFONTSIZE fontX, fontY
-		
+
 			SELECT textAlignment
 			CASE 0
 				//g.button.textPosition.x = positionX + wpGUI_settings.animationButtonDistance + 5
-		
+
 				g.button.textPosition.x = wpGUI_getTextPositionX(0, positionX, sizeX, text$)
 				g.button.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
 			CASE 1
@@ -316,14 +316,14 @@ LOCAL g AS wpGUI_TYPE, textLength, fontX, fontY
 				g.button.textPosition.x = wpGUI_getTextPositionX(2, positionX, sizeX, text$)
 				g.button.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
 			ENDSELECT
-		
-		
-		
+
+
+
 			g.button.returnCode$ =		"button|" + returnCode$
 			g.button.font =				font
-		
+
 			DIMPUSH wpGUI[], g
-			
+
 		ENDIF
 
 ENDFUNCTION
@@ -332,11 +332,11 @@ FUNCTION wpGUI_checkName: name$
 LOCAL found = FALSE
 
 	FOREACH g IN wpGUI[]
-		
+
 		IF g.name$ = name$
 			found = TRUE
 		ENDIF
-		
+
 	NEXT
 
 	RETURN found
@@ -361,7 +361,7 @@ LOCAL g AS wpGUI_TYPE
 		g.label.size.height =		sizeY
 		g.label.textPosition.x = 	wpGUI_getTextPositionX(1, positionX, sizeX, text$)
 		g.label.textPosition.y = 	wpGUI_getTextPositionY(0, positionY, sizeY)
-	
+
 		DIMPUSH wpGUI[], g
 	ENDIF
 
@@ -501,7 +501,7 @@ FUNCTION wpGUI_updateButtonText: name$, text$
 
 	FOREACH g IN wpGUI[]
 		IF g.name$ = name$
-		
+
 			SELECT g.button.textAlignment
 			CASE 0
 				g.button.textPosition.x = wpGUI_getTextPositionX(0, g.button.position.x, g.button.size.width, text$)
@@ -513,7 +513,7 @@ FUNCTION wpGUI_updateButtonText: name$, text$
 				g.button.textPosition.x = wpGUI_getTextPositionX(2, g.button.position.x, g.button.size.width, text$)
 				g.button.textPosition.y = wpGUI_getTextPositionY(0, g.button.position.y, g.button.size.height)
 			ENDSELECT
-		
+
 			g.button.text$ = text$
 		ENDIF
 	NEXT

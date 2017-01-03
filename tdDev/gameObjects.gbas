@@ -9,12 +9,18 @@
 TYPE go_sprite_TYPE
 	id
 	active
-	offset AS go_position_type
+	offset 	AS go_position_type
+	size	AS go_size
 ENDTYPE
 
 TYPE go_infos_type
 
 
+ENDTYPE
+
+TYPE go_size
+	width
+	height
 ENDTYPE
 
 TYPE go_position_type
@@ -25,8 +31,9 @@ ENDTYPE
 TYPE go_main_type
 	name$
 	spriteCounter
-	sprite[] AS			go_sprite_TYPE
-	position AS			go_position_type
+	sprite[] AS				go_sprite_TYPE
+	spriteMouseOver[] AS	go_sprite_TYPE
+	position AS				go_position_type
 ENDTYPE
 
 TYPE gameobject_TYPE
@@ -59,6 +66,30 @@ TYPE gameobject_TYPE
 			ENDIF
 		NEXT
 	ENDFUNCTION
+	
+	FUNCTION addSpriteMouseOverLayer: name$, gfxLibID$, offsetX, offsetY
+	LOCAL s AS go_sprite_TYPE, width, height
+	
+		
+	
+		FOREACH g IN self.go[]
+			IF g.name$ = name$
+
+				s.id =				gfxLib.Get(gfxLibID$)
+				
+				GETSPRITESIZE s.id, width, height
+				
+				s.offset.x =		offsetX
+				s.offset.y =		offsetY
+				s.size.width =		width
+				s.size.height = 	height
+
+				DIMPUSH g.spriteMouseOver[], s
+
+			ENDIF
+		NEXT
+	
+	ENDFUNCTION
 
 	FUNCTION setPosition: name$, positionX, positionY
 
@@ -77,6 +108,13 @@ TYPE gameobject_TYPE
 				IF LEN(g.sprite[]) > 0
 					FOREACH s IN g.sprite[]
 						DRAWSPRITE s.id, g.position.x + s.offset.x, g.position.y + s.offset.y
+					NEXT
+				ENDIF
+				IF LEN(g.spriteMouseOver[]) > 0
+					FOREACH m IN g.spriteMouseOver[]
+						IF BOXCOLL(g.position.x + m.offset.x, g.position.y + m.offset.y, m.size.width, m.size.height, mouse.x, mouse.y, 1, 1) = TRUE
+							DRAWSPRITE m.id, g.position.x + m.offset.x, g.position.y + m.offset.y
+						ENDIF
 					NEXT
 				ENDIF
 				//PRINT "test", g.position.x, g.position.y
