@@ -33,26 +33,34 @@ FUNCTION main:
 	gfxLib_loadsprite("media/gfx/spr_3.png", "spr_3")
 	gfxLib_loadsprite("media/gfx/spr_4.png", "spr_4")
 
-	wpGUI_addBackground(50, 50, 400, 400)
-	wpGUI_addLabel("label1", "test", 0, 0, 150, 20)
-	wpGUI_addButton("button1", "blub", "testbutton", 100, 100, 200, 20, 2)
-	wpGUI_addButton("button2", "blubdi", "testbutton2", 100, 200, 200, 20)
+//	wpGUI_addBackground(50, 50, 400, 400)
+//	wpGUI_addLabel("label1", "test", 0, 0, 150, 20)
+//	wpGUI_addButton("button1", "blub", "testbutton", 100, 100, 200, 20, 2)
+//	wpGUI_addButton("button2", "blubdi", "testbutton2", 100, 200, 200, 20)
+//
+//	wpGUI_updateLabelText("label1", "Horst")
+//	wpGUI_updateButtonText("button1", "Schnüb")
+LOCAL tmp, tmp2
 
-	wpGUI_updateLabelText("label1", "Horst")
-	wpGUI_updateButtonText("button1", "Schnüb")
-
-	gameObject.addNew("horst", 10, 10)
+FOR tmp = 0 TO 15
+	FOR tmp2 = 0 TO 15
+	gameObject.addNew("horst", tmp * 32, tmp2 * 32)
 	gameObject.addSpriteLayer("horst", "spr_0", 0, 0)
-	gameObject.addSpriteLayer("horst", "spr_1", 0, 0)
-	gameObject.addSpriteLayer("horst", "spr_2", 0, 0)
-	gameObject.addSpriteLayer("horst", "spr_3", 0, 0)
-	gameObject.addSpriteLayer("horst", "spr_4", 0, 0)
+//	gameObject.addSpriteLayer("horst", "spr_1", 0, 0)
+//	gameObject.addSpriteLayer("horst", "spr_2", 0, 0)
+//	gameObject.addSpriteLayer("horst", "spr_3", 0, 0)
+//	gameObject.addSpriteLayer("horst", "spr_4", 0, 0)
 	gameObject.addSpriteMouseOverLayer("horst", "testgfx", 0, 0)
+	NEXT
+NEXT
 
-
+//	gameObject.addNew("bub", 10, 10)
+//	gameObject.addNew("buadsfb", 10, 10)
+//	gameObject.addNew("buffb", 10, 10)
+//	gameObject.addNew("buwwwwb", 10, 10)
 
 	WHILE TRUE
-	
+
 		showWindows()
 
 		//gfxLib_drawSprite("testgfx", 500, 300)
@@ -67,7 +75,7 @@ FUNCTION main:
 
 		IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
 
-		gameObject.setPosition("horst", 500, 500)
+		//gameObject.setPosition("horst", 500, 500)
 		gameObject.draw("horst")
 
 		SHOWSCREEN

@@ -34,6 +34,7 @@ TYPE go_main_type
 	sprite[] AS				go_sprite_TYPE
 	spriteMouseOver[] AS	go_sprite_TYPE
 	position AS				go_position_type
+	autoID
 ENDTYPE
 
 TYPE gameobject_TYPE
@@ -41,11 +42,55 @@ TYPE gameobject_TYPE
 	go[] AS go_main_type
 
 	FUNCTION addNew: name$, positionX, positionY
-		LOCAL g AS go_main_type
+		LOCAL g AS go_main_type, found, tmp
+		STATIC objectCounter
 
 		g.name$ =			name$
 		g.position.x =		positionX
 		g.position.y =		positionY
+		
+		INC objectCounter, 1
+		
+		IF LEN(self.go[]) > 0
+			FOR tmp = 1 TO LEN(self.go[])
+				found = FALSE
+				FOREACH h IN self.go[]
+					IF tmp = h.autoID
+						found = TRUE
+					ENDIF
+				NEXT
+				IF found = FALSE
+					objectCounter = tmp
+					BREAK
+				ENDIF
+				IF found = TRUE AND tmp = LEN(self.go[])
+					objectCounter = tmp + 1
+				ENDIF
+			NEXT
+		ENDIF
+		
+		DEBUG objectCounter + "\n"
+		g.autoID = objectCounter
+		
+
+
+//		IF LEN(self.go[]) > 0
+//			WHILE found = TRUE
+//				found = FALSE
+//				INC count, 1
+//				DEBUG count + "\n"
+//				FOREACH gam IN self.go[]
+//					IF gam.autoID = count
+//						found = TRUE
+//					ENDIF
+//				NEXT
+//			WEND
+//
+//			DEBUG count
+//			END
+//		ELSE
+//		g.autoID = 1
+//		ENDIF
 
 		DIMPUSH self.go[], g
 
@@ -66,19 +111,19 @@ TYPE gameobject_TYPE
 			ENDIF
 		NEXT
 	ENDFUNCTION
-	
+
 	FUNCTION addSpriteMouseOverLayer: name$, gfxLibID$, offsetX, offsetY
 	LOCAL s AS go_sprite_TYPE, width, height
-	
-		
-	
+
+
+
 		FOREACH g IN self.go[]
 			IF g.name$ = name$
 
 				s.id =				gfxLib.Get(gfxLibID$)
-				
+
 				GETSPRITESIZE s.id, width, height
-				
+
 				s.offset.x =		offsetX
 				s.offset.y =		offsetY
 				s.size.width =		width
@@ -88,7 +133,7 @@ TYPE gameobject_TYPE
 
 			ENDIF
 		NEXT
-	
+
 	ENDFUNCTION
 
 	FUNCTION setPosition: name$, positionX, positionY
@@ -103,25 +148,30 @@ TYPE gameobject_TYPE
 	ENDFUNCTION
 
 	FUNCTION draw: name$
+	LOCAL count
 		FOREACH g IN self.go[]
-			IF g.name$ = name$
+			INC count, 1
+			//IF g.name$ = name$
 				IF LEN(g.sprite[]) > 0
 					FOREACH s IN g.sprite[]
 						DRAWSPRITE s.id, g.position.x + s.offset.x, g.position.y + s.offset.y
 					NEXT
 				ENDIF
 				IF LEN(g.spriteMouseOver[]) > 0
-					FOREACH m IN g.spriteMouseOver[]
-						IF BOXCOLL(g.position.x + m.offset.x, g.position.y + m.offset.y, m.size.width, m.size.height, mouse.x, mouse.y, 1, 1) = TRUE
-							DRAWSPRITE m.id, g.position.x + m.offset.x, g.position.y + m.offset.y
-						ENDIF
-					NEXT
+					
+					
+					//FOREACH m IN g.spriteMouseOver[]
+//						IF BOXCOLL(g.position.x + g.spriteMouseOver[0].offset.x, g.position.y + g.spriteMouseOver[0].offset.y, m.size.width, m.size.height, mouse.x, mouse.y, 1, 1) = TRUE
+//							DRAWSPRITE m.id, g.position.x + g.spriteMouseOver[0].offset.x, g.position.y + g.spriteMouseOver[0].offset.y
+//						ENDIF
+					//NEXT
 				ENDIF
 				//PRINT "test", g.position.x, g.position.y
-			ENDIF
+			//ENDIF
 
 
 		NEXT
+		
 	ENDFUNCTION
 
 

@@ -25,7 +25,7 @@ STATIC initialWindow
 		window.changeInitial = FALSE
 		initialWindow = TRUE
 	ENDIF
-	
+
 	SELECT window.activeWindowID
 	CASE 4
 		window_004()
@@ -36,8 +36,8 @@ ENDFUNCTION
 
 FUNCTION window_000:
 
-	
-	
+
+
 
 ENDFUNCTION
 
@@ -47,11 +47,11 @@ ENDFUNCTION
 
 FUNCTION window_004:
 // Level Editor
-	
+
 	IF window.changeInitial = FALSE
-		
-		
-		
+
+
+
 		window.changeInitial = TRUE
 	ENDIF
 
