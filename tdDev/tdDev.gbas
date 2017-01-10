@@ -58,6 +58,8 @@ NEXT
 //	gameObject.addNew("buadsfb", 10, 10)
 //	gameObject.addNew("buffb", 10, 10)
 //	gameObject.addNew("buwwwwb", 10, 10)
+	
+	LOCAL dtime, fps, delay, showfps
 
 	WHILE TRUE
 
@@ -77,6 +79,17 @@ NEXT
 
 		//gameObject.setPosition("horst", 500, 500)
 		gameObject.draw("horst")
+
+		 dtime = GETTIMER()
+ 
+		 fps = ((1000/dtime))
+		 delay=delay+dtime
+		 IF delay>500 // 1/2 sec
+		  delay=0
+		  showfps=fps
+		 ENDIF
+		 
+		 PRINT "FPS: "+showfps+" dtime:"+dtime, 0,0
 
 		SHOWSCREEN
 	WEND
@@ -139,5 +152,22 @@ STATIC b1_tmp, b2_tmp, press_init, press_timer_old
 	mouse.b2 = b2
 	mouse.b1_press = b1_press
 	mouse.b2_press = b2_press
+
+ENDFUNCTION
+
+FUNCTION fpsCounter:
+LOCAL dtime, fps, delay, showfps
+
+	 dtime = GETTIMER()
+ 
+ fps = ((1000/dtime))
+ delay=delay+dtime
+ IF delay>500 // 1/2 sec
+  delay=0
+  showfps=fps
+ ENDIF
+ 
+ PRINT "FPS: "+showfps+" dtime:"+dtime, 0,0
+ //PRINT actual,0,50
 
 ENDFUNCTION

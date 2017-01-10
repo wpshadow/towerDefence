@@ -48,9 +48,9 @@ TYPE gameobject_TYPE
 		g.name$ =			name$
 		g.position.x =		positionX
 		g.position.y =		positionY
-		
+
 		INC objectCounter, 1
-		
+
 		IF LEN(self.go[]) > 0
 			FOR tmp = 1 TO LEN(self.go[])
 				found = FALSE
@@ -68,10 +68,10 @@ TYPE gameobject_TYPE
 				ENDIF
 			NEXT
 		ENDIF
-		
+
 		DEBUG objectCounter + "\n"
 		g.autoID = objectCounter
-		
+
 
 
 //		IF LEN(self.go[]) > 0
@@ -150,20 +150,19 @@ TYPE gameobject_TYPE
 	FUNCTION draw: name$
 	LOCAL count
 		FOREACH g IN self.go[]
-			INC count, 1
 			//IF g.name$ = name$
-				IF LEN(g.sprite[]) > 0
-					FOREACH s IN g.sprite[]
-						DRAWSPRITE s.id, g.position.x + s.offset.x, g.position.y + s.offset.y
-					NEXT
-				ENDIF
+				//IF LEN(g.sprite[]) > 0
+					//FOREACH s IN g.sprite[]
+						DRAWSPRITE  g.sprite[0].id, g.position.x + g.sprite[0].offset.x, g.position.y + g.sprite[0].offset.y
+					//NEXT
+				//ENDIF
 				IF LEN(g.spriteMouseOver[]) > 0
-					
-					
+
+
 					//FOREACH m IN g.spriteMouseOver[]
-//						IF BOXCOLL(g.position.x + g.spriteMouseOver[0].offset.x, g.position.y + g.spriteMouseOver[0].offset.y, m.size.width, m.size.height, mouse.x, mouse.y, 1, 1) = TRUE
-//							DRAWSPRITE m.id, g.position.x + g.spriteMouseOver[0].offset.x, g.position.y + g.spriteMouseOver[0].offset.y
-//						ENDIF
+						IF BOXCOLL(g.position.x + g.spriteMouseOver[0].offset.x, g.position.y + g.spriteMouseOver[0].offset.y, g.spriteMouseOver[0].size.width, g.spriteMouseOver[0].size.height, mouse.x, mouse.y, 0, 0) = TRUE
+							DRAWSPRITE g.spriteMouseOver[0].id, g.position.x + g.spriteMouseOver[0].offset.x, g.position.y + g.spriteMouseOver[0].offset.y
+						ENDIF
 					//NEXT
 				ENDIF
 				//PRINT "test", g.position.x, g.position.y
@@ -171,7 +170,7 @@ TYPE gameobject_TYPE
 
 
 		NEXT
-		
+
 	ENDFUNCTION
 
 
