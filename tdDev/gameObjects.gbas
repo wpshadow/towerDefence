@@ -39,8 +39,10 @@ ENDTYPE
 
 TYPE gameobject_TYPE
 
+	
 	go[] AS go_main_type
-
+	info$
+	
 	FUNCTION addNew: name$, positionX, positionY
 		LOCAL g AS go_main_type, found, tmp
 		STATIC objectCounter
@@ -69,7 +71,7 @@ TYPE gameobject_TYPE
 			NEXT
 		ENDIF
 
-		DEBUG objectCounter + "\n"
+		//DEBUG objectCounter + "\n"
 		g.autoID = objectCounter
 
 
@@ -120,16 +122,28 @@ TYPE gameobject_TYPE
 		FOREACH g IN self.go[]
 			IF g.name$ = name$
 
-				s.id =				gfxLib.Get(gfxLibID$)
+					IF LEN(g.spriteMouseOver[]) = 0
 
-				GETSPRITESIZE s.id, width, height
+						s.id =				gfxLib.Get(gfxLibID$)
 
-				s.offset.x =		offsetX
-				s.offset.y =		offsetY
-				s.size.width =		width
-				s.size.height = 	height
+						GETSPRITESIZE s.id, width, height
 
-				DIMPUSH g.spriteMouseOver[], s
+						s.offset.x =		offsetX
+						s.offset.y =		offsetY
+						s.size.width =		width
+						s.size.height = 	height
+
+						DIMPUSH g.spriteMouseOver[], s
+
+					ENDIF
+
+					IF LEN(g.spriteMouseOver[]) > 0
+						g.spriteMouseOver[0].id =			gfxLib.Get(gfxLibID$)
+						g.spriteMouseOver[0].offset.x =		offsetX
+						g.spriteMouseOver[0].offset.y =		offsetY
+						g.spriteMouseOver[0].size.width =	width
+						g.spriteMouseOver[0].size.height =	height
+					ENDIF
 
 			ENDIF
 		NEXT
@@ -147,33 +161,47 @@ TYPE gameobject_TYPE
 
 	ENDFUNCTION
 
-	FUNCTION draw: name$
-	LOCAL count
+	FUNCTION draw: name$, positionX, positionY
+	LOCAL count, returnInfo$
+	
+	self.info$ = ""
+	returnInfo$ = ""
+	
 		FOREACH g IN self.go[]
 			//IF g.name$ = name$
 				//IF LEN(g.sprite[]) > 0
 					//FOREACH s IN g.sprite[]
-						DRAWSPRITE  g.sprite[0].id, g.position.x + g.sprite[0].offset.x, g.position.y + g.sprite[0].offset.y
+						DRAWSPRITE  g.sprite[0].id, positionX, positionY //g.position.x + g.sprite[0].offset.x, g.position.y + g.sprite[0].offset.y
 					//NEXT
 				//ENDIF
 				IF LEN(g.spriteMouseOver[]) > 0
-
-
-					//FOREACH m IN g.spriteMouseOver[]
-						IF BOXCOLL(g.position.x + g.spriteMouseOver[0].offset.x, g.position.y + g.spriteMouseOver[0].offset.y, g.spriteMouseOver[0].size.width, g.spriteMouseOver[0].size.height, mouse.x, mouse.y, 0, 0) = TRUE
-							DRAWSPRITE g.spriteMouseOver[0].id, g.position.x + g.spriteMouseOver[0].offset.x, g.position.y + g.spriteMouseOver[0].offset.y
+					IF BOXCOLL(positionX, positionY, g.spriteMouseOver[0].size.width, g.spriteMouseOver[0].size.height, mouse.x, mouse.y, 0, 0) = TRUE
+						DRAWSPRITE g.spriteMouseOver[0].id, positionX + g.spriteMouseOver[0].offset.x, positionY + g.spriteMouseOver[0].offset.y
+						
+						IF mouse.b1 = TRUE
+							returnInfo$ = g.name$ + "|" + positionX + "|" + positionY
 						ENDIF
-					//NEXT
+					ENDIF
 				ENDIF
 				//PRINT "test", g.position.x, g.position.y
 			//ENDIF
 
 
 		NEXT
+		
+		
+		
+		IF LEN(returnInfo$) > 0
+			self.info$ = returnInfo$
+		ENDIF
 
 	ENDFUNCTION
 
-
+	FUNCTION returnCode:
+	
+		RETURN self.info$
+	
+	ENDFUNCTION
 
 ENDTYPE
 

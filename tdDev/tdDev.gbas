@@ -42,8 +42,8 @@ FUNCTION main:
 //	wpGUI_updateButtonText("button1", "Schnüb")
 LOCAL tmp, tmp2
 
-FOR tmp = 0 TO 15
-	FOR tmp2 = 0 TO 15
+//FOR tmp = 0 TO 15
+//	FOR tmp2 = 0 TO 15
 	gameObject.addNew("horst", tmp * 32, tmp2 * 32)
 	gameObject.addSpriteLayer("horst", "spr_0", 0, 0)
 //	gameObject.addSpriteLayer("horst", "spr_1", 0, 0)
@@ -51,14 +51,14 @@ FOR tmp = 0 TO 15
 //	gameObject.addSpriteLayer("horst", "spr_3", 0, 0)
 //	gameObject.addSpriteLayer("horst", "spr_4", 0, 0)
 	gameObject.addSpriteMouseOverLayer("horst", "testgfx", 0, 0)
-	NEXT
-NEXT
+//	NEXT
+//NEXT
 
 //	gameObject.addNew("bub", 10, 10)
 //	gameObject.addNew("buadsfb", 10, 10)
 //	gameObject.addNew("buffb", 10, 10)
 //	gameObject.addNew("buwwwwb", 10, 10)
-	
+
 	LOCAL dtime, fps, delay, showfps
 
 	WHILE TRUE
@@ -78,17 +78,23 @@ NEXT
 		IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
 
 		//gameObject.setPosition("horst", 500, 500)
-		gameObject.draw("horst")
+		FOR tmp = 0 TO 23
+			FOR tmp2 = 0 TO 23
+				gameObject.draw("horst", 32 * tmp, 32 * tmp2)
+			NEXT
+		NEXT
+		
+		DEBUG gameObject.returnCode()
 
 		 dtime = GETTIMER()
- 
+
 		 fps = ((1000/dtime))
 		 delay=delay+dtime
 		 IF delay>500 // 1/2 sec
 		  delay=0
 		  showfps=fps
 		 ENDIF
-		 
+
 		 PRINT "FPS: "+showfps+" dtime:"+dtime, 0,0
 
 		SHOWSCREEN
@@ -159,14 +165,14 @@ FUNCTION fpsCounter:
 LOCAL dtime, fps, delay, showfps
 
 	 dtime = GETTIMER()
- 
+
  fps = ((1000/dtime))
  delay=delay+dtime
  IF delay>500 // 1/2 sec
   delay=0
   showfps=fps
  ENDIF
- 
+
  PRINT "FPS: "+showfps+" dtime:"+dtime, 0,0
  //PRINT actual,0,50
 
