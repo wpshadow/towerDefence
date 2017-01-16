@@ -59,7 +59,7 @@ LOCAL tmp, tmp2
 //	gameObject.addNew("buffb", 10, 10)
 //	gameObject.addNew("buwwwwb", 10, 10)
 
-	LOCAL dtime, fps, delay, showfps
+	LOCAL dtime, fps, delay, showfps, info$, information$
 
 	WHILE TRUE
 
@@ -77,14 +77,21 @@ LOCAL tmp, tmp2
 
 		IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
 
+		information$ = ""
+
 		//gameObject.setPosition("horst", 500, 500)
 		FOR tmp = 0 TO 23
 			FOR tmp2 = 0 TO 23
-				gameObject.draw("horst", 32 * tmp, 32 * tmp2)
+				info$ = gameObject.draw$("horst", 32 * tmp, 32 * tmp2)
+				IF info$ <> "0"
+					information$ = info$
+				ENDIF
+				
 			NEXT
 		NEXT
 		
-		DEBUG gameObject.returnCode()
+
+		DEBUG information$
 
 		 dtime = GETTIMER()
 

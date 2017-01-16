@@ -39,10 +39,10 @@ ENDTYPE
 
 TYPE gameobject_TYPE
 
-	
+
 	go[] AS go_main_type
 	info$
-	
+
 	FUNCTION addNew: name$, positionX, positionY
 		LOCAL g AS go_main_type, found, tmp
 		STATIC objectCounter
@@ -161,12 +161,11 @@ TYPE gameobject_TYPE
 
 	ENDFUNCTION
 
-	FUNCTION draw: name$, positionX, positionY
+	FUNCTION draw$: name$, positionX, positionY
 	LOCAL count, returnInfo$
-	
-	self.info$ = ""
+
 	returnInfo$ = ""
-	
+
 		FOREACH g IN self.go[]
 			//IF g.name$ = name$
 				//IF LEN(g.sprite[]) > 0
@@ -177,9 +176,10 @@ TYPE gameobject_TYPE
 				IF LEN(g.spriteMouseOver[]) > 0
 					IF BOXCOLL(positionX, positionY, g.spriteMouseOver[0].size.width, g.spriteMouseOver[0].size.height, mouse.x, mouse.y, 0, 0) = TRUE
 						DRAWSPRITE g.spriteMouseOver[0].id, positionX + g.spriteMouseOver[0].offset.x, positionY + g.spriteMouseOver[0].offset.y
-						
+
 						IF mouse.b1 = TRUE
 							returnInfo$ = g.name$ + "|" + positionX + "|" + positionY
+							//DEBUG returnInfo$ + "\n"
 						ENDIF
 					ENDIF
 				ENDIF
@@ -188,19 +188,14 @@ TYPE gameobject_TYPE
 
 
 		NEXT
-		
-		
-		
+
 		IF LEN(returnInfo$) > 0
-			self.info$ = returnInfo$
+			//DEBUG LEN(returnInfo$) + "\n"
+			//DEBUG returnInfo$
+			RETURN returnInfo$
+			//DEBUG self.info$
 		ENDIF
 
-	ENDFUNCTION
-
-	FUNCTION returnCode:
-	
-		RETURN self.info$
-	
 	ENDFUNCTION
 
 ENDTYPE
