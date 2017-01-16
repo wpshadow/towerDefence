@@ -55,4 +55,7 @@ FUNCTION window_004:
 		window.changeInitial = TRUE
 	ENDIF
 
+	//PRINT "EDITOR", 0, 0
+
+
 ENDFUNCTION

@@ -25,13 +25,7 @@ FUNCTION main:
 	initial()
 	loader()
 
-	gfxLib_loadsprite("media/gfx/test.png", "testgfx")
 
-	gfxLib_loadsprite("media/gfx/spr_0.png", "spr_0")
-	gfxLib_loadsprite("media/gfx/spr_1.png", "spr_1")
-	gfxLib_loadsprite("media/gfx/spr_2.png", "spr_2")
-	gfxLib_loadsprite("media/gfx/spr_3.png", "spr_3")
-	gfxLib_loadsprite("media/gfx/spr_4.png", "spr_4")
 
 //	wpGUI_addBackground(50, 50, 400, 400)
 //	wpGUI_addLabel("label1", "test", 0, 0, 150, 20)
@@ -86,12 +80,10 @@ LOCAL tmp, tmp2
 				IF info$ <> "0"
 					information$ = info$
 				ENDIF
-				
+
 			NEXT
 		NEXT
-		
 
-		DEBUG information$
 
 		 dtime = GETTIMER()
 
@@ -120,6 +112,17 @@ FUNCTION loader:
 
 	LOADFONT "media/font/font2.png", 0
 	SETFONT 0
+	
+	gfxLib_fileLoader("media/gfx/gfxLib.ini", "default")
+	
+//	gfxLib_loadsprite("media/gfx/test.png", "testgfx")
+//
+//	gfxLib_loadsprite("media/gfx/spr_0.png", "spr_0")
+//	gfxLib_loadsprite("media/gfx/spr_1.png", "spr_1")
+//	gfxLib_loadsprite("media/gfx/spr_2.png", "spr_2")
+//	gfxLib_loadsprite("media/gfx/spr_3.png", "spr_3")
+//	gfxLib_loadsprite("media/gfx/spr_4.png", "spr_4")
+	
 
 ENDFUNCTION
 
