@@ -49,13 +49,20 @@ FUNCTION window_004:
 // Level Editor
 
 	IF window.changeInitial = FALSE
-
-
+		//wpGUI_addBackground(0, 0, 256, 768)
+		wpGUI_addBackground(768, 0, 255, 767)
+		wpGUI_addButton("button1", "blub", "testbutton", 795, 20, 200, 20, 1)
+		wpGUI_addButton("button2", "blub2", "testbutton", 795, 40, 200, 20, 1)
+		DEBUG "hit"
 
 		window.changeInitial = TRUE
 	ENDIF
 
 	//PRINT "EDITOR", 0, 0
+	
+	wpGUI_update()
+	
+	IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
 
 
 ENDFUNCTION

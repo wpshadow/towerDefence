@@ -27,9 +27,9 @@ FUNCTION main:
 
 
 
-//	wpGUI_addBackground(50, 50, 400, 400)
+	//wpGUI_addBackground(50, 50, 400, 400)
 //	wpGUI_addLabel("label1", "test", 0, 0, 150, 20)
-//	wpGUI_addButton("button1", "blub", "testbutton", 100, 100, 200, 20, 2)
+	//wpGUI_addButton("button1", "blub", "testbutton", 100, 100, 200, 20, 2)
 //	wpGUI_addButton("button2", "blubdi", "testbutton2", 100, 200, 200, 20)
 //
 //	wpGUI_updateLabelText("label1", "Horst")
@@ -57,44 +57,47 @@ LOCAL tmp, tmp2
 
 	WHILE TRUE
 
+		system_mouse()
+		wpGUI_setMouseInfos(mouse.x, mouse.y, mouse.b1, mouse.b2, mouse.b1_press, mouse.b2_press)
+		
 		showWindows()
 
 		//gfxLib_drawSprite("testgfx", 500, 300)
 		//gfxLib_drawSprite("testgfx", 600, 300, 45)
 
-		system_mouse()
-		wpGUI_setMouseInfos(mouse.x, mouse.y, mouse.b1, mouse.b2, mouse.b1_press, mouse.b2_press)
+		
+		
 
 		//DRAWRECT 100, 100, 100, 20, RGB(128, 128, 128)
 
-		wpGUI_update()
+		
 
-		IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
+		
 
 		information$ = ""
 
 		//gameObject.setPosition("horst", 500, 500)
-		FOR tmp = 0 TO 23
-			FOR tmp2 = 0 TO 23
-				info$ = gameObject.draw$("horst", 32 * tmp, 32 * tmp2)
-				IF info$ <> "0"
-					information$ = info$
-				ENDIF
+//		FOR tmp = 0 TO 23
+//			FOR tmp2 = 0 TO 23
+//				info$ = gameObject.draw$("horst", 32 * tmp, 32 * tmp2)
+//				IF info$ <> "0"
+//					information$ = info$
+//				ENDIF
+//
+//			NEXT
+//		NEXT
 
-			NEXT
-		NEXT
 
-
-		 dtime = GETTIMER()
-
-		 fps = ((1000/dtime))
-		 delay=delay+dtime
-		 IF delay>500 // 1/2 sec
-		  delay=0
-		  showfps=fps
-		 ENDIF
-
-		 PRINT "FPS: "+showfps+" dtime:"+dtime, 0,0
+//		 dtime = GETTIMER()
+//
+//		 fps = ((1000/dtime))
+//		 delay=delay+dtime
+//		 IF delay>500 // 1/2 sec
+//		  delay=0
+//		  showfps=fps
+//		 ENDIF
+//
+//		 PRINT "FPS: "+showfps+" dtime:"+dtime, 0,0
 
 		SHOWSCREEN
 	WEND
@@ -112,9 +115,9 @@ FUNCTION loader:
 
 	LOADFONT "media/font/font2.png", 0
 	SETFONT 0
-	
+
 	gfxLib_fileLoader("media/gfx/gfxLib.ini", "default")
-	
+
 //	gfxLib_loadsprite("media/gfx/test.png", "testgfx")
 //
 //	gfxLib_loadsprite("media/gfx/spr_0.png", "spr_0")
@@ -122,7 +125,7 @@ FUNCTION loader:
 //	gfxLib_loadsprite("media/gfx/spr_2.png", "spr_2")
 //	gfxLib_loadsprite("media/gfx/spr_3.png", "spr_3")
 //	gfxLib_loadsprite("media/gfx/spr_4.png", "spr_4")
-	
+
 
 ENDFUNCTION
 
