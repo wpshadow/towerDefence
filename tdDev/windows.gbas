@@ -47,21 +47,32 @@ ENDFUNCTION
 
 FUNCTION window_004:
 // Level Editor
+STATIC picID
 
 	IF window.changeInitial = FALSE
 		//wpGUI_addBackground(0, 0, 256, 768)
 		wpGUI_addBackground(768, 0, 255, 767)
-		wpGUI_addButton("button1", "blub", "testbutton", 795, 20, 200, 20, 1)
-		wpGUI_addButton("button2", "blub2", "testbutton", 795, 40, 200, 20, 1)
-		DEBUG "hit"
+		wpGUI_addLabel("mapEditor", "Map Editor", 795, 10, 200, 20)
+		//wpGUI_addButton("button1", "blub", "testbutton", 795, 20, 200, 20, 1)
+		//wpGUI_addButton("button2", "blub2", "testbutton", 795, 40, 200, 20, 1)
+		
+		wpGUI_addRadio("radio1", "Ausgabe 1", 1, 1, 200, 200, 200, 20)
+		wpGUI_addRadio("radio2", "Ausgabe 2", 1, 1, 200, 230, 200, 20)
+		wpGUI_addRadio("radio3", "Ausgabe 3", 1, 1, 200, 260, 200, 20)
+		
+		gfxLib_drawSprite("testgfx", 600, 300, 45)
+		
+		picID = gfxLib.Get("testgfx")
 
 		window.changeInitial = TRUE
 	ENDIF
 
 	//PRINT "EDITOR", 0, 0
-	
+
 	wpGUI_update()
-	
+
+	gitLib_drawSprite2(picID, 23, 300, 300, 32, 32, 255, 255, 255)
+
 	IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
 
 

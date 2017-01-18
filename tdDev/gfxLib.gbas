@@ -130,6 +130,30 @@ LOCAL id, pos1, pos2
 
 ENDFUNCTION
 
+FUNCTION gitLib_drawSprite2: id, rot, posX, posY, sizeX, sizeY, colorR, colorG, colorB
+LOCAL midX, midY, dist, d1x, d1y
+
+	midX = posX + (sizeX / 2)
+	midY = posY + (sizeY / 2)
+
+//	rotSIN = SIN(rot)
+//	rotCOS = COS(rot)
+
+	d1x = midX - posX
+	d1y = midY - posY
+	
+	dist = SQR(d1x * d1x + d1y * d1y)
+
+	STARTPOLY id
+		POLYVECTOR midX + dist * (COS(rot + 225)), midY + dist * (SIN(rot + 225)),     0,     0, RGB(colorR, colorG, colorB)
+		POLYVECTOR midX + dist * (COS(rot + 135)), midY + dist * (SIN(rot + 135)),     0, sizeY, RGB(colorR, colorG, colorB)
+		POLYVECTOR midX + dist * (COS(rot +  45)), midY + dist * (SIN(rot +  45)), sizeX, sizeY, RGB(colorR, colorG, colorB)
+		POLYVECTOR midX + dist * (COS(rot -  45)), midY + dist * (SIN(rot -  45)), sizeX,     0, RGB(colorR, colorG, colorB)
+	ENDPOLY
+
+ENDFUNCTION
+
+
 FUNCTION gfxLib_fileLoader: file$, category$
 LOCAL fileFound
 LOCAL count, loop, loop$, loopName$, gfx$, gfxContent$[]

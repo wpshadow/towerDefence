@@ -59,20 +59,20 @@ LOCAL tmp, tmp2
 
 		system_mouse()
 		wpGUI_setMouseInfos(mouse.x, mouse.y, mouse.b1, mouse.b2, mouse.b1_press, mouse.b2_press)
-		
+
 		showWindows()
 
-		//gfxLib_drawSprite("testgfx", 500, 300)
+		
 		//gfxLib_drawSprite("testgfx", 600, 300, 45)
 
-		
-		
+
+
 
 		//DRAWRECT 100, 100, 100, 20, RGB(128, 128, 128)
 
-		
 
-		
+
+
 
 		information$ = ""
 

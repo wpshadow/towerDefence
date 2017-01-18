@@ -45,6 +45,23 @@ TYPE wpGUI_label_TYPE
 
 ENDTYPE
 
+TYPE wpGUI_radio_TYPE
+	text$
+	textAlignment
+	textPosition AS wpGUI_position_TYPE
+	position AS 	wpGUI_position_TYPE
+	size AS 		wpGUI_size_TYPE	
+	groupID
+	activeID
+	autoCounter
+ENDTYPE
+
+TYPE wpGUI_radioHelper_TYPE
+	groupID
+	activeID
+	groupCounter
+ENDTYPE
+
 TYPE wpGUI_mouse_TYPE
 	position AS wpGUI_position_TYPE
 	buttonLeft
@@ -60,6 +77,7 @@ TYPE wpGUI_TYPE
 	background AS 	wpGUI_background_TYPE
 	button AS 		wpGUI_button_TYPE
 	label AS 		wpGUI_label_TYPE
+	radio AS 		wpGUI_radio_TYPE
 
 ENDTYPE
 
@@ -91,13 +109,16 @@ TYPE wpGUI_color_TYPE
 	buttonPress AS 			wpGUI_colorBasic_TYPE
 	label AS				wpGUI_colorBasic_TYPE
 	background AS			wpGUI_colorBasic_TYPE
+	radioInactive AS		wpGUI_colorBasic_TYPE
+	radioActive AS			wpGUI_colorBasic_TYPE
+	radioPress AS 			wpGUI_colorBasic_TYPE	
 ENDTYPE
 
 TYPE wpGUI_font_TYPE
 	id
 ENDTYPE
 
-GLOBAL wpGUI[] AS wpGUI_TYPE, wpGUI_mouse AS wpGUI_mouse_TYPE, wpGUI_settings AS wpGUI_settings_TYPE, wpGUI_color AS wpGUI_color_TYPE, wpGUI_font AS wpGUI_font_TYPE
+GLOBAL wpGUI[] AS wpGUI_TYPE, wpGUI_mouse AS wpGUI_mouse_TYPE, wpGUI_settings AS wpGUI_settings_TYPE, wpGUI_color AS wpGUI_color_TYPE, wpGUI_font AS wpGUI_font_TYPE, wpGUI_radioHelper[] AS wpGUI_radioHelper_TYPE
 
 FUNCTION wpGUI_update:
 LOCAL guiIndex
@@ -122,6 +143,7 @@ LOCAL guiIndex
 		CASE 2
 			wpGUI_drawLabel(guiIndex)
 		CASE 3
+			wpGUI_drawRadio(guiIndex)
 
 		ENDSELECT
 
@@ -258,6 +280,18 @@ FUNCTION wpGUI_setInitialColor:
 	wpGUI_color.background.r =				33
 	wpGUI_color.background.g =				33
 	wpGUI_color.background.b =				33
+	
+	wpGUI_color.radioInactive.r = 			60
+	wpGUI_color.radioInactive.g = 			125
+	wpGUI_color.radioInactive.b = 			139
+
+	wpGUI_color.radioActive.r = 			60 * 1.25
+	wpGUI_color.radioActive.g = 			125 * 1.25
+	wpGUI_color.radioActive.b = 			139 * 1.25
+
+	wpGUI_color.radioPress.r = 				60 * 1.5
+	wpGUI_color.radioPress.g = 				125 * 1.5
+	wpGUI_color.radioPress.b = 				139 * 1.5
 
 ENDFUNCTION
 
@@ -325,6 +359,104 @@ LOCAL g AS wpGUI_TYPE, textLength, fontX, fontY
 			DIMPUSH wpGUI[], g
 
 		ENDIF
+
+ENDFUNCTION
+
+FUNCTION wpGUI_addRadio: name$, text$, groupID, activeID, positionX, positionY, sizeX, sizeY, textAlignment = 0, font = -1
+LOCAL g AS wpGUI_TYPE, fontX, fontY, gID, groupIDfound, helper AS wpGUI_radioHelper_TYPE
+	
+	wpGUI_check_init()
+
+	IF wpGUI_checkName(name$) = FALSE
+		
+		g.typ =						3
+		g.name$ =					name$
+		g.radio.text$ =				text$
+		g.radio.textAlignment =	textAlignment
+		g.radio.position.x =		positionX
+		g.radio.position.y =		positionY
+		g.radio.size.width =		sizeX
+		g.radio.size.height =		sizeY
+		
+		g.radio.groupID = 			groupID
+		g.radio.activeID =			activeID
+		
+		GETFONTSIZE fontX, fontY
+		
+		IF LEN(wpGUI_radioHelper[]) > 0
+			// bereits vorhanden
+			groupIDfound = FALSE
+			
+			FOREACH h IN wpGUI_radioHelper[]
+				IF h.groupID = groupID
+					groupIDfound = TRUE
+					IF h.activeID <> activeID
+						h.activeID = activeID
+					ENDIF
+				ENDIF
+			NEXT
+			
+			IF groupIDfound = FALSE
+				helper.groupID =		groupID
+				helper.activeID = 		activeID
+				helper.groupCounter = 	0
+				
+				DIMPUSH wpGUI_radioHelper[], helper
+			ENDIF
+			
+		ELSE
+			helper.groupID =	groupID
+			helper.activeID = 	activeID
+			helper.groupCounter = 	0
+			
+			DIMPUSH wpGUI_radioHelper[], helper						
+		ENDIF
+
+		FOREACH h IN wpGUI_radioHelper[]
+			IF h.groupID = groupID
+				INC h.groupCounter, 1
+				g.radio.autoCounter = h.groupCounter
+			ENDIF
+			
+		NEXT		
+		
+		
+
+		SELECT textAlignment
+		CASE 0
+			//g.button.textPosition.x = positionX + wpGUI_settings.animationButtonDistance + 5
+
+			g.radio.textPosition.x = wpGUI_getTextPositionX(0, positionX, sizeX, text$)
+			g.radio.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
+		CASE 1
+			g.radio.textPosition.x = wpGUI_getTextPositionX(1, positionX, sizeX, text$)
+			g.radio.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
+		CASE 2
+			g.radio.textPosition.x = wpGUI_getTextPositionX(2, positionX, sizeX, text$)
+			g.radio.textPosition.y = wpGUI_getTextPositionY(0, positionY, sizeY)
+		ENDSELECT
+		
+		DIMPUSH wpGUI[], g
+
+	ENDIF
+	
+
+	
+
+//TYPE wpGUI_radio_TYPE
+//	text$
+//	textAlignment
+//	textPosition AS wpGUI_position_TYPE
+//	position AS 	wpGUI_position_TYPE
+//	size AS 		wpGUI_size_TYPE	
+//	groupID
+//	id
+//ENDTYPE
+//
+//TYPE wpGUI_radioHelper_TYPE
+//	groupIDcounter
+//	groupIDactive
+//ENDTYPE
 
 ENDFUNCTION
 
@@ -484,6 +616,41 @@ LOCAL positionX, positionY, width, height
 	DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.label.r, wpGUI_color.label.g, wpGUI_color.label.b)
 
 	PRINT  wpGUI[guiIndex].label.text$, wpGUI[guiIndex].label.textPosition.x, wpGUI[guiIndex].label.textPosition.y
+
+ENDFUNCTION
+
+FUNCTION wpGUI_drawRadio: guiIndex
+LOCAL positionX, positionY, width, height
+
+	positionX =		wpGUI[guiIndex].radio.position.x
+	positionY =		wpGUI[guiIndex].radio.position.y
+	width =			wpGUI[guiIndex].radio.size.width
+	height =		wpGUI[guiIndex].radio.size.height	
+
+	IF BOXCOLL(positionX, positionY, width, height, wpGUI_mouse.position.x, wpGUI_mouse.position.y, 0, 0) = TRUE
+		IF wpGUI_mouse.buttonLeft_press = TRUE
+			DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioPress.r, wpGUI_color.radioPress.g, wpGUI_color.radioPress.b)
+			
+			FOREACH g IN wpGUI[]
+				IF g.typ = 3
+					g.radio.activeID = wpGUI[guiIndex].radio.autoCounter
+				ENDIF
+			NEXT
+			
+		ELSE
+			DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioActive.r, wpGUI_color.radioActive.g, wpGUI_color.radioActive.b)
+		ENDIF	
+	
+	ELSE
+		DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioInactive.r, wpGUI_color.radioInactive.g, wpGUI_color.radioInactive.b)
+	ENDIF
+	
+	IF wpGUI[guiIndex].radio.autoCounter = wpGUI[guiIndex].radio.activeID
+		DRAWRECT positionX + 1, positionY + 1, height - 2, height - 2, RGB(255, 0, 0)
+	ENDIF
+	
+	PRINT wpGUI[guiIndex].radio.autoCounter, positionX, positionY
+	
 
 ENDFUNCTION
 
