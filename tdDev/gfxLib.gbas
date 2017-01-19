@@ -141,7 +141,7 @@ LOCAL midX, midY, dist, d1x, d1y
 
 	d1x = midX - posX
 	d1y = midY - posY
-	
+
 	dist = SQR(d1x * d1x + d1y * d1y)
 
 	STARTPOLY id

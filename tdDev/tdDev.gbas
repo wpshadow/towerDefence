@@ -62,7 +62,7 @@ LOCAL tmp, tmp2
 
 		showWindows()
 
-		
+
 		//gfxLib_drawSprite("testgfx", 600, 300, 45)
 
 
