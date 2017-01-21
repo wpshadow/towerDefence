@@ -261,13 +261,17 @@ FUNCTION wpGUI_setAnimationSpeedSettings:
 ENDFUNCTION
 
 FUNCTION wpGUI_setInitialColor:
-	wpGUI_color.buttonInactive.r = 			60
-	wpGUI_color.buttonInactive.g = 			125
-	wpGUI_color.buttonInactive.b = 			139
+//	wpGUI_color.buttonInactive.r = 			60
+//	wpGUI_color.buttonInactive.g = 			125
+//	wpGUI_color.buttonInactive.b = 			139
 
-	wpGUI_color.buttonActive.r = 			60 * 1.25
-	wpGUI_color.buttonActive.g = 			125 * 1.25
-	wpGUI_color.buttonActive.b = 			139 * 1.25
+	wpGUI_color.buttonInactive.r = 			32
+	wpGUI_color.buttonInactive.g = 			32
+	wpGUI_color.buttonInactive.b = 			32
+
+	wpGUI_color.buttonActive.r = 			69
+	wpGUI_color.buttonActive.g = 			90
+	wpGUI_color.buttonActive.b = 			100
 
 	wpGUI_color.buttonPress.r = 			60 * 1.5
 	wpGUI_color.buttonPress.g = 			125 * 1.5
@@ -277,17 +281,17 @@ FUNCTION wpGUI_setInitialColor:
 	wpGUI_color.label.g =					90
 	wpGUI_color.label.b =					100
 
-	wpGUI_color.background.r =				33
-	wpGUI_color.background.g =				33
-	wpGUI_color.background.b =				33
+	wpGUI_color.background.r =				32
+	wpGUI_color.background.g =				32
+	wpGUI_color.background.b =				32
 
-	wpGUI_color.radioInactive.r = 			60
-	wpGUI_color.radioInactive.g = 			125
-	wpGUI_color.radioInactive.b = 			139
+	wpGUI_color.radioInactive.r = 			32
+	wpGUI_color.radioInactive.g = 			32
+	wpGUI_color.radioInactive.b = 			32
 
-	wpGUI_color.radioActive.r = 			60 * 1.25
-	wpGUI_color.radioActive.g = 			125 * 1.25
-	wpGUI_color.radioActive.b = 			139 * 1.25
+	wpGUI_color.radioActive.r = 			69
+	wpGUI_color.radioActive.g = 			90
+	wpGUI_color.radioActive.b = 			100
 
 	wpGUI_color.radioPress.r = 				60 * 1.5
 	wpGUI_color.radioPress.g = 				125 * 1.5
@@ -667,7 +671,7 @@ LOCAL positionX, positionY, width, height
 	PRINT wpGUI[guiIndex].radio.text$, wpGUI[guiIndex].radio.textPosition.x, wpGUI[guiIndex].radio.textPosition.y
 
 
-	
+
 
 ENDFUNCTION
 
@@ -675,7 +679,7 @@ FUNCTION wpGUI_updateLabelText: name$, text$
 
 	FOREACH g IN wpGUI[]
 		IF g.name$ = name$
-			
+
 			SELECT g.label.textAlignment
 			CASE 0
 				g.label.textPosition.x = wpGUI_getTextPositionX(0, g.label.position.x, g.label.size.width, text$)
@@ -687,7 +691,7 @@ FUNCTION wpGUI_updateLabelText: name$, text$
 				g.label.textPosition.x = wpGUI_getTextPositionX(2, g.label.position.x, g.label.size.width, text$)
 				g.label.textPosition.y = wpGUI_getTextPositionY(0, g.label.position.y, g.label.size.height)
 			ENDSELECT
-			
+
 			g.label.text$ = text$
 		ENDIF
 	NEXT
@@ -738,14 +742,14 @@ LOCAL colorR, colorG, colorB, tmpR, tmpG, tmpB
 			colorB = wpGUI_color.buttonInactive.b
 		// Mouseover
 		CASE 1
-			colorR = INTEGER(60 * 1.25)
-			colorG = INTEGER(125 * 1.25)
-			colorB = INTEGER(139 * 1.25)
+			colorR = wpGUI_color.buttonActive.r
+			colorG = wpGUI_color.buttonActive.g
+			colorB = wpGUI_color.buttonActive.b
 		// Mouse Press
 		CASE 2
-			colorR = INTEGER(60 * 1.6)
-			colorG = INTEGER(125 * 1.6)
-			colorB = INTEGER(139 * 1.6)
+			colorR = wpGUI_color.buttonPress.r
+			colorG = wpGUI_color.buttonPress.g
+			colorB = wpGUI_color.buttonPress.b
 		ENDSELECT
 
 		IF colorR > 255 THEN colorR = 255

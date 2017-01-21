@@ -63,9 +63,9 @@ STATIC picID, coutner
 		wpGUI_addLabel("label", wpGUI_getRadioGroupActive(1), 200, 100, 50, 20)
 
 		wpGUI_addLabel("counterLabel", coutner, 500, 100, 50, 20)
-		
+
 		wpGUI_addButton("counter", "+", "counterButton", 500, 400, 200, 20, 1)
-		
+
 
 		wpGUI_addRadio("radio4", "Ausgabe 1", 2, 1, 500, 200, 200, 20)
 		wpGUI_addRadio("radio5", "Ausgabe 2", 2, 1, 500, 230, 200, 20)
@@ -81,9 +81,9 @@ STATIC picID, coutner
 	IF wpGUI_getReturnCode$() = "button|counterButton"
 		INC coutner, 1
 	ENDIF
-	
+
 	wpGUI_updateLabelText("counterLabel", coutner)
-	
+
 	//PRINT "EDITOR", 0, 0
 
 	wpGUI_update()

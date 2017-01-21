@@ -165,7 +165,6 @@ LOCAL count, loop, loop$, loopName$, gfx$, gfxContent$[]
 		INIOPEN file$
 
 			count = INIGET$(category$, "count")
-			DEBUG "count:" + count
 
 			FOR loop = 1 TO count
 				loop$ = loop
