@@ -795,3 +795,21 @@ LOCAL p
         NEXT
 ENDFUNCTION
 
+FUNCTION wpGUI_deleteAll:
+
+	FOREACH g IN wpGUI[]
+		DELETE g
+	NEXT
+
+ENDFUNCTION
+
+FUNCTION wpGUI_deleteElement: name$
+
+	FOREACH g IN wpGUI[]
+		IF g.name$ = name$			
+			DELETE g
+			BREAK
+		ENDIF
+	NEXT
+
+ENDFUNCTION
