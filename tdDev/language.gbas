@@ -1,0 +1,57 @@
+// --------------------------------- //
+// Project: tdDev
+// Start: Sunday, January 22, 2017
+// IDE Version: 14.497
+
+
+// SETCURRENTDIR("Media") // go to media files
+
+TYPE languageInfo_TYPE
+	identifier$
+	groupName$
+	information$
+ENDTYPE
+
+TYPE language_TYPE
+
+	languageInfo[] AS languageInfo_TYPE
+
+	FUNCTION loadFromFile: fileName$
+		
+	ENDFUNCTION
+
+	FUNCTION addEntry: id$, groupName$, entry$
+	LOCAL l AS languageInfo_TYPE
+		
+		l.identifier$ =		id$
+		l.groupName$ =		groupName$
+		l.information$ =	entry$
+		
+		DIMPUSH self.languageInfo[], l
+	
+	ENDFUNCTION
+	
+	FUNCTION getEntry$: id$
+	
+		FOREACH l IN self.languageInfo[]
+			IF l.identifier$ = id$				
+				RETURN l.information$
+				BREAK
+			ENDIF
+		NEXT
+	
+	ENDFUNCTION
+	
+	FUNCTION deleteGroup: groupName$
+	
+		FOREACH l IN self.languageInfo[]
+			IF l.groupName$ = groupName$
+				DELETE l
+			ENDIF
+		NEXT
+	
+	ENDFUNCTION
+
+ENDTYPE
+
+GLOBAL language AS language_TYPE

@@ -56,7 +56,7 @@ STATIC picID, coutner
 		//wpGUI_addButton("button1", "blub", "testbutton", 795, 20, 200, 20, 1)
 		//wpGUI_addButton("button2", "blub2", "testbutton", 795, 40, 200, 20, 1)
 
-		wpGUI_addRadio("radio1", "Ausgabe 1", 1, 1, 795, 40, 200, 20, 0)
+		wpGUI_addRadio("radio1", "Einstellungen", 1, 1, 795, 40, 200, 20, 0)
 		wpGUI_addRadio("radio2", "Ausgabe 2", 1, 1, 795, 60, 200, 20, 0)
 		wpGUI_addRadio("radio3", "Ausgabe 3", 1, 1, 795, 80, 200, 20, 0)
 
