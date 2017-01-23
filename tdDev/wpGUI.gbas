@@ -806,7 +806,7 @@ ENDFUNCTION
 FUNCTION wpGUI_deleteElement: name$
 
 	FOREACH g IN wpGUI[]
-		IF g.name$ = name$			
+		IF g.name$ = name$
 			DELETE g
 			BREAK
 		ENDIF

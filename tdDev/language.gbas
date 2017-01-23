@@ -8,7 +8,6 @@
 
 TYPE languageInfo_TYPE
 	identifier$
-	groupName$
 	information$
 ENDTYPE
 
@@ -16,42 +15,94 @@ TYPE language_TYPE
 
 	languageInfo[] AS languageInfo_TYPE
 
-	FUNCTION loadFromFile: fileName$
+	FUNCTION loadFromFile:
+	LOCAL languages$[], languageCount, tmp, tmp$, languageFileID$, languageFile$, entry$, count, entryTmp$, entryString$[]
+	
+		DIM languages$[9]
+	
+		INIOPEN "media/language/language_index.ini"
+		
+			languageCount = INIGET$("language_index", "count")
+			
+			FOR tmp = 1 TO languageCount
+				tmp$ = tmp
+				languageFileID$ = "languagePack_" + tmp$
+				
+				languages$[tmp - 1] = languageFileID$
+		
+				
+				
+			NEXT
+			
+			languageFile$ = INIGET$("language_index" ,languages$[options.languageID])
+		
+		INIOPEN ""
+
+		
+		INIOPEN "media/language/" + languageFile$
+			
+			count = INIGET$("language", "count")
+			
+			FOR tmp = 0 TO count - 1
+				
+				tmp$ = tmp + 1
+				
+				entryTmp$ = "entry_" + tmp$
+				
+				entry$ = INIGET$("language", entryTmp$)
+				
+				SPLITSTR(entry$, entryString$[], "|")
+				
+				self.addEntry(entryString$[0], entryString$[1])
+				
+				//DEBUG entryString$[0] + " " + entryString$[1]
+				
+			NEXT
+			
+			//entry$
+		INIOPEN ""
 		
 	ENDFUNCTION
 
-	FUNCTION addEntry: id$, groupName$, entry$
+	FUNCTION addEntry: id$, entry$
 	LOCAL l AS languageInfo_TYPE
-		
+
 		l.identifier$ =		id$
-		l.groupName$ =		groupName$
 		l.information$ =	entry$
-		
+
 		DIMPUSH self.languageInfo[], l
-	
+
 	ENDFUNCTION
-	
-	FUNCTION getEntry$: id$
+
+	FUNCTION getEntryID: identifier$
+	LOCAL counter
 	
 		FOREACH l IN self.languageInfo[]
-			IF l.identifier$ = id$				
-				RETURN l.information$
+			
+			IF l.identifier$ = identifier$
+				RETURN counter
 				BREAK
 			ENDIF
+			
+			INC counter, 1
+			
 		NEXT
+		
 	
 	ENDFUNCTION
+
+	FUNCTION getEntry$: id
 	
-	FUNCTION deleteGroup: groupName$
-	
-		FOREACH l IN self.languageInfo[]
-			IF l.groupName$ = groupName$
-				DELETE l
-			ENDIF
-		NEXT
+		RETURN self.languageInfo[id].information$
 	
 	ENDFUNCTION
 
 ENDTYPE
 
-GLOBAL language AS language_TYPE
+TYPE text_TYPE
+	mapEditorMainMenu1
+	mapEditorMainMenu2
+	mapEditorMainMenu3
+ENDTYPE
+
+GLOBAL language AS language_TYPE, text AS text_TYPE

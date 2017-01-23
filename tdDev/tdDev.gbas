@@ -21,11 +21,10 @@ GLOBAL mouse AS mouse_TYPE
 main()
 
 FUNCTION main:
+LOCAL flu$
 
 	initial()
 	loader()
-
-
 
 	//wpGUI_addBackground(50, 50, 400, 400)
 //	wpGUI_addLabel("label1", "test", 0, 0, 150, 20)
@@ -53,7 +52,15 @@ LOCAL tmp, tmp2
 //	gameObject.addNew("buffb", 10, 10)
 //	gameObject.addNew("buwwwwb", 10, 10)
 
-	LOCAL dtime, fps, delay, showfps, info$, information$
+	LOCAL dtime, fps, delay, showfps, info$, information$, flufl
+	
+	
+//	language.addEntry("test1", "Test 1")
+//	language.addEntry("test2", "Test 2")
+//	language.addEntry("test3", "Test 3")
+//	
+	flufl = language.getEntryID("mapEditor0000")
+	DEBUG language.getEntry$(flufl)
 
 	WHILE TRUE
 
@@ -108,6 +115,8 @@ FUNCTION initial:
 
 	AUTOPAUSE FALSE
 	SYSTEMPOINTER TRUE
+	
+	options.languageID = 0
 
 ENDFUNCTION
 
@@ -117,6 +126,8 @@ FUNCTION loader:
 	SETFONT 0
 
 	gfxLib_fileLoader("media/gfx/gfxLib.ini", "default")
+	
+	language.loadFromFile()
 
 //	gfxLib_loadsprite("media/gfx/test.png", "testgfx")
 //

@@ -1,0 +1,13 @@
+// --------------------------------- //
+// Project: tdDev
+// Start: Monday, January 23, 2017
+// IDE Version: 14.497
+
+
+// SETCURRENTDIR("Media") // go to media files
+
+TYPE options_TYPE
+	languageID	
+ENDTYPE
+
+GLOBAL options AS options_TYPE
