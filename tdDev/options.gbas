@@ -7,7 +7,7 @@
 // SETCURRENTDIR("Media") // go to media files
 
 TYPE options_TYPE
-	languageID	
+	languageID
 ENDTYPE
 
 GLOBAL options AS options_TYPE

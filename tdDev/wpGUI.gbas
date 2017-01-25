@@ -71,9 +71,10 @@ TYPE wpGUI_mouse_TYPE
 ENDTYPE
 
 TYPE wpGUI_TYPE
-
+	
 	typ
 	name$
+	active
 	background AS 	wpGUI_background_TYPE
 	button AS 		wpGUI_button_TYPE
 	label AS 		wpGUI_label_TYPE
@@ -314,6 +315,7 @@ FUNCTION wpGUI_addBackground: positionX, positionY, sizeX, sizeY
 LOCAL g AS wpGUI_TYPE
 
 	g.typ =						0
+	g.active =					TRUE
 	g.background.position.x =	positionX
 	g.background.position.y =	positionY
 	g.background.size.width =	sizeX
@@ -331,6 +333,7 @@ LOCAL g AS wpGUI_TYPE, textLength, fontX, fontY
 		IF wpGUI_checkName(name$) = FALSE
 
 			g.typ =						1
+			g.active =					TRUE
 			g.name$ =					name$
 			g.button.text$ = 			text$
 			g.button.position.x =		positionX
@@ -374,6 +377,7 @@ LOCAL g AS wpGUI_TYPE, fontX, fontY, gID, groupIDfound, helper AS wpGUI_radioHel
 	IF wpGUI_checkName(name$) = FALSE
 
 		g.typ =						3
+		g.active =					TRUE
 		g.name$ =					name$
 		g.radio.text$ =				text$
 		g.radio.textAlignment =	textAlignment
@@ -486,7 +490,8 @@ LOCAL g AS wpGUI_TYPE
 
 	IF wpGUI_checkName(name$) = FALSE
 
-		g.typ = 2
+		g.typ = 					2
+		g.active =					TRUE
 		g.name$ = 					name$
 		g.label.text$ =				text$
 		g.label.textAlignment =		1
@@ -586,35 +591,37 @@ LOCAL positionX, positionY, width, height
 	width =			wpGUI[guiIndex].button.size.width - (wpGUI_settings.animationButtonDistance * 2) + (wpGUI[guiIndex].button.mouseOverOffset * 2)
 	height =		wpGUI[guiIndex].button.size.height
 
+	IF wpGUI[guiIndex].active = TRUE
 
-
-	IF wpGUI_mouse.position.x >= positionX AND wpGUI_mouse.position.x <= positionX + width AND wpGUI_mouse.position.y >= positionY AND wpGUI_mouse.position.y <= positionY + height
-
-		IF wpGUI_settings.animationButton = TRUE
-			INC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeedButton * GETTIMER()
-			IF wpGUI[guiIndex].button.mouseOverOffset > wpGUI_settings.animationButtonDistance THEN wpGUI[guiIndex].button.mouseOverOffset = wpGUI_settings.animationButtonDistance
-		ENDIF
-
-		IF wpGUI_mouse.buttonLeft_press = TRUE
-			wpGUI_drawRRect(positionX, positionY, width, height, 1, 2)
+		IF wpGUI_mouse.position.x >= positionX AND wpGUI_mouse.position.x <= positionX + width AND wpGUI_mouse.position.y >= positionY AND wpGUI_mouse.position.y <= positionY + height
+	
+			IF wpGUI_settings.animationButton = TRUE
+				INC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeedButton * GETTIMER()
+				IF wpGUI[guiIndex].button.mouseOverOffset > wpGUI_settings.animationButtonDistance THEN wpGUI[guiIndex].button.mouseOverOffset = wpGUI_settings.animationButtonDistance
+			ENDIF
+	
+			IF wpGUI_mouse.buttonLeft_press = TRUE
+				wpGUI_drawRRect(positionX, positionY, width, height, 1, 2)
+			ELSE
+				wpGUI_drawRRect(positionX, positionY, width, height, 1, 1)
+			ENDIF
+	
+			IF wpGUI_mouse.buttonLeft = TRUE
+				wpGUI_settings.returnCode$ = wpGUI[guiIndex].button.returnCode$
+			ENDIF
+	
 		ELSE
-			wpGUI_drawRRect(positionX, positionY, width, height, 1, 1)
+			IF wpGUI_settings.animationButton = TRUE
+				DEC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeedButton * GETTIMER()
+				IF wpGUI[guiIndex].button.mouseOverOffset < 0 THEN wpGUI[guiIndex].button.mouseOverOffset = 0
+			ENDIF
+	
+			wpGUI_drawRRect(positionX, positionY, width, height, 1, 0)
 		ENDIF
+	
+		PRINT wpGUI[guiIndex].button.text$, wpGUI[guiIndex].button.textPosition.x, wpGUI[guiIndex].button.textPosition.y
 
-		IF wpGUI_mouse.buttonLeft = TRUE
-			wpGUI_settings.returnCode$ = wpGUI[guiIndex].button.returnCode$
-		ENDIF
-
-	ELSE
-		IF wpGUI_settings.animationButton = TRUE
-			DEC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeedButton * GETTIMER()
-			IF wpGUI[guiIndex].button.mouseOverOffset < 0 THEN wpGUI[guiIndex].button.mouseOverOffset = 0
-		ENDIF
-
-		wpGUI_drawRRect(positionX, positionY, width, height, 1, 0)
 	ENDIF
-
-	PRINT wpGUI[guiIndex].button.text$, wpGUI[guiIndex].button.textPosition.x, wpGUI[guiIndex].button.textPosition.y
 
 	//DRAWRECT wpGUI[guiIndex].button.position.x, wpGUI[guiIndex].button.position.y, wpGUI[guiIndex].button.size.width, wpGUI[guiIndex].button.size.height, RGB(255, 255, 255)
 
@@ -808,6 +815,28 @@ FUNCTION wpGUI_deleteElement: name$
 	FOREACH g IN wpGUI[]
 		IF g.name$ = name$
 			DELETE g
+			BREAK
+		ENDIF
+	NEXT
+
+ENDFUNCTION
+
+FUNCTION wpGUI_setElementActive: name$
+
+	FOREACH g IN wpGUI[]
+		IF g.name$ = name$
+			g.active = TRUE
+			BREAK
+		ENDIF
+	NEXT
+
+ENDFUNCTION
+
+FUNCTION wpGUI_setElementInactive: name$
+
+	FOREACH g IN wpGUI[]
+		IF g.name$ = name$
+			g.active = FALSE
 			BREAK
 		ENDIF
 	NEXT

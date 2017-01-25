@@ -56,45 +56,60 @@ STATIC picID, coutner
 		//wpGUI_addButton("button1", "blub", "testbutton", 795, 20, 200, 20, 1)
 		//wpGUI_addButton("button2", "blub2", "testbutton", 795, 40, 200, 20, 1)
 
-		wpGUI_addRadio("radio1", "Einstellungen", 1, 1, 795, 40, 200, 20, 0)
-		wpGUI_addRadio("radio2", "Ausgabe 2", 1, 1, 795, 60, 200, 20, 0)
-		wpGUI_addRadio("radio3", "Ausgabe 3", 1, 1, 795, 80, 200, 20, 0)
+		wpGUI_addRadio("MEMainMenuRadio1", language.getEntry$(text.MEMainMenu1), 1, 1, 795, 40, 200, 20, 0)
+		wpGUI_addRadio("MEMainMenuRadio2", language.getEntry$(text.MEMainMenu2), 1, 1, 795, 60, 200, 20, 0)
+		wpGUI_addRadio("MEMainMenuRadio3", "Ausgabe 3", 1, 1, 795, 80, 200, 20, 0)
+		
+		wpGUI_addButton("test", "Testbutton", "test", 100, 100, 200, 20)
+		wpGUI_addButton("test2", "Testbutton2", "test2", 100, 200, 200, 20)
+		
+		
+		
+		
 
-		wpGUI_addLabel("label", wpGUI_getRadioGroupActive(1), 200, 100, 50, 20)
+//		wpGUI_addLabel("label", wpGUI_getRadioGroupActive(1), 200, 100, 50, 20)
+//
+//		wpGUI_addLabel("counterLabel", coutner, 500, 100, 50, 20)
+//
+//		wpGUI_addButton("counter", "+", "counterButton", 500, 400, 200, 20, 1)
+//
+//
+//		wpGUI_addRadio("radio4", "Ausgabe 1", 2, 1, 500, 200, 200, 20)
+//		wpGUI_addRadio("radio5", "Ausgabe 2", 2, 1, 500, 230, 200, 20)
+//		wpGUI_addRadio("radio6", "Ausgabe 3", 2, 1, 500, 260, 200, 20)
 
-		wpGUI_addLabel("counterLabel", coutner, 500, 100, 50, 20)
-
-		wpGUI_addButton("counter", "+", "counterButton", 500, 400, 200, 20, 1)
-
-
-		wpGUI_addRadio("radio4", "Ausgabe 1", 2, 1, 500, 200, 200, 20)
-		wpGUI_addRadio("radio5", "Ausgabe 2", 2, 1, 500, 230, 200, 20)
-		wpGUI_addRadio("radio6", "Ausgabe 3", 2, 1, 500, 260, 200, 20)
-
-		gfxLib_drawSprite("testgfx", 600, 300, 45)
-
-		picID = gfxLib.Get("testgfx")
+//		gfxLib_drawSprite("testgfx", 600, 300, 45)
+//
+//		picID = gfxLib.Get("testgfx")
 
 		window.changeInitial = TRUE
 	ENDIF
 
-	IF wpGUI_getReturnCode$() = "button|counterButton"
-		wpGUI_deleteElement("counter")
-	ENDIF
+//	IF wpGUI_getReturnCode$() = "button|counterButton"
+//		wpGUI_deleteElement("counter")
+//	ENDIF
 
-	wpGUI_updateLabelText("counterLabel", coutner)
+//	wpGUI_updateLabelText("counterLabel", coutner)
 
 	//PRINT "EDITOR", 0, 0
 
+	IF wpGUI_getReturnCode$() = "button|test"
+		wpGUI_setElementInactive("test")
+	ENDIF
+
+	IF wpGUI_getReturnCode$() = "button|test2"
+		wpGUI_setElementActive("test")
+	ENDIF
+
 	wpGUI_update()
 
-	gitLib_drawSprite2(picID, 0, 0, 300, 32, 32, 255, 255, 255)
-	gitLib_drawSprite2(picID, 90, 32, 300, 32, 32, 255, 255, 255)
-	gitLib_drawSprite2(picID, 180, 64, 300, 32, 32, 255, 255, 255)
-
-	wpGUI_updateLabelText("label", wpGUI_getRadioGroupActive(1))
-
-	IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
+//	gitLib_drawSprite2(picID, 0, 0, 300, 32, 32, 255, 255, 255)
+//	gitLib_drawSprite2(picID, 90, 32, 300, 32, 32, 255, 255, 255)
+//	gitLib_drawSprite2(picID, 180, 64, 300, 32, 32, 255, 255, 255)
+//
+//	wpGUI_updateLabelText("label", wpGUI_getRadioGroupActive(1))
+//
+//	IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
 
 
 ENDFUNCTION

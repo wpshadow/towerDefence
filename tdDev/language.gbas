@@ -17,51 +17,51 @@ TYPE language_TYPE
 
 	FUNCTION loadFromFile:
 	LOCAL languages$[], languageCount, tmp, tmp$, languageFileID$, languageFile$, entry$, count, entryTmp$, entryString$[]
-	
+
 		DIM languages$[9]
-	
+
 		INIOPEN "media/language/language_index.ini"
-		
+
 			languageCount = INIGET$("language_index", "count")
-			
+
 			FOR tmp = 1 TO languageCount
 				tmp$ = tmp
 				languageFileID$ = "languagePack_" + tmp$
-				
+
 				languages$[tmp - 1] = languageFileID$
-		
-				
-				
+
+
+
 			NEXT
-			
+
 			languageFile$ = INIGET$("language_index" ,languages$[options.languageID])
-		
+
 		INIOPEN ""
 
-		
+
 		INIOPEN "media/language/" + languageFile$
-			
+
 			count = INIGET$("language", "count")
-			
+
 			FOR tmp = 0 TO count - 1
-				
+
 				tmp$ = tmp + 1
-				
+
 				entryTmp$ = "entry_" + tmp$
-				
+
 				entry$ = INIGET$("language", entryTmp$)
-				
+
 				SPLITSTR(entry$, entryString$[], "|")
-				
+
 				self.addEntry(entryString$[0], entryString$[1])
-				
+
 				//DEBUG entryString$[0] + " " + entryString$[1]
-				
+
 			NEXT
-			
+
 			//entry$
 		INIOPEN ""
-		
+
 	ENDFUNCTION
 
 	FUNCTION addEntry: id$, entry$
@@ -76,33 +76,52 @@ TYPE language_TYPE
 
 	FUNCTION getEntryID: identifier$
 	LOCAL counter
-	
+
 		FOREACH l IN self.languageInfo[]
-			
+
 			IF l.identifier$ = identifier$
 				RETURN counter
 				BREAK
 			ENDIF
-			
+
 			INC counter, 1
-			
+
 		NEXT
-		
-	
+
+
 	ENDFUNCTION
 
 	FUNCTION getEntry$: id
-	
+
 		RETURN self.languageInfo[id].information$
+
+	ENDFUNCTION
+
+	FUNCTION setEntryToText:
+	LOCAL counter
+	
+		FOREACH l IN self.languageInfo[]
+			
+			SELECT l.identifier$
+			CASE "MEMainMenu1"
+				text.MEMainMenu1 = counter
+			CASE "MEMainMenu2"
+				text.MEMainMenu2 = counter
+			ENDSELECT
+			
+			
+			INC counter, 1	
+		NEXT
+	
 	
 	ENDFUNCTION
 
 ENDTYPE
 
 TYPE text_TYPE
-	mapEditorMainMenu1
-	mapEditorMainMenu2
-	mapEditorMainMenu3
+	MEMainMenu1
+	MEMainMenu2
+	MEMainMenu3
 ENDTYPE
 
 GLOBAL language AS language_TYPE, text AS text_TYPE

@@ -53,12 +53,12 @@ LOCAL tmp, tmp2
 //	gameObject.addNew("buwwwwb", 10, 10)
 
 	LOCAL dtime, fps, delay, showfps, info$, information$, flufl
-	
-	
+
+
 //	language.addEntry("test1", "Test 1")
 //	language.addEntry("test2", "Test 2")
 //	language.addEntry("test3", "Test 3")
-//	
+//
 	flufl = language.getEntryID("mapEditor0000")
 	DEBUG language.getEntry$(flufl)
 
@@ -115,7 +115,7 @@ FUNCTION initial:
 
 	AUTOPAUSE FALSE
 	SYSTEMPOINTER TRUE
-	
+
 	options.languageID = 0
 
 ENDFUNCTION
@@ -126,8 +126,9 @@ FUNCTION loader:
 	SETFONT 0
 
 	gfxLib_fileLoader("media/gfx/gfxLib.ini", "default")
-	
+
 	language.loadFromFile()
+	language.setEntryToText()
 
 //	gfxLib_loadsprite("media/gfx/test.png", "testgfx")
 //
