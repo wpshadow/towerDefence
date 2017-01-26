@@ -564,8 +564,12 @@ LOCAL positionX, positionY, width, height
 	width =			wpGUI[guiIndex].background.size.width
 	height =		wpGUI[guiIndex].background.size.height
 
-	DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.background.r, wpGUI_color.background.g, wpGUI_color.background.b)
-	wpGUI_drawBorder(positionX, positionY, width, height)
+	IF wpGUI[guiIndex].active = TRUE
+
+		DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.background.r, wpGUI_color.background.g, wpGUI_color.background.b)
+		wpGUI_drawBorder(positionX, positionY, width, height)
+		
+	ENDIF
 
 ENDFUNCTION
 
@@ -639,11 +643,12 @@ LOCAL positionX, positionY, width, height
 	width =			wpGUI[guiIndex].label.size.width
 	height =		wpGUI[guiIndex].label.size.height
 
+	IF wpGUI[guiIndex].active = TRUE
 
-
-	DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.label.r, wpGUI_color.label.g, wpGUI_color.label.b)
-
-	PRINT  wpGUI[guiIndex].label.text$, wpGUI[guiIndex].label.textPosition.x, wpGUI[guiIndex].label.textPosition.y
+		DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.label.r, wpGUI_color.label.g, wpGUI_color.label.b)
+		PRINT  wpGUI[guiIndex].label.text$, wpGUI[guiIndex].label.textPosition.x, wpGUI[guiIndex].label.textPosition.y
+		
+	ENDIF
 
 ENDFUNCTION
 
@@ -655,33 +660,35 @@ LOCAL positionX, positionY, width, height
 	width =			wpGUI[guiIndex].radio.size.width
 	height =		wpGUI[guiIndex].radio.size.height
 
-	IF BOXCOLL(positionX, positionY, width, height, wpGUI_mouse.position.x, wpGUI_mouse.position.y, 0, 0) = TRUE
-		IF wpGUI_mouse.buttonLeft_press = TRUE
-			DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioPress.r, wpGUI_color.radioPress.g, wpGUI_color.radioPress.b)
+	IF wpGUI[guiIndex].active = TRUE
 
-			FOREACH g IN wpGUI[]
-				IF g.typ = 3
-					IF g.radio.groupID = wpGUI[guiIndex].radio.groupID
-						g.radio.activeID = wpGUI[guiIndex].radio.autoCounter
+		IF BOXCOLL(positionX, positionY, width, height, wpGUI_mouse.position.x, wpGUI_mouse.position.y, 0, 0) = TRUE
+			IF wpGUI_mouse.buttonLeft_press = TRUE
+				DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioPress.r, wpGUI_color.radioPress.g, wpGUI_color.radioPress.b)
+	
+				FOREACH g IN wpGUI[]
+					IF g.typ = 3
+						IF g.radio.groupID = wpGUI[guiIndex].radio.groupID
+							g.radio.activeID = wpGUI[guiIndex].radio.autoCounter
+						ENDIF
 					ENDIF
-				ENDIF
-			NEXT
-
+				NEXT
+	
+			ELSE
+				DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioActive.r, wpGUI_color.radioActive.g, wpGUI_color.radioActive.b)
+			ENDIF
+	
 		ELSE
-			DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioActive.r, wpGUI_color.radioActive.g, wpGUI_color.radioActive.b)
+			DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioInactive.r, wpGUI_color.radioInactive.g, wpGUI_color.radioInactive.b)
 		ENDIF
+	
+		IF wpGUI[guiIndex].radio.autoCounter = wpGUI[guiIndex].radio.activeID
+			DRAWRECT positionX + 2, positionY + 2, height - 4, height - 4, RGB(255, 0, 0)
+		ENDIF
+	
+		PRINT wpGUI[guiIndex].radio.text$, wpGUI[guiIndex].radio.textPosition.x, wpGUI[guiIndex].radio.textPosition.y
 
-	ELSE
-		DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioInactive.r, wpGUI_color.radioInactive.g, wpGUI_color.radioInactive.b)
 	ENDIF
-
-	IF wpGUI[guiIndex].radio.autoCounter = wpGUI[guiIndex].radio.activeID
-		DRAWRECT positionX + 2, positionY + 2, height - 4, height - 4, RGB(255, 0, 0)
-	ENDIF
-
-	PRINT wpGUI[guiIndex].radio.text$, wpGUI[guiIndex].radio.textPosition.x, wpGUI[guiIndex].radio.textPosition.y
-
-
 
 
 ENDFUNCTION
