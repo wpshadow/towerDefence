@@ -99,21 +99,21 @@ TYPE language_TYPE
 
 	FUNCTION setEntryToText:
 	LOCAL counter
-	
+
 		FOREACH l IN self.languageInfo[]
-			
+
 			SELECT l.identifier$
 			CASE "MEMainMenu1"
 				text.MEMainMenu1 = counter
 			CASE "MEMainMenu2"
 				text.MEMainMenu2 = counter
 			ENDSELECT
-			
-			
-			INC counter, 1	
+
+
+			INC counter, 1
 		NEXT
-	
-	
+
+
 	ENDFUNCTION
 
 ENDTYPE

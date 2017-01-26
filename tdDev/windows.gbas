@@ -59,13 +59,13 @@ STATIC picID, coutner
 		wpGUI_addRadio("MEMainMenuRadio1", language.getEntry$(text.MEMainMenu1), 1, 1, 795, 40, 200, 20, 0)
 		wpGUI_addRadio("MEMainMenuRadio2", language.getEntry$(text.MEMainMenu2), 1, 1, 795, 60, 200, 20, 0)
 		wpGUI_addRadio("MEMainMenuRadio3", "Ausgabe 3", 1, 1, 795, 80, 200, 20, 0)
-		
+
 		wpGUI_addButton("test", "Testbutton", "test", 100, 100, 200, 20)
 		wpGUI_addButton("test2", "Testbutton2", "test2", 100, 200, 200, 20)
-		
-		
-		
-		
+
+
+
+
 
 //		wpGUI_addLabel("label", wpGUI_getRadioGroupActive(1), 200, 100, 50, 20)
 //

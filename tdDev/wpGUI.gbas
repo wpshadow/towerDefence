@@ -71,7 +71,7 @@ TYPE wpGUI_mouse_TYPE
 ENDTYPE
 
 TYPE wpGUI_TYPE
-	
+
 	typ
 	name$
 	active
@@ -594,33 +594,37 @@ LOCAL positionX, positionY, width, height
 	IF wpGUI[guiIndex].active = TRUE
 
 		IF wpGUI_mouse.position.x >= positionX AND wpGUI_mouse.position.x <= positionX + width AND wpGUI_mouse.position.y >= positionY AND wpGUI_mouse.position.y <= positionY + height
-	
+
 			IF wpGUI_settings.animationButton = TRUE
 				INC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeedButton * GETTIMER()
 				IF wpGUI[guiIndex].button.mouseOverOffset > wpGUI_settings.animationButtonDistance THEN wpGUI[guiIndex].button.mouseOverOffset = wpGUI_settings.animationButtonDistance
 			ENDIF
-	
+
 			IF wpGUI_mouse.buttonLeft_press = TRUE
 				wpGUI_drawRRect(positionX, positionY, width, height, 1, 2)
 			ELSE
 				wpGUI_drawRRect(positionX, positionY, width, height, 1, 1)
 			ENDIF
-	
+
 			IF wpGUI_mouse.buttonLeft = TRUE
 				wpGUI_settings.returnCode$ = wpGUI[guiIndex].button.returnCode$
 			ENDIF
-	
+
 		ELSE
 			IF wpGUI_settings.animationButton = TRUE
 				DEC wpGUI[guiIndex].button.mouseOverOffset, wpGUI_settings.animationSpeedButton * GETTIMER()
 				IF wpGUI[guiIndex].button.mouseOverOffset < 0 THEN wpGUI[guiIndex].button.mouseOverOffset = 0
 			ENDIF
-	
+
 			wpGUI_drawRRect(positionX, positionY, width, height, 1, 0)
 		ENDIF
-	
+
 		PRINT wpGUI[guiIndex].button.text$, wpGUI[guiIndex].button.textPosition.x, wpGUI[guiIndex].button.textPosition.y
 
+	ENDIF
+	IF wpGUI[guiIndex].active = FALSE
+		//wpGUI[guiIndex].button.mouseOverOffset = wpGUI_settings.animationButtonDistance
+		wpGUI[guiIndex].button.mouseOverOffset = 0
 	ENDIF
 
 	//DRAWRECT wpGUI[guiIndex].button.position.x, wpGUI[guiIndex].button.position.y, wpGUI[guiIndex].button.size.width, wpGUI[guiIndex].button.size.height, RGB(255, 255, 255)
