@@ -37,13 +37,13 @@ LOCAL tmp, tmp2
 
 //FOR tmp = 0 TO 15
 //	FOR tmp2 = 0 TO 15
-	gameObject.addNew("horst", tmp * 32, tmp2 * 32)
-	gameObject.addSpriteLayer("horst", "spr_0", 0, 0)
+//	gameObject.addNew("horst", tmp * 32, tmp2 * 32)
+//	gameObject.addSpriteLayer("horst", "spr_0", 0, 0)
 //	gameObject.addSpriteLayer("horst", "spr_1", 0, 0)
 //	gameObject.addSpriteLayer("horst", "spr_2", 0, 0)
 //	gameObject.addSpriteLayer("horst", "spr_3", 0, 0)
 //	gameObject.addSpriteLayer("horst", "spr_4", 0, 0)
-	gameObject.addSpriteMouseOverLayer("horst", "testgfx", 0, 0)
+//	gameObject.addSpriteMouseOverLayer("horst", "testgfx", 0, 0)
 //	NEXT
 //NEXT
 
@@ -81,7 +81,7 @@ LOCAL tmp, tmp2
 
 
 
-		information$ = ""
+//		information$ = ""
 
 		//gameObject.setPosition("horst", 500, 500)
 //		FOR tmp = 0 TO 23

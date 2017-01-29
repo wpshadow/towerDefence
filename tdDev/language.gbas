@@ -107,6 +107,24 @@ TYPE language_TYPE
 				text.MEMainMenu1 = counter
 			CASE "MEMainMenu2"
 				text.MEMainMenu2 = counter
+			CASE "MEMainMenu3"
+				text.MEMainMenu3 = counter
+			CASE "MEMenu1MinusX5"
+				text.MEMenu1MinusX5 = counter
+			CASE "MEMenu1MinusX1"
+				text.MEMenu1MinusX1 = counter
+			CASE "MEMenu1PlusX1"
+				text.MEMenu1PlusX1 = counter
+			CASE "MEMenu1PlusX5"
+				text.MEMenu1PlusX5 = counter
+			CASE "MEMenu1MinusY5"
+				text.MEMenu1MinusY5 = counter
+			CASE "MEMenu1MinusY1"
+				text.MEMenu1MinusY1 = counter
+			CASE "MEMenu1PlusY1"
+				text.MEMenu1PlusY1 = counter
+			CASE "MEMenu1PlusY5"
+				text.MEMenu1PlusY5 = counter
 			ENDSELECT
 
 
@@ -122,6 +140,14 @@ TYPE text_TYPE
 	MEMainMenu1
 	MEMainMenu2
 	MEMainMenu3
+	MEMenu1MinusX5
+	MEMenu1MinusX1
+	MEMenu1PlusX1
+	MEMenu1PlusX5
+	MEMenu1MinusY5
+	MEMenu1MinusY1
+	MEMenu1PlusY1
+	MEMenu1PlusY5
 ENDTYPE
 
 GLOBAL language AS language_TYPE, text AS text_TYPE

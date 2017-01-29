@@ -130,7 +130,7 @@ LOCAL id, pos1, pos2
 
 ENDFUNCTION
 
-FUNCTION gitLib_drawSprite2: id, rot, posX, posY, sizeX, sizeY, colorR, colorG, colorB
+FUNCTION gitLib_drawSprite2: id, rot, posX, posY, sizeX, sizeY, picSizeX, picSizeY, colorR, colorG, colorB
 LOCAL midX, midY, dist, d1x, d1y
 
 	midX = posX + (sizeX / 2)
@@ -145,10 +145,10 @@ LOCAL midX, midY, dist, d1x, d1y
 	dist = SQR(d1x * d1x + d1y * d1y)
 
 	STARTPOLY id
-		POLYVECTOR midX + dist * (COS(rot + 225)), midY + dist * (SIN(rot + 225)),     0,     0, RGB(colorR, colorG, colorB)
-		POLYVECTOR midX + dist * (COS(rot + 135)), midY + dist * (SIN(rot + 135)),     0, sizeY, RGB(colorR, colorG, colorB)
-		POLYVECTOR midX + dist * (COS(rot +  45)), midY + dist * (SIN(rot +  45)), sizeX, sizeY, RGB(colorR, colorG, colorB)
-		POLYVECTOR midX + dist * (COS(rot -  45)), midY + dist * (SIN(rot -  45)), sizeX,     0, RGB(colorR, colorG, colorB)
+		POLYVECTOR midX + dist * (COS(rot + 225)), midY + dist * (SIN(rot + 225)),        0,        0, RGB(colorR, colorG, colorB)
+		POLYVECTOR midX + dist * (COS(rot + 135)), midY + dist * (SIN(rot + 135)),        0, picSizeY, RGB(colorR, colorG, colorB)
+		POLYVECTOR midX + dist * (COS(rot +  45)), midY + dist * (SIN(rot +  45)), picSizeX, picSizeY, RGB(colorR, colorG, colorB)
+		POLYVECTOR midX + dist * (COS(rot -  45)), midY + dist * (SIN(rot -  45)), picSizeX,        0, RGB(colorR, colorG, colorB)
 	ENDPOLY
 
 ENDFUNCTION

@@ -48,45 +48,48 @@ ENDFUNCTION
 FUNCTION window_004:
 // Level Editor
 STATIC menuActiveID
-STATIC mapSizeX, mapSizeY
+STATIC mapSizeX, mapSizeY, tempMapSizeX, tempMapSizeY, picID, zoomFactor
+LOCAL tmpX, tmpY
 
 
 //STATIC picID, coutner
 
 
 	IF window.changeInitial = FALSE
-		//wpGUI_addBackground(0, 0, 256, 768)
+
 		wpGUI_addBackground(768, 0, 255, 767)
 		wpGUI_addLabel("mapEditor", "Map Editor", 795, 10, 200, 20)
-		//wpGUI_addButton("button1", "blub", "testbutton", 795, 20, 200, 20, 1)
-		//wpGUI_addButton("button2", "blub2", "testbutton", 795, 40, 200, 20, 1)
 
 		wpGUI_addRadio("MEMainMenuRadio1", language.getEntry$(text.MEMainMenu1), 1, 1, 795, 40, 200, 20, 0)
 		wpGUI_addRadio("MEMainMenuRadio2", language.getEntry$(text.MEMainMenu2), 1, 1, 795, 60, 200, 20, 0)
 		wpGUI_addRadio("MEMainMenuRadio3", "Ausgabe 3", 1, 1, 795, 80, 200, 20, 0)
 
-		wpGUI_addButton("test", "Testbutton", "test", 100, 100, 200, 20)
-		wpGUI_addButton("test2", "Testbutton2", "test2", 100, 200, 200, 20)
 
 		wpGUI_addCuttingLine(795, 110, 200)
 
 		wpGUI_addLabel("Menu1Label1", "Map Größe", 795, 130, 200, 20)
+		
+		mapSizeX = 10
+		mapSizeY = 10
+		tempMapSizeX = mapSizeX
+		tempMapSizeY = mapSizeY
+		
+		wpGUI_addButton("Menu1MinusX5", language.getEntry$(text.MEMenu1MinusX5), "Menu1MinusX5", 795, 160, 30, 20, 1)
+		wpGUI_addButton("Menu1MinusX1", language.getEntry$(text.MEMenu1MinusX1), "Menu1MinusX1", 830, 160, 30, 20, 1)
+		wpGUI_addLabel("Menu1SizeX", mapSizeX, 865, 160, 60, 20)
+		wpGUI_addButton("Menu1PlusX1", language.getEntry$(text.MEMenu1PlusX1), "Menu1PlusX1", 930, 160, 30, 20, 1)
+		wpGUI_addButton("Menu1PlusX5", language.getEntry$(text.MEMenu1PlusX5), "Menu1PlusX5", 965, 160, 30, 20, 1)
 
-//		wpGUI_addLabel("label", wpGUI_getRadioGroupActive(1), 200, 100, 50, 20)
-//
-//		wpGUI_addLabel("counterLabel", coutner, 500, 100, 50, 20)
-//
-//		wpGUI_addButton("counter", "+", "counterButton", 500, 400, 200, 20, 1)
-//
-//
-//		wpGUI_addRadio("radio4", "Ausgabe 1", 2, 1, 500, 200, 200, 20)
-//		wpGUI_addRadio("radio5", "Ausgabe 2", 2, 1, 500, 230, 200, 20)
-//		wpGUI_addRadio("radio6", "Ausgabe 3", 2, 1, 500, 260, 200, 20)
-
-//		gfxLib_drawSprite("testgfx", 600, 300, 45)
-//
-//		picID = gfxLib.Get("testgfx")
-
+		wpGUI_addButton("Menu1MinusY5", language.getEntry$(text.MEMenu1MinusY5), "Menu1MinusY5", 795, 190, 30, 20, 1)
+		wpGUI_addButton("Menu1MinusY1", language.getEntry$(text.MEMenu1MinusY1), "Menu1MinusY1", 830, 190, 30, 20, 1)
+		wpGUI_addLabel("Menu1SizeY", mapSizeY, 865, 190, 60, 20)
+		wpGUI_addButton("Menu1PlusY1", language.getEntry$(text.MEMenu1PlusY1), "Menu1PlusY1", 930, 190, 30, 20, 1)
+		wpGUI_addButton("Menu1PlusY5", language.getEntry$(text.MEMenu1PlusY5), "Menu1PlusY5", 965, 190, 30, 20, 1)
+		
+		wpGUI_addButton("Menu1TakeOver", "Übernehmen", "Menu1TakeOver", 795, 220, 200, 20, 1)
+		
+		picID = gfxLib.Get("testgfx")
+		
 		window.changeInitial = TRUE
 	ENDIF
 
@@ -94,40 +97,122 @@ STATIC mapSizeX, mapSizeY
 	CASE 1
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
 			wpGUI_setElementActive("Menu1Label1")
+			wpGUI_setElementActive("Menu1MinusX5")
+			wpGUI_setElementActive("Menu1MinusX1")
+			wpGUI_setElementActive("Menu1SizeX")
+			wpGUI_setElementActive("Menu1PlusX1")
+			wpGUI_setElementActive("Menu1PlusX5")
+			wpGUI_setElementActive("Menu1MinusY5")
+			wpGUI_setElementActive("Menu1MinusY1")
+			wpGUI_setElementActive("Menu1SizeY")
+			wpGUI_setElementActive("Menu1PlusY1")
+			wpGUI_setElementActive("Menu1PlusY5")
+			wpGUI_setElementActive("Menu1TakeOver")
 			menuActiveID = wpGUI_getRadioGroupActive(1)
 		ENDIF
-		
+
 	CASE 2
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
 			wpGUI_setElementInactive("Menu1Label1")
+			wpGUI_setElementInactive("Menu1MinusX5")
+			wpGUI_setElementInactive("Menu1MinusX1")
+			wpGUI_setElementInactive("Menu1SizeX")
+			wpGUI_setElementInactive("Menu1PlusX1")
+			wpGUI_setElementInactive("Menu1PlusX5")
+			wpGUI_setElementInactive("Menu1MinusY5")
+			wpGUI_setElementInactive("Menu1MinusY1")
+			wpGUI_setElementInactive("Menu1SizeY")
+			wpGUI_setElementInactive("Menu1PlusY1")
+			wpGUI_setElementInactive("Menu1PlusY5")
+			wpGUI_setElementInactive("Menu1TakeOver")
 			menuActiveID = wpGUI_getRadioGroupActive(1)
 		ENDIF
 	CASE 3
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
 			wpGUI_setElementInactive("Menu1Label1")
+			wpGUI_setElementInactive("Menu1MinusX5")
+			wpGUI_setElementInactive("Menu1MinusX1")
+			wpGUI_setElementInactive("Menu1SizeX")
+			wpGUI_setElementInactive("Menu1PlusX1")
+			wpGUI_setElementInactive("Menu1PlusX5")
+			wpGUI_setElementInactive("Menu1MinusY5")
+			wpGUI_setElementInactive("Menu1MinusY1")
+			wpGUI_setElementInactive("Menu1SizeY")
+			wpGUI_setElementInactive("Menu1PlusY1")
+			wpGUI_setElementInactive("Menu1PlusY5")
+			wpGUI_setElementInactive("Menu1TakeOver")
 			menuActiveID = wpGUI_getRadioGroupActive(1)
 		ENDIF
 	ENDSELECT
+	
+	SELECT wpGUI_getReturnCode$()
+	CASE "button|Menu1MinusX5"
+		DEC mapSizeX, 5
+		IF mapSizeX < 10 THEN mapSizeX = 10
+		wpGUI_updateLabelText("Menu1SizeX", mapSizeX)
+	CASE "button|Menu1MinusX1"
+		DEC mapSizeX, 1
+		IF mapSizeX < 10 THEN mapSizeX = 10
+		wpGUI_updateLabelText("Menu1SizeX", mapSizeX)
+	CASE "button|Menu1PlusX1"
+		INC mapSizeX, 1
+		IF mapSizeX > 100 THEN mapSizeX = 100
+		wpGUI_updateLabelText("Menu1SizeX", mapSizeX)
+	CASE "button|Menu1PlusX5"
+		INC mapSizeX, 5
+		IF mapSizeX > 100 THEN mapSizeX = 100
+		wpGUI_updateLabelText("Menu1SizeX", mapSizeX)
+	CASE "button|Menu1MinusY5"
+		DEC mapSizeY, 5
+		IF mapSizeY < 10 THEN mapSizeY = 10
+		wpGUI_updateLabelText("Menu1SizeY", mapSizeY)
+	CASE "button|Menu1MinusY1"
+		DEC mapSizeY, 1
+		IF mapSizeY < 10 THEN mapSizeY = 10
+		wpGUI_updateLabelText("Menu1SizeY", mapSizeY)
+	CASE "button|Menu1PlusY1"
+		INC mapSizeY, 1
+		IF mapSizeY > 100 THEN mapSizeY = 100
+		wpGUI_updateLabelText("Menu1SizeY", mapSizeY)
+	CASE "button|Menu1PlusY5"
+		INC mapSizeY, 5
+		IF mapSizeY > 100 THEN mapSizeY = 100
+		wpGUI_updateLabelText("Menu1SizeY", mapSizeY)
+	CASE "button|Menu1TakeOver"
+		tempMapSizeX = mapSizeX
+		tempMapSizeY = mapSizeY
+	ENDSELECT
 
-//	IF wpGUI_getReturnCode$() = "button|counterButton"
-//		wpGUI_deleteElement("counter")
+	zoomFactor = 8
+
+	FOR tmpY = 0 TO tempMapSizeY - 1
+		FOR tmpX = 0 TO tempMapSizeX - 1
+			//SETPIXEL tmpX * 5, tmpY * 5, RGB(255, 255, 255)
+			gitLib_drawSprite2(picID, 0, tmpX * zoomFactor, tmpY * zoomFactor, zoomFactor, zoomFactor, 32, 32, 255, 255, 255)
+		NEXT
+	NEXT
+
+
+
+	
+
+
+
+
+
+//	IF wpGUI_getReturnCode$() = "button|test"
+//		wpGUI_setElementInactive("test")
 //	ENDIF
-
-//	wpGUI_updateLabelText("counterLabel", coutner)
-
-	//PRINT "EDITOR", 0, 0
-
-	IF wpGUI_getReturnCode$() = "button|test"
-		wpGUI_setElementInactive("test")
-	ENDIF
-
-	IF wpGUI_getReturnCode$() = "button|test2"
-		wpGUI_setElementActive("test")
-	ENDIF
+//
+//	IF wpGUI_getReturnCode$() = "button|test2"
+//		wpGUI_setElementActive("test")
+//	ENDIF
 
 	wpGUI_update()
 
-//	gitLib_drawSprite2(picID, 0, 0, 300, 32, 32, 255, 255, 255)
+
+
+	
 //	gitLib_drawSprite2(picID, 90, 32, 300, 32, 32, 255, 255, 255)
 //	gitLib_drawSprite2(picID, 180, 64, 300, 32, 32, 255, 255, 255)
 //

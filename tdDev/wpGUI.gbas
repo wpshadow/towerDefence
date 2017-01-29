@@ -174,7 +174,7 @@ ENDFUNCTION
 FUNCTION wpGUI_initial:
 
 		wpGUI_settings.animationGlobal = TRUE
-
+		
 		wpGUI_setAnimationSpeedSettings()
 
 		wpGUI_setInitialColor()
@@ -275,17 +275,17 @@ FUNCTION wpGUI_setInitialColor:
 //	wpGUI_color.buttonInactive.g = 			125
 //	wpGUI_color.buttonInactive.b = 			139
 
-	wpGUI_color.buttonInactive.r = 			32
-	wpGUI_color.buttonInactive.g = 			32
-	wpGUI_color.buttonInactive.b = 			32
+	wpGUI_color.buttonInactive.r = 			40
+	wpGUI_color.buttonInactive.g = 			40
+	wpGUI_color.buttonInactive.b = 			40
 
 	wpGUI_color.buttonActive.r = 			69
 	wpGUI_color.buttonActive.g = 			90
 	wpGUI_color.buttonActive.b = 			100
 
-	wpGUI_color.buttonPress.r = 			60 * 1.5
-	wpGUI_color.buttonPress.g = 			125 * 1.5
-	wpGUI_color.buttonPress.b = 			139 * 1.5
+	wpGUI_color.buttonPress.r = 			100
+	wpGUI_color.buttonPress.g = 			130
+	wpGUI_color.buttonPress.b = 			144
 
 	wpGUI_color.label.r =					69
 	wpGUI_color.label.g =					90
@@ -306,7 +306,7 @@ FUNCTION wpGUI_setInitialColor:
 	wpGUI_color.radioPress.r = 				60 * 1.5
 	wpGUI_color.radioPress.g = 				125 * 1.5
 	wpGUI_color.radioPress.b = 				139 * 1.5
-	
+
 	wpGUI_color.cuttingLine.r =				128
 	wpGUI_color.cuttingLine.g =				128
 	wpGUI_color.cuttingLine.b =				128
@@ -524,14 +524,14 @@ ENDFUNCTION
 
 FUNCTION wpGUI_addCuttingLine: positionX, positionY, sizeX
 LOCAL g AS wpGUI_TYPE
-	
+
 	g.typ =							4
 	g.active =						TRUE
 	g.cuttingLine.position.x =		positionX
 	g.cuttingLine.position.y =		positionY
 	g.cuttingLine.size.width =		sizeX
 	g.cuttingLine.size.height =		0
-	
+
 	DIMPUSH wpGUI[], g
 
 ENDFUNCTION
