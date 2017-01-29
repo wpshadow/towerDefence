@@ -60,7 +60,7 @@ LOCAL tmp, tmp2
 //	language.addEntry("test3", "Test 3")
 //
 	flufl = language.getEntryID("mapEditor0000")
-	DEBUG language.getEntry$(flufl)
+	//DEBUG language.getEntry$(flufl)
 
 	WHILE TRUE
 

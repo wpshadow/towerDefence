@@ -47,7 +47,12 @@ ENDFUNCTION
 
 FUNCTION window_004:
 // Level Editor
-STATIC picID, coutner
+STATIC menuActiveID
+STATIC mapSizeX, mapSizeY
+
+
+//STATIC picID, coutner
+
 
 	IF window.changeInitial = FALSE
 		//wpGUI_addBackground(0, 0, 256, 768)
@@ -63,9 +68,9 @@ STATIC picID, coutner
 		wpGUI_addButton("test", "Testbutton", "test", 100, 100, 200, 20)
 		wpGUI_addButton("test2", "Testbutton2", "test2", 100, 200, 200, 20)
 
+		wpGUI_addCuttingLine(795, 110, 200)
 
-
-
+		wpGUI_addLabel("Menu1Label1", "Map Größe", 795, 130, 200, 20)
 
 //		wpGUI_addLabel("label", wpGUI_getRadioGroupActive(1), 200, 100, 50, 20)
 //
@@ -84,6 +89,25 @@ STATIC picID, coutner
 
 		window.changeInitial = TRUE
 	ENDIF
+
+	SELECT wpGUI_getRadioGroupActive(1)
+	CASE 1
+		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			wpGUI_setElementActive("Menu1Label1")
+			menuActiveID = wpGUI_getRadioGroupActive(1)
+		ENDIF
+		
+	CASE 2
+		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			wpGUI_setElementInactive("Menu1Label1")
+			menuActiveID = wpGUI_getRadioGroupActive(1)
+		ENDIF
+	CASE 3
+		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			wpGUI_setElementInactive("Menu1Label1")
+			menuActiveID = wpGUI_getRadioGroupActive(1)
+		ENDIF
+	ENDSELECT
 
 //	IF wpGUI_getReturnCode$() = "button|counterButton"
 //		wpGUI_deleteElement("counter")

@@ -62,6 +62,12 @@ TYPE wpGUI_radioHelper_TYPE
 	groupCounter
 ENDTYPE
 
+TYPE wpGUI_cuttingLine_TYPE
+	active
+	position AS wpGUI_position_TYPE
+	size AS		wpGUI_size_TYPE
+ENDTYPE
+
 TYPE wpGUI_mouse_TYPE
 	position AS wpGUI_position_TYPE
 	buttonLeft
@@ -79,6 +85,7 @@ TYPE wpGUI_TYPE
 	button AS 		wpGUI_button_TYPE
 	label AS 		wpGUI_label_TYPE
 	radio AS 		wpGUI_radio_TYPE
+	cuttingLine AS	wpGUI_cuttingLine_TYPE
 
 ENDTYPE
 
@@ -113,6 +120,7 @@ TYPE wpGUI_color_TYPE
 	radioInactive AS		wpGUI_colorBasic_TYPE
 	radioActive AS			wpGUI_colorBasic_TYPE
 	radioPress AS 			wpGUI_colorBasic_TYPE
+	cuttingLine AS			wpGUI_colorBasic_TYPE
 ENDTYPE
 
 TYPE wpGUI_font_TYPE
@@ -145,7 +153,8 @@ LOCAL guiIndex
 			wpGUI_drawLabel(guiIndex)
 		CASE 3
 			wpGUI_drawRadio(guiIndex)
-
+		CASE 4
+			wpGUI_drawCuttingLine(guiIndex)
 		ENDSELECT
 
 		INC guiIndex, 1
@@ -297,6 +306,10 @@ FUNCTION wpGUI_setInitialColor:
 	wpGUI_color.radioPress.r = 				60 * 1.5
 	wpGUI_color.radioPress.g = 				125 * 1.5
 	wpGUI_color.radioPress.b = 				139 * 1.5
+	
+	wpGUI_color.cuttingLine.r =				128
+	wpGUI_color.cuttingLine.g =				128
+	wpGUI_color.cuttingLine.b =				128
 
 ENDFUNCTION
 
@@ -509,6 +522,20 @@ LOCAL g AS wpGUI_TYPE
 
 ENDFUNCTION
 
+FUNCTION wpGUI_addCuttingLine: positionX, positionY, sizeX
+LOCAL g AS wpGUI_TYPE
+	
+	g.typ =							4
+	g.active =						TRUE
+	g.cuttingLine.position.x =		positionX
+	g.cuttingLine.position.y =		positionY
+	g.cuttingLine.size.width =		sizeX
+	g.cuttingLine.size.height =		0
+	
+	DIMPUSH wpGUI[], g
+
+ENDFUNCTION
+
 FUNCTION wpGUI_getTextPositionX: textAlignment, positionX, sizeX, text$, offsetX=0
 LOCAL pos, fontSizeX, fontSizeY, textLength
 
@@ -568,7 +595,7 @@ LOCAL positionX, positionY, width, height
 
 		DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.background.r, wpGUI_color.background.g, wpGUI_color.background.b)
 		wpGUI_drawBorder(positionX, positionY, width, height)
-		
+
 	ENDIF
 
 ENDFUNCTION
@@ -647,7 +674,7 @@ LOCAL positionX, positionY, width, height
 
 		DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.label.r, wpGUI_color.label.g, wpGUI_color.label.b)
 		PRINT  wpGUI[guiIndex].label.text$, wpGUI[guiIndex].label.textPosition.x, wpGUI[guiIndex].label.textPosition.y
-		
+
 	ENDIF
 
 ENDFUNCTION
@@ -665,7 +692,7 @@ LOCAL positionX, positionY, width, height
 		IF BOXCOLL(positionX, positionY, width, height, wpGUI_mouse.position.x, wpGUI_mouse.position.y, 0, 0) = TRUE
 			IF wpGUI_mouse.buttonLeft_press = TRUE
 				DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioPress.r, wpGUI_color.radioPress.g, wpGUI_color.radioPress.b)
-	
+
 				FOREACH g IN wpGUI[]
 					IF g.typ = 3
 						IF g.radio.groupID = wpGUI[guiIndex].radio.groupID
@@ -673,23 +700,31 @@ LOCAL positionX, positionY, width, height
 						ENDIF
 					ENDIF
 				NEXT
-	
+
 			ELSE
 				DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioActive.r, wpGUI_color.radioActive.g, wpGUI_color.radioActive.b)
 			ENDIF
-	
+
 		ELSE
 			DRAWRECT positionX, positionY, width, height, RGB(wpGUI_color.radioInactive.r, wpGUI_color.radioInactive.g, wpGUI_color.radioInactive.b)
 		ENDIF
-	
+
 		IF wpGUI[guiIndex].radio.autoCounter = wpGUI[guiIndex].radio.activeID
 			DRAWRECT positionX + 2, positionY + 2, height - 4, height - 4, RGB(255, 0, 0)
 		ENDIF
-	
+
 		PRINT wpGUI[guiIndex].radio.text$, wpGUI[guiIndex].radio.textPosition.x, wpGUI[guiIndex].radio.textPosition.y
 
 	ENDIF
 
+
+ENDFUNCTION
+
+FUNCTION wpGUI_drawCuttingLine: guiIndex
+
+	IF wpGUI[guiIndex].active = TRUE
+		DRAWLINE wpGUI[guiIndex].cuttingLine.position.x, wpGUI[guiIndex].cuttingLine.position.y, wpGUI[guiIndex].cuttingLine.position.x + wpGUI[guiIndex].cuttingLine.size.width, wpGUI[guiIndex].cuttingLine.position.y, RGB(wpGUI_color.cuttingLine.r, wpGUI_color.cuttingLine.g, wpGUI_color.cuttingLine.b)
+	ENDIF
 
 ENDFUNCTION
 
