@@ -25,6 +25,8 @@ LOCAL flu$
 
 	initial()
 	loader()
+	
+	map.setTile(0, 0, 0, 0)
 
 	//wpGUI_addBackground(50, 50, 400, 400)
 //	wpGUI_addLabel("label1", "test", 0, 0, 150, 20)

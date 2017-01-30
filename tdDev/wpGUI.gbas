@@ -174,7 +174,7 @@ ENDFUNCTION
 FUNCTION wpGUI_initial:
 
 		wpGUI_settings.animationGlobal = TRUE
-		
+
 		wpGUI_setAnimationSpeedSettings()
 
 		wpGUI_setInitialColor()

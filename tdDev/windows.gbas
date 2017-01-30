@@ -68,12 +68,12 @@ LOCAL tmpX, tmpY
 		wpGUI_addCuttingLine(795, 110, 200)
 
 		wpGUI_addLabel("Menu1Label1", "Map Größe", 795, 130, 200, 20)
-		
+
 		mapSizeX = 10
 		mapSizeY = 10
 		tempMapSizeX = mapSizeX
 		tempMapSizeY = mapSizeY
-		
+
 		wpGUI_addButton("Menu1MinusX5", language.getEntry$(text.MEMenu1MinusX5), "Menu1MinusX5", 795, 160, 30, 20, 1)
 		wpGUI_addButton("Menu1MinusX1", language.getEntry$(text.MEMenu1MinusX1), "Menu1MinusX1", 830, 160, 30, 20, 1)
 		wpGUI_addLabel("Menu1SizeX", mapSizeX, 865, 160, 60, 20)
@@ -85,11 +85,11 @@ LOCAL tmpX, tmpY
 		wpGUI_addLabel("Menu1SizeY", mapSizeY, 865, 190, 60, 20)
 		wpGUI_addButton("Menu1PlusY1", language.getEntry$(text.MEMenu1PlusY1), "Menu1PlusY1", 930, 190, 30, 20, 1)
 		wpGUI_addButton("Menu1PlusY5", language.getEntry$(text.MEMenu1PlusY5), "Menu1PlusY5", 965, 190, 30, 20, 1)
-		
+
 		wpGUI_addButton("Menu1TakeOver", "Übernehmen", "Menu1TakeOver", 795, 220, 200, 20, 1)
-		
+
 		picID = gfxLib.Get("testgfx")
-		
+
 		window.changeInitial = TRUE
 	ENDIF
 
@@ -144,7 +144,7 @@ LOCAL tmpX, tmpY
 			menuActiveID = wpGUI_getRadioGroupActive(1)
 		ENDIF
 	ENDSELECT
-	
+
 	SELECT wpGUI_getReturnCode$()
 	CASE "button|Menu1MinusX5"
 		DEC mapSizeX, 5
@@ -194,7 +194,7 @@ LOCAL tmpX, tmpY
 
 
 
-	
+
 
 
 
@@ -212,7 +212,7 @@ LOCAL tmpX, tmpY
 
 
 
-	
+
 //	gitLib_drawSprite2(picID, 90, 32, 300, 32, 32, 255, 255, 255)
 //	gitLib_drawSprite2(picID, 180, 64, 300, 32, 32, 255, 255, 255)
 //

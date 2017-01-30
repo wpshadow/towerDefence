@@ -1,0 +1,37 @@
+// --------------------------------- //
+// Project: tdDev
+// Start: Tuesday, January 31, 2017
+// IDE Version: 14.497
+
+
+// SETCURRENTDIR("Media") // go to media files
+//
+TYPE mapLayer_TYPE
+	layer[6]
+ENDTYPE
+
+TYPE mapSize_TYPE
+	x
+	y
+ENDTYPE
+
+TYPE map_TYPE
+
+	tile[100][100] AS mapLayer_TYPE
+	size AS mapSize_TYPE
+	
+	FUNCTION setMapSize: sizeX, sizeY
+		self.size.x = sizeX
+		self.size.y = sizeY
+	ENDFUNCTION
+	
+	FUNCTION setTile: spriteID, positionX, positionY, layer
+		
+		self.tile[positionX][positionY].layer[layer] = spriteID
+	
+	ENDFUNCTION
+
+ENDTYPE
+
+GLOBAL map AS map_TYPE
+
