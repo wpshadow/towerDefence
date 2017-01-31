@@ -25,8 +25,8 @@ LOCAL flu$
 
 	initial()
 	loader()
-	
-	map.setTile(0, 0, 0, 0)
+
+	//map.setTile(0, 0, 0, 0)
 
 	//wpGUI_addBackground(50, 50, 400, 400)
 //	wpGUI_addLabel("label1", "test", 0, 0, 150, 20)
@@ -119,6 +119,8 @@ FUNCTION initial:
 	SYSTEMPOINTER TRUE
 
 	options.languageID = 0
+	
+	map.generateInitialMap()
 
 ENDFUNCTION
 
@@ -131,6 +133,8 @@ FUNCTION loader:
 
 	language.loadFromFile()
 	language.setEntryToText()
+
+	
 
 //	gfxLib_loadsprite("media/gfx/test.png", "testgfx")
 //

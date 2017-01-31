@@ -73,6 +73,7 @@ LOCAL tmpX, tmpY
 		mapSizeY = 10
 		tempMapSizeX = mapSizeX
 		tempMapSizeY = mapSizeY
+		map.setMapSize(mapSizeX, mapSizeY)
 
 		wpGUI_addButton("Menu1MinusX5", language.getEntry$(text.MEMenu1MinusX5), "Menu1MinusX5", 795, 160, 30, 20, 1)
 		wpGUI_addButton("Menu1MinusX1", language.getEntry$(text.MEMenu1MinusX1), "Menu1MinusX1", 830, 160, 30, 20, 1)
@@ -88,8 +89,15 @@ LOCAL tmpX, tmpY
 
 		wpGUI_addButton("Menu1TakeOver", "Übernehmen", "Menu1TakeOver", 795, 220, 200, 20, 1)
 
-		picID = gfxLib.Get("testgfx")
-
+		picID = gfxLib.Get("groundGrass")
+		
+		FOR tmpY = 0 TO mapSizeY
+			FOR tmpX = 0 TO mapSizeX
+				map.setTile(picID, tmpX, tmpY, 0)
+			NEXT
+		NEXT
+		
+		
 		window.changeInitial = TRUE
 	ENDIF
 
@@ -181,19 +189,35 @@ LOCAL tmpX, tmpY
 	CASE "button|Menu1TakeOver"
 		tempMapSizeX = mapSizeX
 		tempMapSizeY = mapSizeY
+		
+		FOR tmpY = 0 TO mapSizeY
+			FOR tmpX = 0 TO mapSizeX
+				map.setTile(picID, tmpX, tmpY, 0)
+			NEXT
+		NEXT
+		
+		map.setMapSize(mapSizeX, mapSizeY)
+		
 	ENDSELECT
 
 	zoomFactor = 8
-
+	
 	FOR tmpY = 0 TO tempMapSizeY - 1
 		FOR tmpX = 0 TO tempMapSizeX - 1
+			
+			DRAWSPRITE map.getTile(tmpX, tmpY, 0), tmpX * 32, tmpY * 32
+			
 			//SETPIXEL tmpX * 5, tmpY * 5, RGB(255, 255, 255)
-			gitLib_drawSprite2(picID, 0, tmpX * zoomFactor, tmpY * zoomFactor, zoomFactor, zoomFactor, 32, 32, 255, 255, 255)
+			//gitLib_drawSprite2(picID, 0, tmpX * zoomFactor, tmpY * zoomFactor, zoomFactor, zoomFactor, 32, 32, 255, 255, 255)
+			
+				
+			//PRINT map.getTile(tmpX, tmpY, 0), 100 + tmpX * 25, tmpY * 10
+			
 		NEXT
 	NEXT
 
 
-
+	
 
 
 

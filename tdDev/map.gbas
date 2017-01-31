@@ -8,6 +8,7 @@
 //
 TYPE mapLayer_TYPE
 	layer[6]
+	layerRotation[6]
 ENDTYPE
 
 TYPE mapSize_TYPE
@@ -19,15 +20,34 @@ TYPE map_TYPE
 
 	tile[100][100] AS mapLayer_TYPE
 	size AS mapSize_TYPE
-	
+
 	FUNCTION setMapSize: sizeX, sizeY
 		self.size.x = sizeX
 		self.size.y = sizeY
 	ENDFUNCTION
-	
+
 	FUNCTION setTile: spriteID, positionX, positionY, layer
-		
+
 		self.tile[positionX][positionY].layer[layer] = spriteID
+
+	ENDFUNCTION
+
+	FUNCTION getTile: positionX, positionY, layer
+		
+		RETURN self.tile[positionX][positionY].layer[layer]
+			
+	ENDFUNCTION
+	
+	FUNCTION generateInitialMap:
+	LOCAL tmpX, tmpY, tmpLayer
+		
+		FOR tmpY = 0 TO 99
+			FOR tmpX = 0 TO 99
+				FOR tmpLayer = 0 TO 5
+					self.tile[tmpX][tmpY].layer[tmpLayer] = -1
+				NEXT
+			NEXT
+		NEXT
 	
 	ENDFUNCTION
 
