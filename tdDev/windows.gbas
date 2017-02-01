@@ -48,7 +48,7 @@ ENDFUNCTION
 FUNCTION window_004:
 // Level Editor
 STATIC menuActiveID
-STATIC mapSizeX, mapSizeY, tempMapSizeX, tempMapSizeY, picID, zoomFactor
+STATIC mapSizeX, mapSizeY, tempMapSizeX, tempMapSizeY, picID, editorFrameID, zoomFactor
 LOCAL tmpX, tmpY
 
 
@@ -62,8 +62,7 @@ LOCAL tmpX, tmpY
 
 		wpGUI_addRadio("MEMainMenuRadio1", language.getEntry$(text.MEMainMenu1), 1, 1, 795, 40, 200, 20, 0)
 		wpGUI_addRadio("MEMainMenuRadio2", language.getEntry$(text.MEMainMenu2), 1, 1, 795, 60, 200, 20, 0)
-		wpGUI_addRadio("MEMainMenuRadio3", "Ausgabe 3", 1, 1, 795, 80, 200, 20, 0)
-
+		wpGUI_addRadio("MEMainMenuRadio3", language.getEntry$(text.MEMainMenu3), 1, 1, 795, 80, 200, 20, 0)
 
 		wpGUI_addCuttingLine(795, 110, 200)
 
@@ -90,14 +89,15 @@ LOCAL tmpX, tmpY
 		wpGUI_addButton("Menu1TakeOver", "Übernehmen", "Menu1TakeOver", 795, 220, 200, 20, 1)
 
 		picID = gfxLib.Get("groundGrass")
+		editorFrameID = gfxLib.Get("editorFrame")
 		
 		FOR tmpY = 0 TO mapSizeY
 			FOR tmpX = 0 TO mapSizeX
 				map.setTile(picID, tmpX, tmpY, 0)
 			NEXT
 		NEXT
-		
-		
+
+
 		window.changeInitial = TRUE
 	ENDIF
 
@@ -189,35 +189,43 @@ LOCAL tmpX, tmpY
 	CASE "button|Menu1TakeOver"
 		tempMapSizeX = mapSizeX
 		tempMapSizeY = mapSizeY
-		
-		FOR tmpY = 0 TO mapSizeY
-			FOR tmpX = 0 TO mapSizeX
+
+		FOR tmpY = 0 TO mapSizeY - 1
+			FOR tmpX = 0 TO mapSizeX - 1
 				map.setTile(picID, tmpX, tmpY, 0)
 			NEXT
 		NEXT
-		
+
 		map.setMapSize(mapSizeX, mapSizeY)
-		
+
 	ENDSELECT
 
 	zoomFactor = 8
-	
+
 	FOR tmpY = 0 TO tempMapSizeY - 1
 		FOR tmpX = 0 TO tempMapSizeX - 1
+
+			gitLib_drawSprite2(map.getTile(tmpX, tmpY, 0), 0, tmpX * 32, tmpY * 32, 32, 32, 32, 32, 255, 255, 255)
 			
-			DRAWSPRITE map.getTile(tmpX, tmpY, 0), tmpX * 32, tmpY * 32
-			
-			//SETPIXEL tmpX * 5, tmpY * 5, RGB(255, 255, 255)
-			//gitLib_drawSprite2(picID, 0, tmpX * zoomFactor, tmpY * zoomFactor, zoomFactor, zoomFactor, 32, 32, 255, 255, 255)
+			IF BOXCOLL(tmpX * 32, tmpY * 32, 32, 32, mouse.x, mouse.y, 0, 0)
+				gitLib_drawSprite2(editorFrameID, 0, tmpX * 32, tmpY * 32, 32, 32, 32, 32, 255, 255, 255)
+			ENDIF
 			
 				
-			//PRINT map.getTile(tmpX, tmpY, 0), 100 + tmpX * 25, tmpY * 10
 			
+			
+
+			//SETPIXEL tmpX * 5, tmpY * 5, RGB(255, 255, 255)
+			//gitLib_drawSprite2(picID, 0, tmpX * zoomFactor, tmpY * zoomFactor, zoomFactor, zoomFactor, 32, 32, 255, 255, 255)
+
+
+			//PRINT map.getTile(tmpX, tmpY, 0), 100 + tmpX * 25, tmpY * 10
+
 		NEXT
 	NEXT
 
 
-	
+
 
 
 

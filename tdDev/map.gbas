@@ -33,14 +33,14 @@ TYPE map_TYPE
 	ENDFUNCTION
 
 	FUNCTION getTile: positionX, positionY, layer
-		
+
 		RETURN self.tile[positionX][positionY].layer[layer]
-			
+
 	ENDFUNCTION
-	
+
 	FUNCTION generateInitialMap:
 	LOCAL tmpX, tmpY, tmpLayer
-		
+
 		FOR tmpY = 0 TO 99
 			FOR tmpX = 0 TO 99
 				FOR tmpLayer = 0 TO 5
@@ -48,7 +48,7 @@ TYPE map_TYPE
 				NEXT
 			NEXT
 		NEXT
-	
+
 	ENDFUNCTION
 
 ENDTYPE

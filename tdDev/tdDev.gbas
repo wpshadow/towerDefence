@@ -107,6 +107,9 @@ LOCAL tmp, tmp2
 //		 ENDIF
 //
 //		 PRINT "FPS: "+showfps+" dtime:"+dtime, 0,0
+			
+			PRINT "ִײÜהצü", 0, 0
+
 
 		SHOWSCREEN
 	WEND
@@ -119,7 +122,7 @@ FUNCTION initial:
 	SYSTEMPOINTER TRUE
 
 	options.languageID = 0
-	
+
 	map.generateInitialMap()
 
 ENDFUNCTION
@@ -134,7 +137,7 @@ FUNCTION loader:
 	language.loadFromFile()
 	language.setEntryToText()
 
-	
+
 
 //	gfxLib_loadsprite("media/gfx/test.png", "testgfx")
 //
