@@ -107,9 +107,6 @@ LOCAL tmp, tmp2
 //		 ENDIF
 //
 //		 PRINT "FPS: "+showfps+" dtime:"+dtime, 0,0
-			
-			PRINT "ִײÜהצü", 0, 0
-
 
 		SHOWSCREEN
 	WEND

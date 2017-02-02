@@ -63,10 +63,14 @@ LOCAL tmpX, tmpY
 		wpGUI_addRadio("MEMainMenuRadio1", language.getEntry$(text.MEMainMenu1), 1, 1, 795, 40, 200, 20, 0)
 		wpGUI_addRadio("MEMainMenuRadio2", language.getEntry$(text.MEMainMenu2), 1, 1, 795, 60, 200, 20, 0)
 		wpGUI_addRadio("MEMainMenuRadio3", language.getEntry$(text.MEMainMenu3), 1, 1, 795, 80, 200, 20, 0)
+		wpGUI_addRadio("MEMainMenuRadio4", language.getEntry$(text.MEMainMenu4), 1, 1, 795, 100, 200, 20, 0)
+		wpGUI_addRadio("MEMainMenuRadio5", language.getEntry$(text.MEMainMenu5), 1, 1, 795, 120, 200, 20, 0)
 
-		wpGUI_addCuttingLine(795, 110, 200)
+		wpGUI_addCuttingLine(795, 150, 200)
 
-		wpGUI_addLabel("Menu1Label1", "Map Größe", 795, 130, 200, 20)
+		// Menu 0 - Einstellungen
+		
+		wpGUI_addLabel("MEMenu1Label", language.getEntry$(text.MEMenu1Label), 795, 170, 200, 20)
 
 		mapSizeX = 10
 		mapSizeY = 10
@@ -74,23 +78,29 @@ LOCAL tmpX, tmpY
 		tempMapSizeY = mapSizeY
 		map.setMapSize(mapSizeX, mapSizeY)
 
-		wpGUI_addButton("Menu1MinusX5", language.getEntry$(text.MEMenu1MinusX5), "Menu1MinusX5", 795, 160, 30, 20, 1)
-		wpGUI_addButton("Menu1MinusX1", language.getEntry$(text.MEMenu1MinusX1), "Menu1MinusX1", 830, 160, 30, 20, 1)
-		wpGUI_addLabel("Menu1SizeX", mapSizeX, 865, 160, 60, 20)
-		wpGUI_addButton("Menu1PlusX1", language.getEntry$(text.MEMenu1PlusX1), "Menu1PlusX1", 930, 160, 30, 20, 1)
-		wpGUI_addButton("Menu1PlusX5", language.getEntry$(text.MEMenu1PlusX5), "Menu1PlusX5", 965, 160, 30, 20, 1)
+		wpGUI_addButton("Menu1MinusX5", language.getEntry$(text.MEMenu1MinusX5), "Menu1MinusX5", 795, 200, 30, 20, 1)
+		wpGUI_addButton("Menu1MinusX1", language.getEntry$(text.MEMenu1MinusX1), "Menu1MinusX1", 830, 200, 30, 20, 1)
+		wpGUI_addLabel("Menu1SizeX", mapSizeX, 865, 200, 60, 20)
+		wpGUI_addButton("Menu1PlusX1", language.getEntry$(text.MEMenu1PlusX1), "Menu1PlusX1", 930, 200, 30, 20, 1)
+		wpGUI_addButton("Menu1PlusX5", language.getEntry$(text.MEMenu1PlusX5), "Menu1PlusX5", 965, 200, 30, 20, 1)
 
-		wpGUI_addButton("Menu1MinusY5", language.getEntry$(text.MEMenu1MinusY5), "Menu1MinusY5", 795, 190, 30, 20, 1)
-		wpGUI_addButton("Menu1MinusY1", language.getEntry$(text.MEMenu1MinusY1), "Menu1MinusY1", 830, 190, 30, 20, 1)
-		wpGUI_addLabel("Menu1SizeY", mapSizeY, 865, 190, 60, 20)
-		wpGUI_addButton("Menu1PlusY1", language.getEntry$(text.MEMenu1PlusY1), "Menu1PlusY1", 930, 190, 30, 20, 1)
-		wpGUI_addButton("Menu1PlusY5", language.getEntry$(text.MEMenu1PlusY5), "Menu1PlusY5", 965, 190, 30, 20, 1)
+		wpGUI_addButton("Menu1MinusY5", language.getEntry$(text.MEMenu1MinusY5), "Menu1MinusY5", 795, 230, 30, 20, 1)
+		wpGUI_addButton("Menu1MinusY1", language.getEntry$(text.MEMenu1MinusY1), "Menu1MinusY1", 830, 230, 30, 20, 1)
+		wpGUI_addLabel("Menu1SizeY", mapSizeY, 865, 230, 60, 20)
+		wpGUI_addButton("Menu1PlusY1", language.getEntry$(text.MEMenu1PlusY1), "Menu1PlusY1", 930, 230, 30, 20, 1)
+		wpGUI_addButton("Menu1PlusY5", language.getEntry$(text.MEMenu1PlusY5), "Menu1PlusY5", 965, 230, 30, 20, 1)
 
-		wpGUI_addButton("Menu1TakeOver", "Übernehmen", "Menu1TakeOver", 795, 220, 200, 20, 1)
+		wpGUI_addButton("Menu1TakeOver", "Übernehmen", "Menu1TakeOver", 795, 260, 200, 20, 1)
+
+		// Menu 1 - Map malen
+		
+		wpGUI_addLabel("MEMenu2Label", language.getEntry$(text.MEMenu2Label), 795, 170, 200, 20)
+		
+		// Set up initial Map
 
 		picID = gfxLib.Get("groundGrass")
 		editorFrameID = gfxLib.Get("editorFrame")
-		
+
 		FOR tmpY = 0 TO mapSizeY
 			FOR tmpX = 0 TO mapSizeX
 				map.setTile(picID, tmpX, tmpY, 0)
@@ -104,53 +114,49 @@ LOCAL tmpX, tmpY
 	SELECT wpGUI_getRadioGroupActive(1)
 	CASE 1
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
-			wpGUI_setElementActive("Menu1Label1")
-			wpGUI_setElementActive("Menu1MinusX5")
-			wpGUI_setElementActive("Menu1MinusX1")
-			wpGUI_setElementActive("Menu1SizeX")
-			wpGUI_setElementActive("Menu1PlusX1")
-			wpGUI_setElementActive("Menu1PlusX5")
-			wpGUI_setElementActive("Menu1MinusY5")
-			wpGUI_setElementActive("Menu1MinusY1")
-			wpGUI_setElementActive("Menu1SizeY")
-			wpGUI_setElementActive("Menu1PlusY1")
-			wpGUI_setElementActive("Menu1PlusY5")
-			wpGUI_setElementActive("Menu1TakeOver")
+			// M0
+			window_004_setElements(0, TRUE)
+			// M1
+			window_004_setElements(1, FALSE)
 			menuActiveID = wpGUI_getRadioGroupActive(1)
 		ENDIF
 
 	CASE 2
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
-			wpGUI_setElementInactive("Menu1Label1")
-			wpGUI_setElementInactive("Menu1MinusX5")
-			wpGUI_setElementInactive("Menu1MinusX1")
-			wpGUI_setElementInactive("Menu1SizeX")
-			wpGUI_setElementInactive("Menu1PlusX1")
-			wpGUI_setElementInactive("Menu1PlusX5")
-			wpGUI_setElementInactive("Menu1MinusY5")
-			wpGUI_setElementInactive("Menu1MinusY1")
-			wpGUI_setElementInactive("Menu1SizeY")
-			wpGUI_setElementInactive("Menu1PlusY1")
-			wpGUI_setElementInactive("Menu1PlusY5")
-			wpGUI_setElementInactive("Menu1TakeOver")
+			// M0
+			window_004_setElements(0, FALSE)
+			// M1
+			window_004_setElements(1, TRUE)
 			menuActiveID = wpGUI_getRadioGroupActive(1)
 		ENDIF
+	
 	CASE 3
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
-			wpGUI_setElementInactive("Menu1Label1")
-			wpGUI_setElementInactive("Menu1MinusX5")
-			wpGUI_setElementInactive("Menu1MinusX1")
-			wpGUI_setElementInactive("Menu1SizeX")
-			wpGUI_setElementInactive("Menu1PlusX1")
-			wpGUI_setElementInactive("Menu1PlusX5")
-			wpGUI_setElementInactive("Menu1MinusY5")
-			wpGUI_setElementInactive("Menu1MinusY1")
-			wpGUI_setElementInactive("Menu1SizeY")
-			wpGUI_setElementInactive("Menu1PlusY1")
-			wpGUI_setElementInactive("Menu1PlusY5")
-			wpGUI_setElementInactive("Menu1TakeOver")
+			window_004_setElements(0, FALSE)
+			// M1
+			window_004_setElements(1, FALSE)
+
 			menuActiveID = wpGUI_getRadioGroupActive(1)
 		ENDIF
+
+	CASE 4
+		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			window_004_setElements(0, FALSE)
+			// M1
+			window_004_setElements(1, FALSE)
+
+			menuActiveID = wpGUI_getRadioGroupActive(1)
+		ENDIF		
+
+	CASE 5
+		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			window_004_setElements(0, FALSE)
+			// M1
+			window_004_setElements(1, FALSE)
+
+			menuActiveID = wpGUI_getRadioGroupActive(1)
+		ENDIF
+
 	ENDSELECT
 
 	SELECT wpGUI_getReturnCode$()
@@ -206,14 +212,14 @@ LOCAL tmpX, tmpY
 		FOR tmpX = 0 TO tempMapSizeX - 1
 
 			gitLib_drawSprite2(map.getTile(tmpX, tmpY, 0), 0, tmpX * 32, tmpY * 32, 32, 32, 32, 32, 255, 255, 255)
-			
+
 			IF BOXCOLL(tmpX * 32, tmpY * 32, 32, 32, mouse.x, mouse.y, 0, 0)
 				gitLib_drawSprite2(editorFrameID, 0, tmpX * 32, tmpY * 32, 32, 32, 32, 32, 255, 255, 255)
 			ENDIF
-			
-				
-			
-			
+
+
+
+
 
 			//SETPIXEL tmpX * 5, tmpY * 5, RGB(255, 255, 255)
 			//gitLib_drawSprite2(picID, 0, tmpX * zoomFactor, tmpY * zoomFactor, zoomFactor, zoomFactor, 32, 32, 255, 255, 255)
@@ -252,5 +258,50 @@ LOCAL tmpX, tmpY
 //
 //	IF wpGUI_getReturnCode$() = "button|testbutton" THEN END
 
+
+ENDFUNCTION
+
+FUNCTION window_004_setElements: elementID, status
+
+	SELECT elementID
+	CASE 0
+		IF status = FALSE
+			wpGUI_setElementInactive("MEMenu1Label")
+			wpGUI_setElementInactive("Menu1MinusX5")
+			wpGUI_setElementInactive("Menu1MinusX1")
+			wpGUI_setElementInactive("Menu1SizeX")
+			wpGUI_setElementInactive("Menu1PlusX1")
+			wpGUI_setElementInactive("Menu1PlusX5")
+			wpGUI_setElementInactive("Menu1MinusY5")
+			wpGUI_setElementInactive("Menu1MinusY1")
+			wpGUI_setElementInactive("Menu1SizeY")
+			wpGUI_setElementInactive("Menu1PlusY1")
+			wpGUI_setElementInactive("Menu1PlusY5")
+			wpGUI_setElementInactive("Menu1TakeOver")
+		ENDIF
+		IF status = TRUE
+			wpGUI_setElementActive("MEMenu1Label")
+			wpGUI_setElementActive("Menu1MinusX5")
+			wpGUI_setElementActive("Menu1MinusX1")
+			wpGUI_setElementActive("Menu1SizeX")
+			wpGUI_setElementActive("Menu1PlusX1")
+			wpGUI_setElementActive("Menu1PlusX5")
+			wpGUI_setElementActive("Menu1MinusY5")
+			wpGUI_setElementActive("Menu1MinusY1")
+			wpGUI_setElementActive("Menu1SizeY")
+			wpGUI_setElementActive("Menu1PlusY1")
+			wpGUI_setElementActive("Menu1PlusY5")
+			wpGUI_setElementActive("Menu1TakeOver")		
+		ENDIF
+	CASE 1
+		IF status = FALSE
+			wpGUI_setElementInactive("MEMenu2Label")
+		ENDIF
+		IF status = TRUE
+			wpGUI_setElementActive("MEMenu2Label")
+		ENDIF
+	
+	
+	ENDSELECT
 
 ENDFUNCTION

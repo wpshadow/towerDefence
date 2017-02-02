@@ -50,8 +50,8 @@ TYPE language_TYPE
 				entryTmp$ = "entry_" + tmp$
 
 				entry$ = INIGET$("language", entryTmp$)
-				
-				DEBUG entry$ + "\n"
+
+				//DEBUG entry$ + "\n"
 
 				SPLITSTR(entry$, entryString$[], "|")
 
@@ -131,6 +131,10 @@ TYPE language_TYPE
 				text.MEMainMenu4 = counter
 			CASE "MEMainMenu5"
 				text.MEMainMenu5 = counter
+			CASE "MEMenu1Label"
+				text.MEMenu1Label = counter
+			CASE "MEMenu2Label"
+				text.MEMenu2Label = counter
 			ENDSELECT
 
 
@@ -156,6 +160,8 @@ TYPE text_TYPE
 	MEMenu1MinusY1
 	MEMenu1PlusY1
 	MEMenu1PlusY5
+	MEMenu1Label
+	MEMenu2Label
 ENDTYPE
 
 GLOBAL language AS language_TYPE, text AS text_TYPE
