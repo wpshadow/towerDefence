@@ -7,6 +7,7 @@
 // SETCURRENTDIR("Media") // go to media files
 //
 TYPE mapLayer_TYPE
+	typ[6]
 	layer[6]
 	layerRotation[6]
 ENDTYPE
@@ -26,9 +27,12 @@ TYPE map_TYPE
 		self.size.y = sizeY
 	ENDFUNCTION
 
-	FUNCTION setTile: spriteID, positionX, positionY, layer
-
+	FUNCTION setTile: spriteID, positionX, positionY, layer, typ
+		// 1	Gras
+		// 2	Sand
+		// 3	Beton
 		self.tile[positionX][positionY].layer[layer] = spriteID
+		self.tile[positionX][positionY].typ[layer] = typ
 
 	ENDFUNCTION
 
@@ -36,6 +40,12 @@ TYPE map_TYPE
 
 		RETURN self.tile[positionX][positionY].layer[layer]
 
+	ENDFUNCTION
+	
+	FUNCTION getTyp: positionX, positionY, typ
+	
+		RETURN self.tile[positionX][positionY].typ[typ]
+	
 	ENDFUNCTION
 
 	FUNCTION generateInitialMap:
@@ -49,6 +59,44 @@ TYPE map_TYPE
 			NEXT
 		NEXT
 
+	ENDFUNCTION
+
+	FUNCTION checkSurroundings: positionX, positionY, layer, typ
+	LOCAL t1, t2, t3, t4, t5, t6, t7, t8, changed, count
+	
+		IF self.tile[positionX][positionY - 1].typ[layer] = typ
+			t1 = 1
+		ENDIF
+		IF self.tile[positionX + 1][positionY - 1].typ[layer] = typ
+			t2 = 1
+		ENDIF
+		IF self.tile[positionX + 1][positionY].typ[layer] = typ
+			t3 = 1
+		ENDIF
+		IF self.tile[positionX][positionY + 1].typ[layer + 1] = typ
+			t4 = 1
+		ENDIF
+		IF self.tile[positionX][positionY + 1].typ[layer] = typ
+			t5 = 1
+		ENDIF
+		IF self.tile[positionX - 1][positionY + 1].typ[layer] = typ
+			t6 = 1
+		ENDIF
+		IF self.tile[positionX - 1][positionY].typ[layer] = typ
+			t7 = 1
+		ENDIF
+		IF self.tile[positionX - 1][positionY - 1].typ[layer] = typ
+			t8 = 1
+		ENDIF
+
+		INC count, (t1 * 1) + (t2 * 2) + (t3 * 4) + (t4 * 8) + (t5 * 16) + (t6 * 32) + (t7 * 64) + (t8 * 128)
+		
+		DEBUG count
+
+//		IF self.tile[positionX][positionY].typ[layer] = typ
+//			
+//		ENDIF
+	
 	ENDFUNCTION
 
 ENDTYPE

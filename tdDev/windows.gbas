@@ -48,7 +48,7 @@ ENDFUNCTION
 FUNCTION window_004:
 // Level Editor
 STATIC menuActiveID
-STATIC mapSizeX, mapSizeY, tempMapSizeX, tempMapSizeY, picID, editorFrameID, zoomFactor
+STATIC mapSizeX, mapSizeY, tempMapSizeX, tempMapSizeY, picID, editorFrameID, zoomFactor, tileSetActive
 LOCAL tmpX, tmpY
 
 
@@ -69,7 +69,7 @@ LOCAL tmpX, tmpY
 		wpGUI_addCuttingLine(795, 150, 200)
 
 		// Menu 0 - Einstellungen
-		
+
 		wpGUI_addLabel("MEMenu1Label", language.getEntry$(text.MEMenu1Label), 795, 170, 200, 20)
 
 		mapSizeX = 10
@@ -93,9 +93,12 @@ LOCAL tmpX, tmpY
 		wpGUI_addButton("Menu1TakeOver", "Übernehmen", "Menu1TakeOver", 795, 260, 200, 20, 1)
 
 		// Menu 1 - Map malen
-		
+
 		wpGUI_addLabel("MEMenu2Label", language.getEntry$(text.MEMenu2Label), 795, 170, 200, 20)
 		
+		wpGUI_addRadio("MEMenu2Radio1", "Gras", 2, 1, 795, 200, 200, 20, 0)
+		wpGUI_addRadio("MEMenu2Radio2", "Sand", 2, 1, 795, 220, 200, 20, 0)
+
 		// Set up initial Map
 
 		picID = gfxLib.Get("groundGrass")
@@ -103,7 +106,7 @@ LOCAL tmpX, tmpY
 
 		FOR tmpY = 0 TO mapSizeY
 			FOR tmpX = 0 TO mapSizeX
-				map.setTile(picID, tmpX, tmpY, 0)
+				map.setTile(picID, tmpX, tmpY, 0, 1)
 			NEXT
 		NEXT
 
@@ -114,6 +117,7 @@ LOCAL tmpX, tmpY
 	SELECT wpGUI_getRadioGroupActive(1)
 	CASE 1
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			tileSetActive = FALSE
 			// M0
 			window_004_setElements(0, TRUE)
 			// M1
@@ -123,15 +127,17 @@ LOCAL tmpX, tmpY
 
 	CASE 2
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			tileSetActive = TRUE
 			// M0
 			window_004_setElements(0, FALSE)
 			// M1
 			window_004_setElements(1, TRUE)
 			menuActiveID = wpGUI_getRadioGroupActive(1)
 		ENDIF
-	
+
 	CASE 3
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			// M0
 			window_004_setElements(0, FALSE)
 			// M1
 			window_004_setElements(1, FALSE)
@@ -141,15 +147,17 @@ LOCAL tmpX, tmpY
 
 	CASE 4
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			// M0
 			window_004_setElements(0, FALSE)
 			// M1
 			window_004_setElements(1, FALSE)
 
 			menuActiveID = wpGUI_getRadioGroupActive(1)
-		ENDIF		
+		ENDIF
 
 	CASE 5
 		IF menuActiveID <> wpGUI_getRadioGroupActive(1)
+			// M0
 			window_004_setElements(0, FALSE)
 			// M1
 			window_004_setElements(1, FALSE)
@@ -198,7 +206,7 @@ LOCAL tmpX, tmpY
 
 		FOR tmpY = 0 TO mapSizeY - 1
 			FOR tmpX = 0 TO mapSizeX - 1
-				map.setTile(picID, tmpX, tmpY, 0)
+				map.setTile(picID, tmpX, tmpY, 0, 1)
 			NEXT
 		NEXT
 
@@ -215,6 +223,14 @@ LOCAL tmpX, tmpY
 
 			IF BOXCOLL(tmpX * 32, tmpY * 32, 32, 32, mouse.x, mouse.y, 0, 0)
 				gitLib_drawSprite2(editorFrameID, 0, tmpX * 32, tmpY * 32, 32, 32, 32, 32, 255, 255, 255)
+				
+				IF mouse.b1 = TRUE AND tileSetActive = TRUE
+					
+					IF wpGUI_getRadioGroupActive(2) <> map.getTyp(tmpX, tmpY, 0)
+						map.checkSurroundings(tmpX, tmpY, 0, wpGUI_getRadioGroupActive(2))
+					ENDIF
+					
+				ENDIF
 			ENDIF
 
 
@@ -291,17 +307,21 @@ FUNCTION window_004_setElements: elementID, status
 			wpGUI_setElementActive("Menu1SizeY")
 			wpGUI_setElementActive("Menu1PlusY1")
 			wpGUI_setElementActive("Menu1PlusY5")
-			wpGUI_setElementActive("Menu1TakeOver")		
+			wpGUI_setElementActive("Menu1TakeOver")
 		ENDIF
 	CASE 1
 		IF status = FALSE
 			wpGUI_setElementInactive("MEMenu2Label")
+			wpGUI_setElementInactive("MEMenu2Radio1")
+			wpGUI_setElementInactive("MEMenu2Radio2")
 		ENDIF
 		IF status = TRUE
 			wpGUI_setElementActive("MEMenu2Label")
+			wpGUI_setElementActive("MEMenu2Radio1")
+			wpGUI_setElementActive("MEMenu2Radio2")
 		ENDIF
-	
-	
+
+
 	ENDSELECT
 
 ENDFUNCTION
