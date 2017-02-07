@@ -95,7 +95,7 @@ LOCAL tmpX, tmpY
 		// Menu 1 - Map malen
 
 		wpGUI_addLabel("MEMenu2Label", language.getEntry$(text.MEMenu2Label), 795, 170, 200, 20)
-		
+
 		wpGUI_addRadio("MEMenu2Radio1", "Gras", 2, 1, 795, 200, 200, 20, 0)
 		wpGUI_addRadio("MEMenu2Radio2", "Sand", 2, 1, 795, 220, 200, 20, 0)
 
@@ -223,13 +223,13 @@ LOCAL tmpX, tmpY
 
 			IF BOXCOLL(tmpX * 32, tmpY * 32, 32, 32, mouse.x, mouse.y, 0, 0)
 				gitLib_drawSprite2(editorFrameID, 0, tmpX * 32, tmpY * 32, 32, 32, 32, 32, 255, 255, 255)
-				
+
 				IF mouse.b1 = TRUE AND tileSetActive = TRUE
-					
+
 					IF wpGUI_getRadioGroupActive(2) <> map.getTyp(tmpX, tmpY, 0)
-						map.checkSurroundings(tmpX, tmpY, 0, wpGUI_getRadioGroupActive(2))
+						map.checkSurroundings(tmpX, tmpY, 0, wpGUI_getRadioGroupActive(2), TRUE)
 					ENDIF
-					
+
 				ENDIF
 			ENDIF
 

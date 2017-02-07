@@ -8,8 +8,9 @@
 //
 TYPE mapLayer_TYPE
 	typ[6]
-	layer[6]
+	layer[6] //spriteID
 	layerRotation[6]
+	binary[6]
 ENDTYPE
 
 TYPE mapSize_TYPE
@@ -34,6 +35,12 @@ TYPE map_TYPE
 		self.tile[positionX][positionY].layer[layer] = spriteID
 		self.tile[positionX][positionY].typ[layer] = typ
 
+//	id
+//	bin
+//	sprite
+//	rotation
+
+
 	ENDFUNCTION
 
 	FUNCTION getTile: positionX, positionY, layer
@@ -41,11 +48,11 @@ TYPE map_TYPE
 		RETURN self.tile[positionX][positionY].layer[layer]
 
 	ENDFUNCTION
-	
+
 	FUNCTION getTyp: positionX, positionY, typ
-	
+
 		RETURN self.tile[positionX][positionY].typ[typ]
-	
+
 	ENDFUNCTION
 
 	FUNCTION generateInitialMap:
@@ -61,42 +68,67 @@ TYPE map_TYPE
 
 	ENDFUNCTION
 
-	FUNCTION checkSurroundings: positionX, positionY, layer, typ
+	FUNCTION checkSurroundings: positionX, positionY, layer, typ, clicked = FALSE
 	LOCAL t1, t2, t3, t4, t5, t6, t7, t8, changed, count
-	
-		IF self.tile[positionX][positionY - 1].typ[layer] = typ
-			t1 = 1
-		ENDIF
-		IF self.tile[positionX + 1][positionY - 1].typ[layer] = typ
-			t2 = 1
-		ENDIF
-		IF self.tile[positionX + 1][positionY].typ[layer] = typ
-			t3 = 1
-		ENDIF
-		IF self.tile[positionX][positionY + 1].typ[layer + 1] = typ
-			t4 = 1
-		ENDIF
-		IF self.tile[positionX][positionY + 1].typ[layer] = typ
-			t5 = 1
-		ENDIF
-		IF self.tile[positionX - 1][positionY + 1].typ[layer] = typ
-			t6 = 1
-		ENDIF
-		IF self.tile[positionX - 1][positionY].typ[layer] = typ
-			t7 = 1
-		ENDIF
-		IF self.tile[positionX - 1][positionY - 1].typ[layer] = typ
-			t8 = 1
-		ENDIF
 
-		INC count, (t1 * 1) + (t2 * 2) + (t3 * 4) + (t4 * 8) + (t5 * 16) + (t6 * 32) + (t7 * 64) + (t8 * 128)
-		
+		IF self.tile[positionX][positionY - 1].typ[layer] = typ THEN t1 = 1
+		IF self.tile[positionX + 1][positionY - 1].typ[layer] = typ THEN t2 = 2
+		IF self.tile[positionX + 1][positionY].typ[layer] = typ THEN t3 = 4
+		IF self.tile[positionX][positionY + 1].typ[layer + 1] = typ THEN t4 = 8
+		IF self.tile[positionX][positionY + 1].typ[layer] = typ THEN t5 = 16
+		IF self.tile[positionX - 1][positionY + 1].typ[layer] = typ THEN t6 = 32
+		IF self.tile[positionX - 1][positionY].typ[layer] = typ THEN t7 = 64
+		IF self.tile[positionX - 1][positionY - 1].typ[layer] = typ THEN t8 = 128
+
+		INC count, t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8
+
 		DEBUG count
+		
+		IF self.tile[positionX][positionY].binary[layer] <> count OR clicked = TRUE
 
-//		IF self.tile[positionX][positionY].typ[layer] = typ
+			self.calculateSurroundings(count, positionX, positionY)
+			
+//			SELECT count
+//			CASE 0
 //			
-//		ENDIF
+//			ENDSELECT
+			
+			changed = TRUE
+			
+		ENDIF
+
+
+
+	ENDFUNCTION
+
+	FUNCTION calculateSurroundings: id, positionX, positionY, typ
 	
+		SELECT id
+		CASE 0
+			self.setMap(positionX, positionY, 
+		ENDSELECT
+	
+	ENDFUNCTION
+
+	FUNCTION setMap: positionX, positionY, typ, layer, layerRotation, binary
+	LOCAL phi
+
+		SELECT layerRotation
+		CASE 0
+			phi = 0
+		CASE 1
+			phi = 90
+		CASE 2
+			phi = 180
+		CASE 3
+			phi = 270
+		ENDSELECT
+
+		self.tile[positionX][positionY].binary[layer] = binary
+		self.tile[positionX][positionY].layer[layer] = layer
+		self.tile[positionX][positionY].layerRotation[layer] = phi
+		self.tile[positionX][positionY].typ[layer] = typ
+
 	ENDFUNCTION
 
 ENDTYPE
