@@ -83,18 +83,18 @@ TYPE map_TYPE
 		INC count, t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8
 
 		DEBUG count
-		
+
 		IF self.tile[positionX][positionY].binary[layer] <> count OR clicked = TRUE
 
-			self.calculateSurroundings(count, positionX, positionY)
-			
+			self.calculateSurroundings(count, positionX, positionY, typ)
+
 //			SELECT count
 //			CASE 0
-//			
+//
 //			ENDSELECT
-			
+
 			changed = TRUE
-			
+
 		ENDIF
 
 
@@ -102,12 +102,12 @@ TYPE map_TYPE
 	ENDFUNCTION
 
 	FUNCTION calculateSurroundings: id, positionX, positionY, typ
-	
+
 		SELECT id
 		CASE 0
-			self.setMap(positionX, positionY, 
+			//self.setMap(positionX, positionY,
 		ENDSELECT
-	
+
 	ENDFUNCTION
 
 	FUNCTION setMap: positionX, positionY, typ, layer, layerRotation, binary
@@ -131,6 +131,10 @@ TYPE map_TYPE
 
 	ENDFUNCTION
 
+ENDTYPE
+
+TYPE mapSprite
+	layer[100][100][6]
 ENDTYPE
 
 GLOBAL map AS map_TYPE
