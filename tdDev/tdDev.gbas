@@ -134,6 +134,7 @@ FUNCTION loader:
 	language.loadFromFile()
 	language.setEntryToText()
 
+	gfxLib_generateMapParts()
 
 
 //	gfxLib_loadsprite("media/gfx/test.png", "testgfx")

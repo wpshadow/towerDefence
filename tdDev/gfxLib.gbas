@@ -180,3 +180,35 @@ LOCAL count, loop, loop$, loopName$, gfx$, gfxContent$[]
 	ENDIF
 
 ENDFUNCTION
+
+FUNCTION gfxLib_generateMapParts:
+
+	gfxLib_generateMapPartsCombinator(gfxLib.Get("grass_0"), gfxLib.Get("sand_1"), gfxLib.Get("sand_2"), gfxLib.Get("sand_3"), gfxLib.Get("sand_4"), gfxLib.Get("sand_5"), gfxLib.Get("sand_6"), gfxLib.Get("sand_7"), gfxLib.Get("sand_8"), gfxLib.Get("sand_9"))
+	
+ENDFUNCTION
+
+FUNCTION gfxLib_generateMapPartsCombinator: groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9
+
+	
+
+	//sandOnGrass
+	//sandOnCement
+	
+
+	gfxLib.Set("", gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9))
+
+ENDFUNCTION
+
+FUNCTION gfxLib_generateMapPartsGenerator: groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9
+LOCAL id
+
+	id = GENSPRITE()
+	
+	CREATESCREEN 0, id, 32, 32
+	USESCREEN 0
+		DRAWSPRITE groundID, 0, 0
+	USESCREEN -1
+	
+	RETURN id
+
+ENDFUNCTION

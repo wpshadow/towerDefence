@@ -101,7 +101,7 @@ LOCAL tmpX, tmpY
 
 		// Set up initial Map
 
-		picID = gfxLib.Get("groundGrass")
+		picID = gfxLib.Get("grass_0")
 		editorFrameID = gfxLib.Get("editorFrame")
 
 		FOR tmpY = 0 TO mapSizeY

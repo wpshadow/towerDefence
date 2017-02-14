@@ -69,7 +69,7 @@ TYPE map_TYPE
 	ENDFUNCTION
 
 	FUNCTION checkSurroundings: positionX, positionY, layer, typ, clicked = FALSE
-	LOCAL t1, t2, t3, t4, t5, t6, t7, t8, changed, count
+	LOCAL t1, t2, t3, t4, t5, t6, t7, t8, changed, count, groundTyp
 
 		IF self.tile[positionX][positionY - 1].typ[layer] = typ THEN t1 = 1
 		IF self.tile[positionX + 1][positionY - 1].typ[layer] = typ THEN t2 = 2
@@ -82,7 +82,9 @@ TYPE map_TYPE
 
 		INC count, t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8
 
-		DEBUG count
+		groundTyp = self.tile[positionX][positionY].typ[layer]
+
+		DEBUG typ + " " + groundTyp + "\n"
 
 		IF self.tile[positionX][positionY].binary[layer] <> count OR clicked = TRUE
 
@@ -134,7 +136,8 @@ TYPE map_TYPE
 ENDTYPE
 
 TYPE mapSprite
-	layer[100][100][6]
+	grass[]
+	sand[]
 ENDTYPE
 
 GLOBAL map AS map_TYPE
