@@ -183,19 +183,43 @@ ENDFUNCTION
 
 FUNCTION gfxLib_generateMapParts:
 
-	gfxLib_generateMapPartsCombinator(gfxLib.Get("grass_0"), gfxLib.Get("sand_1"), gfxLib.Get("sand_2"), gfxLib.Get("sand_3"), gfxLib.Get("sand_4"), gfxLib.Get("sand_5"), gfxLib.Get("sand_6"), gfxLib.Get("sand_7"), gfxLib.Get("sand_8"), gfxLib.Get("sand_9"))
-	
+	gfxLib_generateMapPartsCombinator("sand_grass", gfxLib.Get("grass_0"), gfxLib.Get("sand_1"), gfxLib.Get("sand_2"), gfxLib.Get("sand_3"), gfxLib.Get("sand_4"), gfxLib.Get("sand_5"), gfxLib.Get("sand_6"), gfxLib.Get("sand_7"), gfxLib.Get("sand_8"), gfxLib.Get("sand_9"))
+
 ENDFUNCTION
 
-FUNCTION gfxLib_generateMapPartsCombinator: groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9
+FUNCTION gfxLib_generateMapPartsCombinator: name$, groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9
+LOCAL tmp, tmp$, newName$
 
+	FOR tmp = 0 TO 5
+		tmp$ = tmp
+
+		newName$ = name$ + "_" + tmp$
+		DEBUG newName$ + "\n"
+		
+		SELECT tmp
+		CASE 0
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9))
+		CASE 1
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, -1, -1, -1, -1, -1, -1, -1, -1))
+		CASE 2
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, -1, -1, -1, -1, -1, -1, -1))
+		CASE 3
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, -1, t3, -1, -1, -1, -1, -1, -1))
+		CASE 4
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, -1, -1, t4, -1, -1, -1, -1, -1))
+		CASE 5
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, -1, -1, -1, t5, -1, -1, -1, -1))
+		ENDSELECT
 	
-
+	
+	NEXT
+	
+	
 	//sandOnGrass
 	//sandOnCement
-	
 
-	gfxLib.Set("", gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9))
+
+	//gfxLib.Set("", gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9))
 
 ENDFUNCTION
 
@@ -203,12 +227,24 @@ FUNCTION gfxLib_generateMapPartsGenerator: groundID, t1, t2, t3, t4, t5, t6, t7,
 LOCAL id
 
 	id = GENSPRITE()
-	
+
 	CREATESCREEN 0, id, 32, 32
 	USESCREEN 0
 		DRAWSPRITE groundID, 0, 0
+		
+		IF t1 > -1 THEN DRAWSPRITE t1, 0, 0
+		IF t2 > -1 THEN DRAWSPRITE t2, 0, 0
+		IF t3 > -1 THEN DRAWSPRITE t3, 0, 0
+		IF t4 > -1 THEN DRAWSPRITE t4, 0, 0
+		IF t5 > -1 THEN DRAWSPRITE t5, 0, 0
+		IF t6 > -1 THEN DRAWSPRITE t6, 0, 0
+		IF t7 > -1 THEN DRAWSPRITE t7, 0, 0
+		IF t8 > -1 THEN DRAWSPRITE t8, 0, 0
+		IF t9 > -1 THEN DRAWSPRITE t9, 0, 0
+		
 	USESCREEN -1
-	
+
 	RETURN id
 
 ENDFUNCTION
+

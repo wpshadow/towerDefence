@@ -69,7 +69,12 @@ TYPE map_TYPE
 	ENDFUNCTION
 
 	FUNCTION checkSurroundings: positionX, positionY, layer, typ, clicked = FALSE
-	LOCAL t1, t2, t3, t4, t5, t6, t7, t8, changed, count, groundTyp
+	LOCAL t1, t2, t3, t4, t5, t6, t7, t8, changed, count, groundTyp, groundName$, typName$, idName$, countID$
+		
+		// typ
+		// 1	grass
+		// 2	sand
+	
 
 		IF self.tile[positionX][positionY - 1].typ[layer] = typ THEN t1 = 1
 		IF self.tile[positionX + 1][positionY - 1].typ[layer] = typ THEN t2 = 2
@@ -90,10 +95,24 @@ TYPE map_TYPE
 
 			self.calculateSurroundings(count, positionX, positionY, typ)
 
-//			SELECT count
-//			CASE 0
-//
-//			ENDSELECT
+			IF groundTyp = 1 THEN groundName$ = "grass"
+			IF groundTyp = 2 THEN groundName$ = "sand"
+			
+			IF typ = 1 THEN typName$ = "grass"
+			IF typ = 2 THEN typName$ = "sand"
+			
+			SELECT count
+			CASE 0
+				countID$ = "1"
+			ENDSELECT
+
+			idName$ = typName$ + "_" + groundName$ + "_" + countID$
+			
+			DEBUG idName$ + "\n"
+
+			map.setTile(gfxLib.Get(idName$), positionX, positionY, 0, 2)
+
+			DEBUG gfxLib.Get(idName$)
 
 			changed = TRUE
 
