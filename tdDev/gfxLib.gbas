@@ -194,8 +194,8 @@ LOCAL tmp, tmp$, newName$
 		tmp$ = tmp
 
 		newName$ = name$ + "_" + tmp$
-		DEBUG newName$ + "\n"
-		
+		//DEBUG newName$ + "\n"
+
 		SELECT tmp
 		CASE 0
 			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9))
@@ -210,11 +210,11 @@ LOCAL tmp, tmp$, newName$
 		CASE 5
 			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, -1, -1, -1, t5, -1, -1, -1, -1))
 		ENDSELECT
-	
-	
+
+
 	NEXT
-	
-	
+
+
 	//sandOnGrass
 	//sandOnCement
 
@@ -231,7 +231,7 @@ LOCAL id
 	CREATESCREEN 0, id, 32, 32
 	USESCREEN 0
 		DRAWSPRITE groundID, 0, 0
-		
+
 		IF t1 > -1 THEN DRAWSPRITE t1, 0, 0
 		IF t2 > -1 THEN DRAWSPRITE t2, 0, 0
 		IF t3 > -1 THEN DRAWSPRITE t3, 0, 0
@@ -241,7 +241,7 @@ LOCAL id
 		IF t7 > -1 THEN DRAWSPRITE t7, 0, 0
 		IF t8 > -1 THEN DRAWSPRITE t8, 0, 0
 		IF t9 > -1 THEN DRAWSPRITE t9, 0, 0
-		
+
 	USESCREEN -1
 
 	RETURN id

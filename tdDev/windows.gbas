@@ -51,6 +51,7 @@ STATIC menuActiveID
 STATIC mapSizeX, mapSizeY, tempMapSizeX, tempMapSizeY, picID, editorFrameID, zoomFactor, tileSetActive
 LOCAL tmpX, tmpY
 
+LOCAL tmpOutput$
 
 //STATIC picID, coutner
 
@@ -205,9 +206,12 @@ LOCAL tmpX, tmpY
 		tempMapSizeX = mapSizeX
 		tempMapSizeY = mapSizeY
 
+		// FIXME
 		FOR tmpY = 0 TO mapSizeY - 1
 			FOR tmpX = 0 TO mapSizeX - 1
-				map.setTile(picID, tmpX, tmpY, 0, 1)
+				IF map.getTile(tmpX, tmpY, 0) = 0
+					map.setTile(picID, tmpX, tmpY, 0, 1)
+				ENDIF
 			NEXT
 		NEXT
 
@@ -246,10 +250,6 @@ LOCAL tmpX, tmpY
 
 		NEXT
 	NEXT
-
-
-
-
 
 
 
