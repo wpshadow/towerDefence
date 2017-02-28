@@ -122,12 +122,42 @@ TYPE map_TYPE
 				countID$ = "1"
 			CASE 1
 				countID$ = "2"
+			CASE 2
+				countID$ = "1"
+			CASE 3
+				countID$ = "2"
 			CASE 4
 				countID$ = "3"
+			CASE 5
+				countID$ = "6"
+			CASE 6
+				countID$ = "3"
+			CASE 7
+				countID$ = "10"
+			CASE 8
+				countID$ = "1"
+			CASE 9
+				countID$ = "2"
+			CASE 10
+				countID$ = "1"
+			CASE 11
+				countID$ = "2"
+			CASE 12
+				countID$ = "3"
+			CASE 13
+				countID$ = "6"
+			CASE 14
+				countID$ = "3"
+			CASE 15
+				countID$ = "10"				
 			CASE 16
 				countID$ = "4"
+			CASE 32
+				countID$ = "1"
 			CASE 64
 				countID$ = "5"
+			CASE 128
+				countID$ = "1"
 			ENDSELECT
 
 			idName$ = typName$ + "_" + groundName$ + "_" + countID$
