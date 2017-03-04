@@ -80,7 +80,7 @@ TYPE map_TYPE
 		IF self.tile[positionX][positionY - 1].typ[layer] = typ THEN t1 = 1
 		IF self.tile[positionX + 1][positionY - 1].typ[layer] = typ THEN t2 = 2
 		IF self.tile[positionX + 1][positionY].typ[layer] = typ THEN t3 = 4
-		IF self.tile[positionX][positionY + 1].typ[layer + 1] = typ THEN t4 = 8
+		IF self.tile[positionX + 1][positionY + 1].typ[layer] = typ THEN t4 = 8
 		IF self.tile[positionX][positionY + 1].typ[layer] = typ THEN t5 = 16
 		IF self.tile[positionX - 1][positionY + 1].typ[layer] = typ THEN t6 = 32
 		IF self.tile[positionX - 1][positionY].typ[layer] = typ THEN t7 = 64
@@ -156,7 +156,7 @@ TYPE map_TYPE
 				countID$ = "11"
 			CASE 18
 				countID$ = "4"
-			CASE 19	
+			CASE 19
 				countID$ = "11"
 			CASE 20
 				countID$ = "7"
@@ -176,10 +176,10 @@ TYPE map_TYPE
 				countID$ = "11"
 			CASE 28
 				countID$ = "18" // check it again
-				
-				
-				
-				
+
+
+
+
 			CASE 32
 				countID$ = "1"
 			CASE 64
