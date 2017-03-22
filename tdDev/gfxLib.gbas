@@ -190,7 +190,7 @@ ENDFUNCTION
 FUNCTION gfxLib_generateMapPartsCombinator: name$, groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9
 LOCAL tmp, tmp$, newName$
 
-	FOR tmp = 0 TO 18
+	FOR tmp = 0 TO 20
 		tmp$ = tmp
 
 		newName$ = name$ + "_" + tmp$
@@ -235,6 +235,10 @@ LOCAL tmp, tmp$, newName$
 			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, -1, t6, -1, -1, -1))
 		CASE 18
 			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, -1, t3, t4, -1, -1, t7, -1, -1))
+		CASE 19
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, -1, -1, t7, -1, -1))
+		CASE 20
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, -1, t6, t7, -1, -1))
 		ENDSELECT
 
 
