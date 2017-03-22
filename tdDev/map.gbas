@@ -80,7 +80,7 @@ TYPE map_TYPE
 		IF self.tile[positionX][positionY - 1].typ[layer] = typ THEN t1 = 1
 		IF self.tile[positionX + 1][positionY - 1].typ[layer] = typ THEN t2 = 2
 		IF self.tile[positionX + 1][positionY].typ[layer] = typ THEN t3 = 4
-		IF self.tile[positionX][positionY + 1].typ[layer + 1] = typ THEN t4 = 8
+		IF self.tile[positionX + 1][positionY + 1].typ[layer] = typ THEN t4 = 8
 		IF self.tile[positionX][positionY + 1].typ[layer] = typ THEN t5 = 16
 		IF self.tile[positionX - 1][positionY + 1].typ[layer] = typ THEN t6 = 32
 		IF self.tile[positionX - 1][positionY].typ[layer] = typ THEN t7 = 64
@@ -149,11 +149,85 @@ TYPE map_TYPE
 			CASE 14
 				countID$ = "3"
 			CASE 15
-				countID$ = "10"				
+				countID$ = "10"
 			CASE 16
 				countID$ = "4"
+			CASE 17
+				countID$ = "11"
+			CASE 18
+				countID$ = "4"
+			CASE 19
+				countID$ = "11"
+			CASE 20
+				countID$ = "7"
+			CASE 21
+				countID$ = "13"
+			CASE 22
+				countID$ = "7"
+			CASE 23
+				countID$ = "17"
+			CASE 24
+				countID$ = "4"
+			CASE 25
+				countID$ = "11"
+			CASE 26
+				countID$ = "4"
+			CASE 27
+				countID$ = "11"
+			CASE 28
+				countID$ = "18"
+			CASE 29
+				countID$ = "19"
+			CASE 30
+				countID$ = "18"
+			CASE 31
+				countID$ = "20"
 			CASE 32
 				countID$ = "1"
+			CASE 33
+				countID$ = "2"
+			CASE 34
+				countID$ = "1"
+			CASE 35
+				countID$ = "2"
+			CASE 36
+				countID$ = "3"
+			CASE 37
+				countID$ = "6"
+			CASE 38
+				countID$ = "3"
+			CASE 39
+				countID$ = "10"
+			CASE 40
+				countID$ = "1"
+			CASE 41
+				countID$ = "2"
+			CASE 42
+				countID$ = "1"
+			CASE 43
+				countID$ = "2"
+			CASE 44
+				countID$ = "3"
+			CASE 45
+				countID$ = "6"
+			CASE 46
+				countID$ = "3"
+			CASE 47
+				countID$ = "10"
+			CASE 48
+				countID$ = "4"
+			CASE 49
+				countID$ = "11"
+			CASE 50
+				countID$ = "4"
+			CASE 51
+				countID$ = "11"
+			CASE 52
+				countID$ = "7"
+			
+			
+			
+
 			CASE 64
 				countID$ = "5"
 			CASE 128

@@ -190,7 +190,7 @@ ENDFUNCTION
 FUNCTION gfxLib_generateMapPartsCombinator: name$, groundID, t1, t2, t3, t4, t5, t6, t7, t8, t9
 LOCAL tmp, tmp$, newName$
 
-	FOR tmp = 0 TO 10
+	FOR tmp = 0 TO 20
 		tmp$ = tmp
 
 		newName$ = name$ + "_" + tmp$
@@ -219,6 +219,26 @@ LOCAL tmp, tmp$, newName$
 			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, -1, -1, t5, -1, -1, -1, -1))
 		CASE 10
 			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, -1, -1, t6, -1, -1, -1))
+		CASE 11
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, -1, t4, -1, -1, -1, -1, -1))
+		CASE 12
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, -1, t3, -1, t5, -1, -1, -1, -1))
+		CASE 13
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, -1, -1, -1, -1, -1))
+		CASE 14
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, -1, t3, t4, t5, -1, -1, -1, -1))
+		CASE 15
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, -1, t4, t5, -1, -1, -1, -1))
+		CASE 16
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, -1, t5, -1, -1, -1, -1))
+		CASE 17
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, -1, t6, -1, -1, -1))
+		CASE 18
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, -1, t3, t4, -1, -1, t7, -1, -1))
+		CASE 19
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, -1, -1, t7, -1, -1))
+		CASE 20
+			gfxLib.Set(newName$, gfxLib_generateMapPartsGenerator(groundID, t1, t2, t3, t4, -1, t6, t7, -1, -1))
 		ENDSELECT
 
 

@@ -232,6 +232,7 @@ LOCAL tmpOutput$
 				IF mouse.b1 = TRUE AND tileSetActive = TRUE
 
 					IF wpGUI_getRadioGroupActive(2) <> map.getTyp(tmpX, tmpY, 0)
+						DEBUG "-----" + "\n"
 						map.checkSurroundings(tmpX, tmpY, 0, wpGUI_getRadioGroupActive(2), TRUE)
 					ENDIF
 
